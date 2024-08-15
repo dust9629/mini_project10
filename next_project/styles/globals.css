@@ -105,16 +105,200 @@ a {
     color-scheme: dark;
   }
 } */
+html,
+body {
+  font-size: 62.5%;
+}
 body {
   width: 100%;
   height: 100vh;
-  background: #fff;
+  padding: 0;
+  margin: 0;
+  background: #020202;
   color: #303030;
+  list-style: none;
+  text-decoration: none;
 }
-.title {
-  text-align: center;
-  margin-top: 120px;
+main {
+  margin: 0 auto;
+  background-color: #fff;
+  height: 100%;
+  max-width: 650px;
+  min-width: 340px;
+}
+main section {
+  width: 100%;
+}
+
+/* 메인 큐레이션 배너 */
+.inner-wrap.n1 {
+  display: block;
+  width: 100%;
+  height: 75rem;
+  position: relative;
+}
+.main-ban-wrap {
+  width: 100%;
+  height: 100%;
+}
+.main-ban-wrap .curation_ban {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.main-ban-wrap .curation_ban img {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+.main-ban-wrap .curation_ban::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.3);
+  z-index: 1;
+}
+.main-txt-wrap {
+  position: absolute;
+  bottom: 8%;
+  padding: 0 3rem;
+  width: calc(100% - 6rem);
+  z-index: 2;
+}
+.title-main {
+  text-align: left;
+  font-size: 3rem;
+  color: #fff;
+  margin: 0 0 1.4rem;
+  text-shadow: 0 0 13px rgba(0, 0, 0, 0.095);
 }
 .title-sub {
+  text-align: left;
+  margin: 0 0 3rem;
+  font-size: 1.8rem;
+  color: #fff;
+}
+.title-writer {
+  font-size: 1.4rem;
+  color: #e5e5e5;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.title-writer span {
+  display: block;
+}
+.title-writer span img {
+  width: 3.3rem;
+  height: auto;
+}
+/* 메인 선물 추천 카테고리 */
+section.section02,
+section.section03,
+section.section04,
+section.section05 {
+  width: calc(100% - 3.6rem);
+  margin: 0 auto;
+  padding: 3.2rem 1.8rem 4rem;
+}
+.section-tit {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 1rem 0 3rem;
+}
+.section-tit a {
+  text-decoration: none;
+  font-size: 3rem;
+  font-weight: 600;
+  display: block;
+  color: #020202;
+}
+section h2 {
+  font-size: 2.2rem;
+}
+section ul {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+section.section02 ul {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.6rem;
+}
+section.section02 ul li {
+  width: 100%;
+  padding-top: 100%; /* 넓이에 따라 높이가 결정됩니다 */
+  background: #020202;
+  color: #e5e5e5;
+  font-size: 1.8rem;
   text-align: center;
+  position: relative; /* 내부 콘텐츠 위치 조정을 위함 */
+  border-radius: 50%;
+  overflow: hidden;
+}
+section.section02 ul li > div {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+/* 상품 리스트 */
+
+.cont-wrap {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 2rem;
+}
+.cont-wrap .cont {
+  width: 100%;
+  /* background-color: #f5f5f5; */
+}
+.cont-wrap .cont-img {
+  width: 100%;
+  height: 65%;
+  background: #ccc;
+}
+.cont-wrap .cont-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+.cont-wrap .cont-txt {
+  margin-top: 2.4rem;
+}
+.cont-wrap .cont-txt .prd-brand {
+  color: #7a7a7a;
+  font-size: 1.4rem;
+}
+.cont-wrap .cont-txt .prd-name {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 1.2rem 0 1.8rem;
+  font-size: 2rem;
+}
+.cont-wrap .cont-txt .prd-price {
+  font-size: 1.6rem;
+  display: flex;
+  margin: 0.5rem 0 1rem;
+}
+.cont-wrap .cont-txt .prd-price strong {
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin-right: 0.2rem;
 }

@@ -1,0 +1,135 @@
+header {
+  margin: 0 auto;
+  background-color: #fff;
+  height: 75px;
+  max-width: 650px;
+  min-width: 340px;
+  border-bottom: 1px solid #000;
+  position: relative;
+}
+header .header-inner {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 18px;
+}
+.header-inner .left .logo-wrap {
+  display: block;
+  width: 9rem;
+  /* height: 100%; */
+}
+.header-inner .left .logo-wrap img {
+  width: 100%;
+  height: auto;
+}
+.header-inner .right {
+  display: flex;
+}
+.header-inner .right a {
+  display: block;
+  width: 2.6rem;
+  height: 2.6rem;
+}
+.header-inner .right a + a {
+  margin-left: 1.4rem;
+}
+.header-inner .right a img {
+  width: 100%;
+  height: 100%;
+}
+/* nav */
+.nav-menu {
+  margin: 0 auto;
+  max-width: 650px;
+  min-width: 340px;
+  position: fixed;
+  top: 0;
+  left: 100%;
+  width: 100%;
+  height: 100vh;
+  background-color: #fff;
+  z-index: 999;
+  color: #020202;
+  text-decoration: none;
+  list-style: none;
+  transition: all 0.3s;
+}
+.nav-menu.active {
+  left: calc(50%);
+  transition: all 0.3s;
+  transform: translateX(-50%);
+}
+.nav-menu a {
+  color: #020202;
+  text-decoration: none;
+  list-style: none;
+}
+.nav-menu ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.nav-header {
+  height: 75px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 18px;
+}
+.nav-header a {
+  font-size: 1.8rem;
+}
+.nav-body .nav-banner {
+  height: 18rem;
+  background-color: lightgrey;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.6rem;
+}
+.nav-body .nav-tab li {
+  font-size: 1.8rem;
+  padding: 2rem 1.8rem;
+  border-bottom: 1px solid #ccc;
+}
+/* 햄버거 메뉴 버튼 */
+.ham-btn {
+  width: 32px;
+  height: 22px;
+  margin-left: 3.4rem;
+  cursor: pointer;
+  position: relative;
+  z-index: 99999;
+  transition: all 0.3s;
+}
+.ham-btn span {
+  position: absolute;
+  width: 100%;
+  height: 2.3px;
+  display: block;
+  background-color: #020202;
+  transition: all 0.3s;
+}
+.ham-btn span.h-01 {
+  top: 0;
+  left: 0;
+}
+.ham-btn span.h-01 {
+  top: calc(50% - 1.15px);
+  left: 0;
+}
+.ham-btn span.h-03 {
+  bottom: 0;
+  right: 0;
+}
+.ham-btn.active span.h-01 {
+  transform: rotate(45deg);
+}
+.ham-btn.active span.h-02 {
+  display: none;
+}
+.ham-btn.active span.h-03 {
+  transform: rotate(-45deg);
+  bottom: 45%;
+}
