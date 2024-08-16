@@ -5,7 +5,7 @@ export default function Detail() {
         <div className="prd-info">
           <div className="prd-img"></div>
           <div className="prd-txt">
-            <h3>다이빙 머그컵</h3>
+            <h3>큐레이션</h3>
           </div>
         </div>
       </section>

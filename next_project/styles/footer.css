@@ -1,0 +1,24 @@
+footer {
+  margin: 0 auto;
+  background-color: #282828;
+  max-width: 650px;
+  min-width: 340px;
+  position: relative;
+  color: #f5f5f5;
+}
+.footer-inner {
+  width: calc(100% - 36px);
+  padding: 2.4rem 18px;
+  text-align: center;
+}
+.footer-inner h3 {
+  font-size: 1.6rem;
+}
+.footer-inner p {
+  font-size: 1.2rem;
+}
+.footer-links a {
+  font-size: 1.2rem;
+  text-decoration: none;
+  color: #f5f5f5;
+}

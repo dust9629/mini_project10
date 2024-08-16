@@ -5,7 +5,12 @@ header {
   max-width: 650px;
   min-width: 340px;
   border-bottom: 1px solid #000;
-  position: relative;
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  z-index: 5;
 }
 header .header-inner {
   height: 100%;
@@ -53,12 +58,14 @@ header .header-inner {
   color: #020202;
   text-decoration: none;
   list-style: none;
-  transition: all 0.3s;
+  transition: all 0.8s;
+  visibility: hidden;
 }
 .nav-menu.active {
   left: calc(50%);
-  transition: all 0.3s;
   transform: translateX(-50%);
+  transition: all 0.8s;
+  visibility: visible;
 }
 .nav-menu a {
   color: #020202;

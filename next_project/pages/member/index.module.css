@@ -1,0 +1,35 @@
+.section01.member {
+  min-height: 100vh;
+}
+.loginButton {
+  background-color: #0070f3;
+  color: white;
+  padding: 8px 16px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  margin-top: 20px;
+  width: 100%;
+}
+
+.checkboxGroup {
+  margin: 20px 0;
+}
+
+.linkGroup a {
+  display: block;
+  margin-top: 10px;
+  color: #0070f3;
+  text-decoration: none;
+}
+
+.linkGroup a:hover {
+  text-decoration: underline;
+}
+
+.inputField {
+  width: 100%;
+  padding: 8px;
+  margin-top: 10px;
+  box-sizing: border-box;
+}

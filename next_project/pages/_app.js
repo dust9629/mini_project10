@@ -1,15 +1,56 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useRouter } from "next/router"; // useRouter를 import
 import Link from "next/link";
 import Image from "next/image";
 import "@/styles/globals.css";
 import "@/styles/header.css";
+import "@/styles/footer.css";
 
 export default function App({ Component, pageProps }) {
   const [isActive, setIsActive] = useState(false);
+  const [showTopBtn, setShowTopBtn] = useState(false);
+  const router = useRouter(); // 라우터 인스턴스를 가져옴
 
   const toggleMenu = () => {
     setIsActive(!isActive);
   };
+
+  useEffect(() => {
+    const handleRouteChange = () => {
+      setIsActive(false); // 페이지 이동 시 isActive를 false로 설정
+    };
+
+    // 라우터 이벤트 리스너 등록
+    router.events.on("routeChangeStart", handleRouteChange);
+
+    // cleanup 함수
+    return () => {
+      router.events.off("routeChangeStart", handleRouteChange);
+    };
+  }, [router]);
+
+  useEffect(() => {
+    const toggleVisibility = () => {
+      if (window.pageYOffset > 300) {
+        setShowTopBtn(true);
+      } else {
+        setShowTopBtn(false);
+      }
+    };
+
+    window.addEventListener("scroll", toggleVisibility);
+
+    return () => {
+      window.removeEventListener("scroll", toggleVisibility);
+    };
+  }, []);
+
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  }; // 세미콜론 추가
 
   return (
     <>
@@ -62,11 +103,13 @@ export default function App({ Component, pageProps }) {
         </div>
         <div className={`nav-menu ${isActive ? "active" : ""}`}>
           <div className="nav-header">
-            <Link href="/">로그인 </Link>
+            <Link href="/member">로그인 / 회원가입</Link>
           </div>
           <div className="nav-body">
             <div className="nav-banner">
-              <p>배너를 넣을까 고민중</p>
+              <p>
+                <Link href="/curation">큐레이션</Link>
+              </p>
             </div>
             <ul className="nav-tab">
               <li>
@@ -91,23 +134,63 @@ export default function App({ Component, pageProps }) {
           </div>
         </div>
       </header>
-
       <Component {...pageProps} />
+      {showTopBtn && (
+        <button
+          onClick={scrollToTop}
+          style={{
+            position: "fixed",
+            bottom: "20px",
+            right: "20px",
+            background: "blue",
+            color: "white",
+            border: "none",
+            borderRadius: "5px",
+            padding: "10px",
+            cursor: "pointer",
+            display: "block",
+          }}
+        >
+          Top
+        </button>
+      )}
+      <footer>
+        <div className="footer-inner">
+          <div className="footer-content">
+            <h3>Contact info.</h3>
+            <p></p>
+            <p>
+              전화번호: 010-8696-9388&nbsp;&nbsp;|&nbsp;&nbsp;이메일:
+              dust9629@gmail.com
+            </p>
+            <p>© dust9629 all rights reserved</p>
+          </div>
+          <div className="footer-links">
+            <Link target="_blank" href="/">
+              Resume
+            </Link>
+            &nbsp;|&nbsp;
+            <Link
+              target="_blank"
+              href="https://treasure-wolverine-e71.notion.site/d6fb630e6b9d4158b2c6436af844c3dc?pvs=4"
+            >
+              Notion
+            </Link>
+            &nbsp;|&nbsp;
+            <Link target="_blank" href="/">
+              Medium
+            </Link>
+            &nbsp;|&nbsp;
+            <Link target="_blank" href="/">
+              Velog
+            </Link>
+            &nbsp;|&nbsp;
+            <Link target="_blank" href="/">
+              Github
+            </Link>
+          </div>
+        </div>
+      </footer>
     </>
   );
 }
-
-// export default function RootLayout({ childeren }) {
-//   return (
-//     <html lang="en">
-//       <body>
-//         <div className="navbar">
-//           <Link href="/" className="home">
-//             Home
-//           </Link>
-//           <Link href="/list">List</Link>
-//         </div>
-//       </body>
-//     </html>
-//   );
-// }
