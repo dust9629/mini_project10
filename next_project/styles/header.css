@@ -113,7 +113,7 @@ header .header-inner {
 .ham-btn span {
   position: absolute;
   width: 100%;
-  height: 2.3px;
+  height: 2.2px;
   display: block;
   background-color: #020202;
   transition: all 0.3s;

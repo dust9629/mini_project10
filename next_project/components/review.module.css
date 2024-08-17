@@ -1,0 +1,26 @@
+.review {
+  margin: 4rem 0 0;
+  padding: 3rem 1.8rem 2rem;
+  width: calc(100% - 3.6rem);
+  /* background-color: lightblue; */
+  border-top: 1px solid #202020;
+}
+.review > div {
+  display: flex;
+}
+.review > div > textarea {
+  width: 80%;
+  resize: none;
+  padding: 1.4rem;
+  height: 6rem;
+}
+.review > div > button {
+  width: 20%;
+  background-color: #202020;
+  border: none;
+  font-size: 1.6rem;
+  font-weight: 300;
+  color: #fff;
+  padding: 3rem 0;
+  margin-left: 1rem;
+}

@@ -1,11 +1,12 @@
 import Link from "next/link";
 import Image from "next/image";
-import { Swiper, SwiperSlide } from "swiper/react";
 import SwiperCore, { Pagination, Navigation, Autoplay } from "swiper";
+import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css"; // 기본 스타일
 import "swiper/css/navigation"; // 네비게이션 스타일
 import "swiper/css/pagination"; // 페이지네이션 스타일
 import "swiper/css/autoplay";
+import EventPopup from "../components/popup";
 
 SwiperCore.use([Pagination, Navigation, Autoplay]);
 
@@ -121,17 +122,17 @@ export default function Home() {
               <h2>감각있는 당신을 위한 센스있는 선물</h2>
             </div>
             <ul>
-              <li>
-                <div>{category[0]}</div>
+              <li className="n1">
+                <Link href="/list">{category[0]}</Link>
               </li>
-              <li>
-                <div>{category[1]}</div>
+              <li className="n2">
+                <Link href="/list">{category[1]}</Link>
               </li>
-              <li>
-                <div>{category[2]}</div>
+              <li className="n3">
+                <Link href="/list">{category[2]}</Link>
               </li>
-              <li>
-                <div>{category[3]}</div>
+              <li className="n4">
+                <Link href="/list">{category[3]}</Link>
               </li>
             </ul>
           </div>
@@ -186,7 +187,7 @@ export default function Home() {
         </div>
       </section>
       {/* 중간 배너 */}
-      <section className="banner">
+      {/* <section className="banner">
         <div className="ban-wrap">
           <Link href="/">
             <Image src={"/images/ban01.png"} width={650} height={300} />
@@ -205,10 +206,49 @@ export default function Home() {
             </p>
           </Link>
         </div>
-      </section>
-      {/* 베스트 상품 */}
+      </section> */}
+      {/* 이벤트 브랜드 */}
       <section className="section04">
         <div className="inner-wrap n4">
+          <div className="brand-wrap">
+            <div className="section-tit">
+              <h2>가을맞이 브랜드 이야기</h2>
+              <Link href="/brand">+</Link>
+            </div>
+            <div className="brand-story">
+              <Link href="/brand" className="story-img">
+                <Image src="/images/item_b1.jpg" width={700} height={700} />
+              </Link>
+
+              <div className="story-txt">
+                <h4>따뜻한 햇살을 담은 포터리</h4>
+                <p>
+                  키스를 부르는 파리지앵 브런치 연남동 골목길에 위치한
+                  '키슈앤피즈'는 이름처럼 사랑과 평안을 담은 브런치카페 입니다.
+                  오늘날의 모던한 프랑스 신도시식 여유와 낭만을 담은 이야기를
+                  그려내는 브랜드입니다. 그리고 지금은 글자수 제한 관련 테스트를
+                  하고 있는데 글이 부족해서
+                </p>
+              </div>
+              <div className="story-prd">
+                <div className="story-prd-img">
+                  <Image src="/images/item_b2.jpg" width={200} height={200} />
+                </div>
+                <div className="cont-txt">
+                  <span className="prd-brand">진저브레드팟</span>
+                  <h3 className="prd-name">포터리</h3>
+                  <p className="prd-price">
+                    <strong>23,000</strong>원
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+      {/* 베스트 상품 */}
+      <section className="section05">
+        <div className="inner-wrap n5">
           <div className="best-wrap">
             <div className="section-tit">
               <h2>인기있는 아이템</h2>
@@ -255,8 +295,8 @@ export default function Home() {
         </div>
       </section>
       {/* 큐레이션 */}
-      <section className="section05">
-        <div className="inner-wrap n5">
+      <section className="section06">
+        <div className="inner-wrap n6">
           <div className="cura-wrap">
             <div className="section-tit">
               <h2>큐레이션 공간</h2>
@@ -266,13 +306,12 @@ export default function Home() {
               <Swiper
                 spaceBetween={20}
                 slidesPerView={1.2}
-                navigation
+                navigation={true} // 네비게이션 활성화
                 pagination={{ clickable: true }}
-                loop={true} // 무한 반복
+                loop={true}
                 autoplay={{
-                  // 자동 재생 설정
-                  delay: 2500, // 2.5초 지연
-                  disableOnInteraction: false, // 사용자 상호작용 후에도 자동 재생 계속
+                  delay: 2500,
+                  disableOnInteraction: false,
                 }}
               >
                 {slidesCura.map((slide, index) => (
@@ -292,6 +331,7 @@ export default function Home() {
           </div>
         </div>
       </section>
+      <EventPopup />
     </main>
   );
 }

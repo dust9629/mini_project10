@@ -94,6 +94,7 @@ main section {
   text-align: left;
   font-size: 3rem;
   font-weight: 600;
+  line-height: 1.3;
   color: #fff;
   margin: 0 0 1.4rem;
   text-shadow: 0 0 13px rgba(0, 0, 0, 0.095);
@@ -123,7 +124,8 @@ main section {
 section.section02,
 section.section03,
 section.section04,
-section.section05 {
+section.section05,
+section.section06 {
   width: calc(100% - 3.6rem);
   margin: 0 auto;
   padding: 3.2rem 1.8rem 4rem;
@@ -158,7 +160,7 @@ section.section02 ul {
 section.section02 ul li {
   width: 100%;
   padding-top: 100%; /* 넓이에 따라 높이가 결정됩니다 */
-  background: #020202;
+
   color: #e5e5e5;
   font-size: 1.8rem;
   text-align: center;
@@ -166,7 +168,20 @@ section.section02 ul li {
   border-radius: 50%;
   overflow: hidden;
 }
-section.section02 ul li > div {
+section.section02 ul li.n1 {
+  background: url(/images/gift0.jpg) no-repeat center/cover;
+}
+section.section02 ul li.n2 {
+  background: url(/images/gift1.jpg) no-repeat center/cover;
+}
+section.section02 ul li.n3 {
+  background: url(/images/gift2.jpg) no-repeat center/cover;
+}
+section.section02 ul li.n4 {
+  background: url(/images/gift3.jpg) no-repeat center/cover;
+}
+section.section02 ul li > a {
+  /* display: block; */
   position: absolute;
   top: 0;
   left: 0;
@@ -175,6 +190,13 @@ section.section02 ul li > div {
   display: flex;
   align-items: center;
   justify-content: center;
+  color: #fff;
+  text-decoration: none;
+  transition: all 0.3s;
+  text-shadow: 0 0 12px rgba(0, 0, 0, 0.095);
+}
+section.section02 ul li > a:hover {
+  background: #020202;
 }
 /* 상품 리스트 */
 
@@ -211,6 +233,9 @@ section.section02 ul li > div {
   width: 100%;
   height: 100%;
 }
+.cont-wrap .cont p.like-btn img.like-e {
+  opacity: 0.65;
+}
 .cont-wrap .cont p.like-btn img.like-f {
   display: none;
 }
@@ -241,17 +266,18 @@ section.section02 ul li > div {
   text-overflow: ellipsis;
   margin: 1.2rem 0 1.8rem;
   font-size: 1.8rem;
-  font-weight: 600;
+  font-weight: 500;
   line-height: 1.3;
 }
 .cont-wrap .cont-txt .prd-price {
   font-size: 1.6rem;
   display: flex;
+  align-items: baseline;
   margin: 0.5rem 0 1rem;
 }
 .cont-wrap .cont-txt .prd-price strong {
   font-size: 1.8rem;
-  font-weight: 600;
+  font-weight: 500;
   margin-right: 0.2rem;
 }
 /* 중간 배너 */
@@ -305,6 +331,74 @@ section.section02 ul li > div {
   font-weight: 600;
   color: #303030;
 }
+/* 브랜드 스토리 전하기 */
+.brand-story {
+  width: 100%;
+}
+.brand-story .story-img {
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+  object-position: center;
+}
+.brand-story .story-img img {
+  width: 100%;
+  height: 100%;
+}
+.brand-story .story-txt {
+  margin: 2.6rem 0 1.6rem;
+}
+.brand-story .story-txt h4 {
+  margin: 0 0 1.4rem;
+  font-size: 2rem;
+  font-weight: 500;
+}
+.brand-story .story-txt p {
+  margin: 0 0 2rem;
+  font-size: 1.6rem;
+  font-weight: 400;
+  line-height: 1.4;
+  color: #303030;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.brand-story .story-prd {
+  margin: 2rem 0;
+  padding: 2rem 0;
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+  display: flex;
+}
+.brand-story .story-prd .story-prd-img {
+  width: 10rem;
+  height: 10rem;
+  margin-right: 2rem;
+}
+.brand-story .story-prd .story-prd-img img {
+  width: 100%;
+  height: 100%;
+}
+.brand-story .cont-txt {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.brand-story .prd-brand {
+  display: block;
+  font-size: 1.4rem;
+  margin: 0 0 1.4rem;
+}
+.brand-story .prd-name {
+  font-size: 1.8rem;
+  margin: 0 0 1rem;
+}
+.brand-story .prd-price {
+  font-size: 1.6rem;
+  margin: 0;
+}
 /* 스와이퍼 */
 .cura-slide .swiper .swiper-slide {
   transform: scale(0.95);
@@ -336,13 +430,20 @@ section.section02 ul li > div {
   position: absolute;
   bottom: 10%;
   left: 3.6rem;
+  opacity: 0.3;
+}
+.cura-slide .swiper .swiper-slide.swiper-slide-active .cura-slide-txt {
+  opacity: 1;
 }
 .cura-slide-txt h4 {
   margin: 0 0 1rem 0;
   font-size: 2.6rem;
   font-weight: 500;
+  line-height: 1.3;
   color: #fff;
   text-shadow: 0 0 13px rgba(0, 0, 0, 0.095);
+  padding-right: 3.6rem;
+  white-space: pre-wrap;
 }
 .cura-slide-txt p {
   font-size: 1.4rem;

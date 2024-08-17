@@ -1,25 +1,60 @@
-.section01.member {
-  min-height: 100vh;
+/* 로그인, 아이디, 비밀번호 찾기 폼 */
+.divContainer {
+  height: 100%;
+  min-height: calc(100vh - 333.5px);
+  padding: 4.5rem 1.8rem;
 }
-.loginButton {
-  background-color: #0070f3;
-  color: white;
-  padding: 8px 16px;
+.divContainer h3 {
+  font-size: 2.2rem;
+  font-weight: 500;
+  margin: 0 0 4.4rem;
+}
+.divContainer form > div {
+  display: block;
+  margin-bottom: 2rem;
+  color: #303030;
+}
+.divContainer form > span {
+  font-size: 1.4rem;
+  color: #282828;
+}
+.divContainer form > div > label {
+  font-size: 1.6rem;
+  font-weight: 200;
+}
+.loginButton,
+.findIdButton,
+.findPwButton,
+.kakaoLoginButton {
+  background-color: #282828;
+  color: #fff;
+  font-size: 1.6rem;
+  padding: 1.8rem 1.2rem;
   border: none;
-  border-radius: 5px;
+  border-radius: unset;
   cursor: pointer;
-  margin-top: 20px;
+  margin-top: 2rem;
   width: 100%;
+}
+.kakaoLoginButton {
+  margin-top: 0.8rem;
+  background-color: gold;
+  color: #282828;
 }
 
 .checkboxGroup {
-  margin: 20px 0;
+  margin: 2rem 0;
 }
-
+.divContainer form > div.linkGroup {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  margin-top: 1.6rem;
+}
 .linkGroup a {
   display: block;
-  margin-top: 10px;
-  color: #0070f3;
+  font-size: 1.2rem;
+  color: #303030;
   text-decoration: none;
 }
 
@@ -29,7 +64,23 @@
 
 .inputField {
   width: 100%;
-  padding: 8px;
-  margin-top: 10px;
+  padding: 1.6rem 1.2rem;
+  margin-top: 0.8rem;
   box-sizing: border-box;
+  border-radius: unset;
+  font-size: 1.4rem;
+  border: 1px solid #858585;
 }
+.divContainer form > a {
+  display: block;
+  margin: 0.8rem 0 4rem;
+  text-decoration: none;
+  text-align: center;
+  color: #282828;
+  font-size: 1.6rem;
+  padding: 1.8rem 1.2rem;
+  border: 1px solid #8e8e8e;
+  border-radius: unset;
+  cursor: pointer;
+}
+/* 회원가입 */
