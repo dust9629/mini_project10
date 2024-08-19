@@ -86,6 +86,13 @@ header .header-inner {
 }
 .nav-header a {
   font-size: 1.8rem;
+  display: none;
+}
+.nav-header a.active {
+  display: block;
+}
+.nav-body {
+  height: 100%;
 }
 .nav-body .nav-banner {
   height: 18rem;
@@ -100,6 +107,13 @@ header .header-inner {
   padding: 2rem 1.8rem;
   border-bottom: 1px solid #ccc;
 }
+.nav-body a.logout {
+  font-size: 1.4rem;
+  display: block;
+  position: absolute;
+  bottom: 2rem;
+  left: 1.8rem;
+}
 /* 햄버거 메뉴 버튼 */
 .ham-btn {
   width: 32px;
@@ -108,7 +122,7 @@ header .header-inner {
   cursor: pointer;
   position: relative;
   z-index: 99999;
-  transition: all 0.3s;
+  transition: all 0.2s;
 }
 .ham-btn span {
   position: absolute;
@@ -116,7 +130,7 @@ header .header-inner {
   height: 2.2px;
   display: block;
   background-color: #020202;
-  transition: all 0.3s;
+  transition: all 0.2s;
 }
 .ham-btn span.h-01 {
   top: 0;

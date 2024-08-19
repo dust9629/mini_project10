@@ -75,7 +75,7 @@ export default function App({ Component, pageProps }) {
                 height={50}
               />
             </Link>
-            <Link href="/">
+            <Link href="/like">
               <Image
                 src="/images/icon_like_e.png"
                 alt="좋아요"
@@ -83,7 +83,7 @@ export default function App({ Component, pageProps }) {
                 height={50}
               />
             </Link>
-            <Link href="/">
+            <Link href="/cart">
               <Image
                 src="/images/icon_cart.png"
                 alt="장바구니"
@@ -103,7 +103,15 @@ export default function App({ Component, pageProps }) {
         </div>
         <div className={`nav-menu ${isActive ? "active" : ""}`}>
           <div className="nav-header">
-            <Link href="/member">로그인 / 회원가입</Link>
+            <Link className="member active" href="/member">
+              로그인 / 회원가입
+            </Link>
+            <Link className="mypage" href="/mypage">
+              마이페이지
+            </Link>
+            <Link className="admin" href="/admin">
+              관리자페이지
+            </Link>
           </div>
           <div className="nav-body">
             <div className="nav-banner">
@@ -131,26 +139,15 @@ export default function App({ Component, pageProps }) {
                 <Link href="/">이벤트</Link>
               </li>
             </ul>
+            <Link className="logout" href="/">
+              로그아웃
+            </Link>
           </div>
         </div>
       </header>
       <Component {...pageProps} />
       {showTopBtn && (
-        <button
-          onClick={scrollToTop}
-          style={{
-            position: "fixed",
-            bottom: "20px",
-            right: "20px",
-            background: "blue",
-            color: "white",
-            border: "none",
-            borderRadius: "5px",
-            padding: "10px",
-            cursor: "pointer",
-            display: "block",
-          }}
-        >
+        <button className="top-btn" onClick={scrollToTop}>
           Top
         </button>
       )}

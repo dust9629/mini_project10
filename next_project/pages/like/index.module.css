@@ -1,0 +1,43 @@
+.productLike {
+  width: 100%;
+  padding-bottom: 2rem;
+}
+.productLike > section {
+  margin: 0 auto;
+  width: calc(100% - 3.6rem);
+  padding: 0 1.8rem;
+}
+h3.likeTit {
+  font-size: 2rem;
+  font-weight: 500;
+  margin: 0 0 1.2rem;
+  padding-top: 2rem;
+}
+a.back {
+  display: block;
+  width: 3rem;
+  padding: 2rem 1.8rem 0;
+}
+a.back img {
+  width: 100%;
+  height: auto;
+}
+.likeSort {
+  display: flex;
+  overflow-x: scroll;
+  margin-bottom: 2.4rem;
+}
+.likeSort > li {
+  font-size: 1.6rem;
+  font-weight: 300;
+  border: 1px solid #202020;
+  padding: 0.8rem 1.4rem;
+  border-radius: 1.8rem;
+}
+.likeSort > li.active {
+  color: #fff;
+  background-color: #202020;
+}
+.likeSort > li + li {
+  margin-left: 1rem;
+}

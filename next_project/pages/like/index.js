@@ -46,21 +46,15 @@ let itemsB = [
   },
 ];
 
-export default function List() {
+export default function Like() {
   return (
-    <main className={styles.productList}>
+    <main className={styles.productLike}>
       <Link className={styles.back} href="/">
         <Image src="/images/icon_arrow_back.png" width={200} height={50} />
       </Link>
-      <section className={styles.listTop}>
+      <section className={styles.likeTop}>
         <div>
-          <h3 className={styles.listTit}>상품 리스트</h3>
-          <ul className={styles.listSort}>
-            <li className={styles.active}># 기념일</li>
-            <li># 생일</li>
-            <li># 축하</li>
-            <li># 감사</li>
-          </ul>
+          <h3 className={styles.likeTit}>좋아요 리스트</h3>
         </div>
       </section>
 

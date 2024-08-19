@@ -5,26 +5,46 @@ import { useEffect, useState } from "react";
 import ReviewSection from "../../components/review";
 // import CommentSection from "./../components/comment";
 
-let itemsB = [
+let brandItem = [
   {
-    name: "감성 인테리어 파키라+페블 화분+흙없이 실내에서 키우는 식물 축하 선물 (블랙&화이트)",
-    brand: "본투비그린",
-    price: "23,900",
+    name: "괴마옥 & 이끼코스터 SET",
+    brand: "스퀘어폰드",
+    price: "28,000",
   },
   {
-    name: "[화분 받침] Art Pot 받침",
-    brand: "슈퍼마켙 플라워",
-    price: "3,000",
+    name: "스프링골풀 칼라팟 2TYPE",
+    brand: "스퀘어폰드",
+    price: "24,000",
   },
   {
-    name: "미니 히노키 pearl",
-    brand: "큐이디",
-    price: "50,000",
+    name: "비즈 스트랩 키링 - 머쉬룸",
+    brand: "스퀘어폰드",
+    price: "12,000",
   },
   {
-    name: "해송소나무 테라스톤세트 미니분재",
-    brand: "펫플랜트",
-    price: "52,800",
+    name: "이끼 코스터 SET - 4TYPE",
+    brand: "스퀘어폰드",
+    price: "18,000",
+  },
+  {
+    name: "비즈 스트랩 키링 - 메다카",
+    brand: "스퀘어폰드",
+    price: "12,000",
+  },
+  {
+    name: "청짜보(연산회) 미니 분재",
+    brand: "스퀘어폰드",
+    price: "35,000",
+  },
+  {
+    name: "이끼 코스터 4TYPE",
+    brand: "스퀘어폰드",
+    price: "9,000",
+  },
+  {
+    name: "파티오라금 청산호 미니화분",
+    brand: "스퀘어폰드",
+    price: "24,000",
   },
 ];
 
@@ -43,11 +63,14 @@ export default function Brand() {
 
   return (
     <main className={styles.brandStory}>
+      <Link className={styles.back} href="/">
+        <Image src="/images/icon_arrow_back.png" width={200} height={50} />
+      </Link>
       <section className={styles.mainBan}>
         <span className={styles.badge01}>New Brand</span>
         <h3>신규 입점된 브랜드를 소개합니다</h3>
         <div className={styles.mainImg}>
-          <Image src="/images/brand0.jpg" width={700} height={700} />
+          <Image src="/images/brand0_ban.jpg" width={700} height={700} />
         </div>
         <div className={styles.brandMainTxt}>
           <h4>
@@ -80,12 +103,12 @@ export default function Brand() {
       <section className={styles.prdList}>
         <div className={styles.prdWrap}>
           <ul className="cont-wrap">
-            {itemsB.map((item, i) => (
+            {brandItem.map((item, i) => (
               <li className="cont" key={i}>
                 <Link href="/list/detail">
                   <div className="cont-img">
                     <Image
-                      src={`/images/item_b${i}.jpg`}
+                      src={`/images/brand0_${i}.jpg`}
                       alt={item.name}
                       width={300}
                       height={600}

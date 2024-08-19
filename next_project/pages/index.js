@@ -86,7 +86,7 @@ export default function Home() {
     <main>
       {/* 큐레이션 배너 */}
       <section className="section01">
-        <Link href="/" className="inner-wrap n1">
+        <Link href="/event" className="inner-wrap n1">
           <div className="main-ban-wrap">
             <div href="/" className="curation_ban">
               <Image
@@ -212,33 +212,38 @@ export default function Home() {
         <div className="inner-wrap n4">
           <div className="brand-wrap">
             <div className="section-tit">
-              <h2>가을맞이 브랜드 이야기</h2>
+              <h2>감각적인 초록빛을 따라서</h2>
               <Link href="/brand">+</Link>
             </div>
             <div className="brand-story">
               <Link href="/brand" className="story-img">
-                <Image src="/images/item_b1.jpg" width={700} height={700} />
+                <Image src="/images/brand0_ban.jpg" width={700} height={700} />
               </Link>
 
               <div className="story-txt">
-                <h4>따뜻한 햇살을 담은 포터리</h4>
+                <h4>자연을 닮은 브랜드 "스퀘어폰드"</h4>
                 <p>
-                  키스를 부르는 파리지앵 브런치 연남동 골목길에 위치한
-                  '키슈앤피즈'는 이름처럼 사랑과 평안을 담은 브런치카페 입니다.
-                  오늘날의 모던한 프랑스 신도시식 여유와 낭만을 담은 이야기를
-                  그려내는 브랜드입니다. 그리고 지금은 글자수 제한 관련 테스트를
-                  하고 있는데 글이 부족해서
+                  보글보글 이끼를 닮은 코스터와 현무암을 연상시키는 플랜트 팟은
+                  식집사들의 마음을 훔치는 것만이 아니라, 그 자체로 한 폭의 자연
+                  풍경을 연출합니다. 각 제품은 자연에서 그대로 옮겨온 듯한
+                  느낌을 선사하며, 실내 어디에 두어도 자연스러운 아름다움을
+                  자아냅니다. 스퀘어 폰드의 제품들은 모두 자연을 닮기 위해
+                  세심하게 설계되었습니다. 연못의 식물과 동물에서 영감을 얻어,
+                  장인의 손길로 하나하나 정성스레 만들어진 이 제품들은 사용하는
+                  이로 하여금 평온함과 안정감을 제공합니다. 이는 단순한 화분이나
+                  깔개가 아닌, 살아 있는 생명처럼 느껴지게 하는 스퀘어 폰드만의
+                  마법입니다.
                 </p>
               </div>
               <div className="story-prd">
                 <div className="story-prd-img">
-                  <Image src="/images/item_b2.jpg" width={200} height={200} />
+                  <Image src="/images/brand0_0.jpg" width={200} height={200} />
                 </div>
                 <div className="cont-txt">
-                  <span className="prd-brand">진저브레드팟</span>
-                  <h3 className="prd-name">포터리</h3>
+                  <span className="prd-brand">스퀘어폰드</span>
+                  <h3 className="prd-name">괴마옥 & 이끼코스터 SET</h3>
                   <p className="prd-price">
-                    <strong>23,000</strong>원
+                    <strong>28,000</strong>원
                   </p>
                 </div>
               </div>
@@ -316,14 +321,16 @@ export default function Home() {
               >
                 {slidesCura.map((slide, index) => (
                   <SwiperSlide key={index}>
-                    <img src={slide.image} alt={slide.title} />
-                    <div className="cura-slide-txt">
-                      <h4>{slide.title}</h4>
-                      <p>
-                        <strong>curator.</strong>
-                        {slide.writer}
-                      </p>
-                    </div>
+                    <Link href="/curation">
+                      <img src={slide.image} alt={slide.title} />
+                      <div className="cura-slide-txt">
+                        <h4>{slide.title}</h4>
+                        <p>
+                          <strong>curator.</strong>
+                          {slide.writer}
+                        </p>
+                      </div>
+                    </Link>
                   </SwiperSlide>
                 ))}
               </Swiper>

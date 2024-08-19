@@ -48,7 +48,7 @@ export default function Login() {
               <div className={styles.linkGroup}>
                 <Link href="/member/find_id">아이디 찾기</Link>|
                 <Link href="/member/find_pw">비밀번호 찾기</Link>|
-                <Link href="/">비회원 주문 조회</Link>
+                <Link href="/member/nonmember">비회원 주문 조회</Link>
               </div>
             </form>
           </div>

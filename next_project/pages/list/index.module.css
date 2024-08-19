@@ -1,0 +1,143 @@
+.productList,
+.productDetail {
+  width: 100%;
+  padding-bottom: 2rem;
+}
+.productList > section,
+.productDetail > section.prd {
+  margin: 0 auto;
+  width: calc(100% - 3.6rem);
+  padding: 0 1.8rem;
+}
+h3.listTit {
+  font-size: 2rem;
+  font-weight: 500;
+  margin: 0 0 1.2rem;
+  padding-top: 2rem;
+}
+a.back {
+  display: block;
+  width: 3rem;
+  padding: 2rem 1.8rem 0;
+}
+a.back img {
+  width: 100%;
+  height: auto;
+}
+.listSort {
+  display: flex;
+  overflow-x: scroll;
+  margin-bottom: 2.4rem;
+}
+.listSort > li {
+  font-size: 1.6rem;
+  font-weight: 300;
+  border: 1px solid #202020;
+  padding: 0.8rem 1.4rem;
+  border-radius: 1.8rem;
+}
+.listSort > li.active {
+  color: #fff;
+  background-color: #202020;
+}
+.listSort > li + li {
+  margin-left: 1rem;
+}
+/* 상품 상세페이지 */
+.prdInfo {
+  padding: 1.6rem 0 3.4rem;
+}
+.prdImg {
+  width: 100%;
+  height: auto;
+}
+.prdImg > img {
+  width: 100%;
+  height: 100%;
+}
+.prdTxt {
+  margin-top: 2.4rem;
+  width: 100%;
+}
+.prdTxt .prdBrand {
+  display: inline-block;
+  font-size: 1.2rem;
+  font-weight: 300;
+  padding: 0.6rem 1.2rem;
+  background-color: #202020;
+  color: #fff;
+}
+.prdTxt .prdTit {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.prdTxt .likeBtn {
+  width: 2.4rem;
+  height: 2.4rem;
+}
+.prdTxt .likeBtn > img {
+  width: 100%;
+  height: 100%;
+}
+.prdTxt .likeBtn img.likeF {
+  display: none;
+}
+.prdTxt .likeBtn.active img.likeE {
+  display: none;
+}
+.prdTxt .likeBtn.active img.likeF {
+  display: block;
+}
+.prdTit > h3 {
+  font-size: 2rem;
+  font-weight: 500;
+  margin: 0 0 1.2rem;
+  padding-top: 2rem;
+}
+.prdPrice {
+  font-size: 1.6rem;
+  margin: 1rem 0;
+  border-bottom: 1px solid #d3d3d3;
+  padding-bottom: 1.6rem;
+}
+.prdPrice strong {
+  font-size: 1.8rem;
+  margin-right: 0.2rem;
+}
+.prdDesc {
+  margin: 2rem 0;
+  /* border-bottom: 1px solid #d3d3d3; */
+}
+.prdDesc li {
+  padding: 0.8rem 0;
+  font-size: 1.4rem;
+  font-weight: 300;
+}
+.prdBtn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 2.4rem;
+  border-bottom: 1px solid #d3d3d3;
+}
+.prdBtn > button {
+  width: calc(50% - 0.5rem);
+  background-color: #202020;
+  color: #fff;
+  font-size: 1.6rem;
+  padding: 1.8rem 1.2rem;
+  border: 1px solid #202020;
+  border-radius: unset;
+}
+.prdBtn > button.cart {
+  background-color: #fff;
+  color: #202020;
+}
+.prdDetails {
+  margin-top: 2.4rem;
+}
+.prdDetails img {
+  width: 100%;
+  height: auto;
+}

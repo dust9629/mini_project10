@@ -1,0 +1,149 @@
+.cart {
+  width: 100%;
+  padding-bottom: 2rem;
+}
+.cart > section {
+  margin: 0 auto;
+  width: calc(100% - 3.6rem);
+  padding: 0 1.8rem;
+}
+h3.cartTit,
+.cartTxt h4 {
+  font-size: 2rem;
+  font-weight: 500;
+  margin: 0 0 1.2rem;
+  padding-top: 2rem;
+}
+a.back {
+  display: block;
+  width: 3rem;
+  padding: 2rem 1.8rem 0;
+}
+a.back img {
+  width: 100%;
+  height: auto;
+}
+.cartList {
+  margin-top: 2rem;
+}
+.cartWrap > ul {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.cart {
+  padding: 2rem 0;
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+  position: relative;
+}
+.cart button.del {
+  position: absolute;
+  top: 2rem;
+  right: 1rem;
+  border: none;
+  background: none;
+  width: 1.4rem;
+  height: 1.4rem;
+  padding: 0;
+}
+.cart button.del img {
+  width: 100%;
+  height: 100%;
+}
+.cart .cartConts {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  text-decoration: none;
+  color: #202020;
+}
+.cartImg {
+  width: 10rem;
+  height: 10rem;
+  min-width: 10rem;
+  margin-right: 1.6rem;
+}
+.cartImg img {
+  width: 100%;
+  height: 100%;
+}
+.cartPrd {
+  padding-right: 2.8rem;
+}
+.cartBrand {
+  margin: 0;
+  padding: 0;
+  font-size: 1rem;
+}
+.cartPrdName {
+  font-size: 1.6rem;
+  margin: 1rem 0 0.6rem;
+}
+.cartPrice {
+  margin: 0;
+  padding: 0;
+  font-size: 1.4rem;
+}
+.cartPrice > strong {
+  margin-right: 0.2rem;
+}
+.cartTxt {
+  margin-top: 3rem;
+}
+.cartTxt ul {
+  padding: 1rem 0;
+  border-bottom: 1px solid #ccc;
+}
+.cartTxt ul > li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 0;
+  margin: 0;
+}
+.cartTxt ul > li > h6,
+.cartTxt ul > li > p {
+  font-size: 1.4rem;
+  font-weight: 500;
+  margin: 0;
+}
+
+.totalPrice {
+  padding: 2.6rem 0 3.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.totalPrice h6 {
+  margin: 0;
+  font-size: 2rem;
+  font-weight: 500;
+}
+.totalPrice p {
+  margin: 0;
+  font-size: 2.2rem;
+}
+.totalPrice p > strong {
+  margin-right: 0.3rem;
+}
+.cartBtn {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-bottom: 2.4rem;
+  /* border-bottom: 1px solid #d3d3d3; */
+}
+.cartBtn button {
+  width: calc(50% - 0.5rem);
+  background-color: #202020;
+  color: #fff;
+  font-size: 1.6rem;
+  padding: 1.8rem 1.2rem;
+  border: 1px solid #202020;
+  border-radius: unset;
+}
+.cartBtn button.select {
+  background-color: #fff;
+  color: #202020;
+}

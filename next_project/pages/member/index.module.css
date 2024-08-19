@@ -25,7 +25,8 @@
 .loginButton,
 .findIdButton,
 .findPwButton,
-.kakaoLoginButton {
+.kakaoLoginButton,
+.nonmemberButton {
   background-color: #282828;
   color: #fff;
   font-size: 1.6rem;
@@ -84,3 +85,47 @@
   cursor: pointer;
 }
 /* 회원가입 */
+.addressWrap {
+  display: flex;
+  align-items: center;
+}
+.addressButton {
+  height: 100%;
+  width: 13rem;
+  background-color: #282828;
+  color: #fff;
+  font-size: 1.4rem;
+  padding: 1.6rem 1.2rem;
+  border: none;
+  border-radius: unset;
+  margin: 0.8rem 0 0 0.8rem;
+}
+.agreement {
+  margin-top: 2rem;
+}
+.agreeTit {
+  display: flex;
+  align-items: center;
+}
+.divContainer h3.agreementTit {
+  margin: 5.4rem 0 3rem;
+}
+.agreeTit > label {
+  font-size: 1.6rem;
+  font-weight: 300;
+  margin-left: 0.8rem;
+}
+.agreeConts {
+  width: calc(100% - 3.6rem);
+  height: 12rem;
+  padding: 1.6rem;
+  margin-top: 1.8rem;
+  border: 1px solid #858585;
+  overflow-y: scroll;
+}
+.agreeConts > p {
+  margin: 0;
+  padding: 0;
+  font-size: 1.4rem;
+  line-height: 1.4;
+}
