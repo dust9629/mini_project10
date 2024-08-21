@@ -116,12 +116,17 @@ a.back img {
 }
 .prdBtn {
   display: flex;
-  align-items: center;
-  justify-content: space-between;
+  flex-direction: column;
   padding-bottom: 2.4rem;
   border-bottom: 1px solid #d3d3d3;
 }
-.prdBtn > button {
+.prdBtn > p {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.prdBtn button,
+.prdBtn > p > button {
   width: calc(50% - 0.5rem);
   background-color: #202020;
   color: #fff;
@@ -130,7 +135,12 @@ a.back img {
   border: 1px solid #202020;
   border-radius: unset;
 }
-.prdBtn > button.cart {
+.prdBtn button {
+  width: 100%;
+  background-color: #8f8f8f;
+  border-color: #ccc;
+}
+.prdBtn > p > button.cart {
   background-color: #fff;
   color: #202020;
 }

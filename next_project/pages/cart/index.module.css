@@ -1,14 +1,18 @@
-.cart {
+.cart,
+.order {
   width: 100%;
   padding-bottom: 2rem;
 }
-.cart > section {
+.cart > section,
+.order > section {
   margin: 0 auto;
   width: calc(100% - 3.6rem);
   padding: 0 1.8rem;
 }
 h3.cartTit,
-.cartTxt h4 {
+.cartTxt h4,
+h3.orderTit,
+.orderTxt h4 {
   font-size: 2rem;
   font-weight: 500;
   margin: 0 0 1.2rem;
@@ -23,21 +27,25 @@ a.back img {
   width: 100%;
   height: auto;
 }
-.cartList {
+.cartList,
+.orderList {
   margin-top: 2rem;
 }
-.cartWrap > ul {
+.cartWrap > ul,
+.orderWrap > ul {
   width: 100%;
   display: flex;
   flex-direction: column;
 }
-.cart {
+.cart,
+.order {
   padding: 2rem 0;
   border-top: 1px solid #ccc;
   border-bottom: 1px solid #ccc;
   position: relative;
 }
-.cart button.del {
+.cart button.del,
+.order button.del {
   position: absolute;
   top: 2rem;
   right: 1rem;
@@ -47,55 +55,67 @@ a.back img {
   height: 1.4rem;
   padding: 0;
 }
-.cart button.del img {
+.cart button.del img,
+.order button.del img {
   width: 100%;
   height: 100%;
 }
-.cart .cartConts {
+.cart .cartConts,
+.order .orderConts {
   display: flex;
   width: 100%;
   align-items: center;
   text-decoration: none;
   color: #202020;
 }
-.cartImg {
+.cartImg,
+.orderImg {
   width: 10rem;
   height: 10rem;
   min-width: 10rem;
   margin-right: 1.6rem;
 }
-.cartImg img {
+.cartImg img,
+.orderImg img {
   width: 100%;
   height: 100%;
 }
-.cartPrd {
+.cartPrd,
+.orderPrd {
   padding-right: 2.8rem;
 }
-.cartBrand {
+.cartBrand,
+.orderBrand {
   margin: 0;
   padding: 0;
   font-size: 1rem;
 }
-.cartPrdName {
+.cartPrdName,
+.orderPrdName {
   font-size: 1.6rem;
   margin: 1rem 0 0.6rem;
 }
-.cartPrice {
+.cartPrice,
+.orderPrice {
   margin: 0;
   padding: 0;
   font-size: 1.4rem;
 }
-.cartPrice > strong {
+.cartPrice > strong,
+.orderPrice > strong {
   margin-right: 0.2rem;
 }
-.cartTxt {
+.cartTxt,
+.orderTxt {
   margin-top: 3rem;
 }
-.cartTxt ul {
+.cartTxt ul,
+.orderTxt ul {
   padding: 1rem 0;
   border-bottom: 1px solid #ccc;
 }
-.cartTxt ul > li {
+.cartTxt ul > li,
+.orderTxt ul > li {
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -103,7 +123,9 @@ a.back img {
   margin: 0;
 }
 .cartTxt ul > li > h6,
-.cartTxt ul > li > p {
+.cartTxt ul > li > p,
+.orderTxt ul > li > h6,
+.orderTxt ul > li > p {
   font-size: 1.4rem;
   font-weight: 500;
   margin: 0;
@@ -127,14 +149,16 @@ a.back img {
 .totalPrice p > strong {
   margin-right: 0.3rem;
 }
-.cartBtn {
+.cartBtn,
+.orderBtn {
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding-bottom: 2.4rem;
   /* border-bottom: 1px solid #d3d3d3; */
 }
-.cartBtn button {
+.cartBtn button,
+.orderBtn button {
   width: calc(50% - 0.5rem);
   background-color: #202020;
   color: #fff;
@@ -143,7 +167,46 @@ a.back img {
   border: 1px solid #202020;
   border-radius: unset;
 }
-.cartBtn button.select {
+.cartBtn button.select,
+.orderBtn button.select {
   background-color: #fff;
   color: #202020;
+}
+
+.inputField {
+  width: 100%;
+  padding: 1.6rem 1.2rem;
+  margin-top: 0.8rem;
+  box-sizing: border-box;
+  border-radius: unset;
+  font-size: 1.4rem;
+  border: 1px solid #858585;
+}
+.order form > div {
+  display: block;
+  margin-bottom: 2rem;
+  color: #303030;
+}
+.order form > span {
+  font-size: 1.4rem;
+  color: #282828;
+}
+.order form > div > label {
+  font-size: 1.6rem;
+  font-weight: 200;
+}
+.addressWrap {
+  display: flex;
+  align-items: center;
+}
+.addressButton {
+  height: 100%;
+  width: 13rem;
+  background-color: #282828;
+  color: #fff;
+  font-size: 1.4rem;
+  padding: 1.6rem 1.2rem;
+  border: none;
+  border-radius: unset;
+  margin: 0.8rem 0 0 0.8rem;
 }

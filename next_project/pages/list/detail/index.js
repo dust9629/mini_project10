@@ -55,8 +55,11 @@ export default function Detail() {
             </ul>
           </div>
           <div className={styles.prdBtn}>
-            <button className={styles.cart}>장바구니</button>
-            <button className={styles.buy}>구매하기</button>
+            <p>
+              <button className={styles.cart}>장바구니</button>
+              <button className={styles.buy}>구매하기</button>
+            </p>
+            <button className={styles.gift}>선물하기</button>
           </div>
         </div>
       </section>
