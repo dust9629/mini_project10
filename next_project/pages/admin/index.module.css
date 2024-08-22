@@ -1,5 +1,5 @@
 .admin {
-  max-width: 100%;
+  /* max-width: 100%; */
   width: 100%;
   min-height: calc(100vh - 166.75px);
   padding-bottom: 2rem;
@@ -92,17 +92,135 @@ a.back img {
   text-decoration: none;
   color: #202020;
 }
-.adminBtm .profileImg {
-  width: 6rem;
-  height: 6rem;
-  margin-top: 1rem;
-}
-.adminBtm .profileImg img {
-  width: 100%;
-  height: 100%;
-}
+
 .adminBtm .adminMenu {
   text-align: center;
   font-size: 1.6rem;
-  margin: 2rem 0 0;
+  margin: 0;
+  width: 100%;
+  height: 100%;
+}
+.admintab {
+  width: 100%;
+  margin-top: 2rem;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.2rem;
+  margin-bottom: 3.2rem;
+}
+.admintab > li {
+  width: 100%;
+  border: 1px solid #525252;
+  text-align: center;
+}
+.admintab > li > a {
+  display: block;
+  width: 100%;
+  height: 100%;
+  font-size: 1.6rem;
+  font-weight: 300;
+  box-sizing: border-box;
+  padding: 2rem;
+  text-decoration: none;
+  color: #202020;
+}
+.admintab > li > a.active {
+  background-color: #202020;
+  color: #fff;
+}
+.adminBtm .adminList {
+  display: flex;
+  flex-direction: column;
+  margin-top: 3rem;
+}
+.adminBtm .adminList li {
+  display: flex;
+  align-items: center;
+  position: relative;
+  padding: 2rem 1.8rem;
+  box-sizing: border-box;
+}
+.adminList li .prdImg {
+  width: 15rem;
+  min-width: 15rem;
+  height: 15rem;
+}
+.adminList li .prdImg img {
+  width: 100%;
+  height: 100%;
+}
+.PrdTxt {
+  margin-left: 2rem;
+}
+.PrdTxt .prdBrand {
+  font-size: 1.4rem;
+  color: #525252;
+  margin: 0;
+}
+.PrdTxt .prdPrdName {
+  font-size: 1.6rem;
+  line-height: 1.3;
+  margin: 1rem 0;
+}
+.PrdTxt .prdPrice {
+  font-size: 1.6rem;
+  margin: 0;
+}
+button.del {
+  position: absolute;
+  border: none;
+  background-color: transparent;
+  top: 2rem;
+  right: 1.8rem;
+  width: 2rem;
+  height: 2rem;
+  padding: 0;
+}
+button.del img {
+  width: 100%;
+  height: 100%;
+}
+.adminBtm .register {
+  border: 1px solid #525252;
+  padding: 2rem;
+}
+.adminBtm .register > form,
+.adminBtm .register > form > label {
+  display: flex;
+  flex-direction: column;
+}
+.adminBtm .register > form > label > span,
+.adminBtm .register > form > div > span {
+  display: block;
+  font-size: 1.4rem;
+  font-weight: 500;
+  margin: 0 0 1rem;
+}
+.adminBtm .register > form > label > input {
+  padding: 0.8rem 1.2rem;
+  font-size: 1.4rem;
+  background: #fff;
+  color: #202020;
+  border-radius: 0;
+  border: 1px solid #7e7e7e;
+  margin-bottom: 1.28rem;
+}
+.adminBtm .register > form > div > label {
+  display: inline-flex;
+  align-items: center;
+  font-size: 1.3rem;
+}
+.adminBtm .register > form > div > label + label {
+  margin-left: 1.2rem;
+}
+button.registerBtn {
+  background-color: #282828;
+  color: #fff;
+  font-size: 1.6rem;
+  padding: 1.8rem 1.2rem;
+  border: none;
+  border-radius: unset;
+  cursor: pointer;
+  margin-top: 2rem;
+  width: 100%;
 }

@@ -16,8 +16,8 @@ export default function admin() {
           </div>
           <ul>
             <li className={styles.badge}>
-              <span className={styles.active}>일반회원</span>
-              <span>관리자</span>
+              <span>일반회원</span>
+              <span className={styles.active}>관리자</span>
               <span>큐레이터</span>
               <span>에디터</span>
               <span>MD</span>
@@ -33,51 +33,33 @@ export default function admin() {
         <h3 className={styles.adminTit}></h3>
         <ul>
           <li>
-            <Link href="/">
-              <div className={styles.profileImg}>
-                <Image src="/images/icon_m01.png" width={300} height={300} />
-              </div>
-              <p className={styles.adminMenu}>정보변경</p>
+            <Link href="/admin/users">
+              <p className={styles.adminMenu}>회원관리</p>
+            </Link>
+          </li>
+          <li>
+            <Link href="/admin/products">
+              <p className={styles.adminMenu}>상품관리</p>
+            </Link>
+          </li>
+          <li>
+            <Link href="/admin/coupons">
+              <p className={styles.adminMenu}>쿠폰관리</p>
             </Link>
           </li>
           <li>
             <Link href="/">
-              <div className={styles.profileImg}>
-                <Image src="/images/icon_m02.png" width={300} height={300} />
-              </div>
-              <p className={styles.adminMenu}>주문확인</p>
-            </Link>
-          </li>
-          <li>
-            <Link href="/like">
-              <div className={styles.profileImg}>
-                <Image src="/images/icon_m03.png" width={300} height={300} />
-              </div>
-              <p className={styles.adminMenu}>관심상품</p>
+              <p className={styles.adminMenu}>이벤트</p>
             </Link>
           </li>
           <li>
             <Link href="/">
-              <div className={styles.profileImg}>
-                <Image src="/images/icon_m04.png" width={300} height={300} />
-              </div>
-              <p className={styles.adminMenu}>장바구니</p>
+              <p className={styles.adminMenu}>브랜드</p>
             </Link>
           </li>
           <li>
             <Link href="/">
-              <div className={styles.profileImg}>
-                <Image src="/images/icon_m05.png" width={300} height={300} />
-              </div>
-              <p className={styles.adminMenu}>할인코드</p>
-            </Link>
-          </li>
-          <li>
-            <Link href="/">
-              <div className={styles.profileImg}>
-                <Image src="/images/icon_m06.png" width={300} height={300} />
-              </div>
-              <p className={styles.adminMenu}>할인쿠폰</p>
+              <p className={styles.adminMenu}>큐레이션</p>
             </Link>
           </li>
         </ul>
