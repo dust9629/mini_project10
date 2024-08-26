@@ -27,12 +27,18 @@ export default function AdminProducts() {
   //     price: "52,800",
   //   },
   // ];
+
+  const [image, setImage] = useState(null);
   const [product, setProduct] = useState({
     brand: "",
     prd_name: "",
     prd_price: "",
     categories: [],
   });
+
+  const handleImageChange = (e) => {
+    setImage(e.target.files[0]);
+  };
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -54,21 +60,59 @@ export default function AdminProducts() {
     }
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  // 상품 사진 클라우디너리로 업로드
+  const uploadImageToCloudinary = async () => {
+    const formData = new FormData();
+    formData.append("file", image);
+    formData.append("upload_preset", "boodle"); // Cloudinary에서 설정한 업로드 프리셋
+
     try {
-      const response = await axios.post("/api/products/add", product);
-      if (response.status === 200) {
-        alert("Product successfully added!");
-        // Optionally reset form or other actions
-      } else {
-        throw new Error("Failed to add product");
-      }
+      const response = await axios.post(
+        "https://api.cloudinary.com/v1_1/boodle/image/upload",
+        formData
+      );
+      return response.data.secure_url; // 업로드된 이미지의 URL 반환
     } catch (error) {
-      alert("Failed to add product. " + error.message);
+      console.error("이미지 업로드에 실패함:", error);
+      throw error;
     }
   };
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!image) {
+      alert("Please attach an image.");
+      return;
+    }
+
+    try {
+      const imageUrl = await uploadImageToCloudinary(); // 이미지를 Cloudinary에 업로드하고 URL을 받음
+      const productData = { ...product, imageUrl }; // 기존 상품 데이터에 이미지 URL 추가
+
+      // 서버로 상품 데이터를 보내고 응답 처리
+      axios
+        .post("/api/products/add", productData)
+        .then((response) => {
+          if (response.status === 200) {
+            alert("Product successfully added!");
+            // 폼 초기화
+            setProduct({
+              brand: "",
+              prd_name: "",
+              prd_price: "",
+              categories: [],
+            });
+            setImage(null); // 이미지 상태 초기화
+          }
+        })
+        .catch((error) => {
+          alert("Failed to add product. " + error.message);
+        });
+    } catch (error) {
+      alert("Failed to upload image. " + error.message);
+    }
+  };
   return (
     <main className={styles.admin}>
       <Link className={styles.back} href="/admin">
@@ -95,7 +139,16 @@ export default function AdminProducts() {
         <div className={styles.register}>
           <form onSubmit={handleSubmit}>
             <label>
+              <span>상품 이미지</span>
+              <input
+                type="file"
+                accept="image/*"
+                onChange={handleImageChange}
+              />
+            </label>
+            <label>
               <span>브랜드명</span>
+
               <input
                 type="text"
                 name="brand"
