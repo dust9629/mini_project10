@@ -1,13 +1,8 @@
 import { connectDB } from "@/util/database";
-const formidable = require("formidable").default;
-const cloudinary = require("cloudinary").v2;
+import { uploadImage } from "@/lib/s3"; // S3 업로드 함수 가져오기
+// import { generateImageUrl } from "@/lib/cloudinary"; // Cloudinary URL 생성 함수 가져오기
 
-// Cloudinary 설정 (환경 변수 CLOUDINARY_URL은 자동으로 적용됩니다.)
-cloudinary.config({
-  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-  api_key: process.env.CLOUDINARY_API_KEY,
-  api_secret: process.env.CLOUDINARY_API_SECRET,
-});
+const formidable = require("formidable").default;
 
 export const config = {
   api: {
@@ -16,52 +11,52 @@ export const config = {
 };
 
 export default async function handler(req, res) {
-  let client; // 클라이언트 변수를 외부에 정의
-  if (req.method === "POST") {
-    const form = formidable({ multiples: true });
-
-    form.parse(req, async (err, fields, files) => {
-      if (err) {
-        console.error("Error processing form:", err);
-        return res.status(500).json({ message: "Form processing error" });
-      }
-      console.log("Files object structure:", files);
-      const { brand, prd_name, prd_price, categories, gift_type } = fields;
-      const imageFile = files.image;
-
-      try {
-        // MongoDB 클라이언트 연결
-        client = await connectDB();
-        const db = client.db("boodle");
-
-        // Cloudinary로 이미지 업로드
-        const imageResult = await cloudinary.uploader.upload(
-          imageFile.filepath,
-          {
-            upload_preset: "boodle",
-          }
-        );
-        const imageUrl = imageResult.secure_url;
-
-        // 상품 정보와 이미지 URL을 DB에 저장
-        const result = await db.collection("product").insertOne({
-          imageUrl,
-          brand,
-          prd_name,
-          prd_price,
-          categories,
-          gift_type,
-        });
-
-        res.status(200).json({ message: "Product added successfully", result });
-      } catch (error) {
-        console.error("Failed to add product", error);
-        res.status(500).json({ message: "Failed to add product" });
-      } finally {
-        if (client) await client.close(); // 클라이언트가 정의된 경우에만 닫기
-      }
-    });
-  } else {
-    res.status(405).json({ message: "Method not allowed" });
+  if (req.method !== "POST") {
+    return res.status(405).json({ message: "Method not allowed" });
   }
+
+  const form = formidable({
+    multiples: true,
+    keepExtensions: true,
+    uploadDir: "/public/images", // 적절한 업로드 경로 설정
+  });
+
+  form.parse(req, async (err, fields, files) => {
+    if (err) {
+      console.error("Form parsing error:", err);
+      return res.status(500).json({ message: "폼 파싱 에러" });
+    }
+
+    const imageFile = files.image;
+    if (!imageFile) {
+      return res.status(400).json({ message: "제공된 이미지 파일이 없습니다." });
+    }
+
+    try {
+      // 버킷 이름 확인 필요
+      const imageUrl = await uploadImage(imageFile, "boodleproject", "images");
+
+      const client = await connectDB();
+      const db = client.db("boodle");
+      const { brand, prd_name, prd_price, categories, gift_type } = fields;
+
+      const result = await db.collection("product").insertOne({
+        imageUrl,
+        brand,
+        prd_name,
+        prd_price,
+        categories,
+        gift_type,
+      });
+
+      res.status(200).json({ message: "상품 등록이 성공적으로 완료되었습니다.", result });
+    } catch (error) {
+      console.error("Failed to add product:", error);
+      res.status(500).json({ message: "상품 등록에 실패했습니다." });
+    } finally {
+      if (client) {
+        await client.close();
+    }
+  });
 }
+

@@ -5,29 +5,6 @@ import Image from "next/image";
 import styles from "./../../index.module.css";
 
 export default function AdminProducts() {
-  // let prdList = [
-  //   {
-  //     name: "감성 인테리어 파키라+페블 화분+흙없이 실내에서 키우는 식물 축하 선물 (블랙&화이트)",
-  //     brand: "본투비그린",
-  //     price: "23,900",
-  //   },
-  //   {
-  //     name: "[화분 받침] Art Pot 받침",
-  //     brand: "슈퍼마켙 플라워",
-  //     price: "3,000",
-  //   },
-  //   {
-  //     name: "미니 히노키 pearl",
-  //     brand: "큐이디",
-  //     price: "50,000",
-  //   },
-  //   {
-  //     name: "해송소나무 테라스톤세트 미니분재",
-  //     brand: "펫플랜트",
-  //     price: "52,800",
-  //   },
-  // ];
-
   const [image, setImage] = useState(null);
   const [product, setProduct] = useState({
     brand: "",
@@ -36,15 +13,19 @@ export default function AdminProducts() {
     categories: [],
   });
 
+  // 이미지 파일 선택 시 처리
   const handleImageChange = (e) => {
+    console.log(e.target.files[0]);
     setImage(e.target.files[0]);
   };
 
+  // 텍스트 입력 처리
   const handleChange = (e) => {
     const { name, value } = e.target;
     setProduct({ ...product, [name]: value });
   };
 
+  // 카테고리 선택 처리
   const handleCategoryChange = (e) => {
     const { checked, value } = e.target;
     if (checked) {
@@ -65,24 +46,36 @@ export default function AdminProducts() {
     const formData = new FormData();
     formData.append("file", image);
     formData.append("upload_preset", "boodle"); // Cloudinary에서 설정한 업로드 프리셋
-
+    // 폼 데이터 구성 검사 ( 이미지 추가가 된건지 확인 )
+    for (let key of formData.keys()) {
+      console.log(key, formData.get(key));
+    }
     try {
       const response = await axios.post(
         "https://api.cloudinary.com/v1_1/boodle/image/upload",
         formData
+        // {
+        //   headers: {
+        //     "Content-Type": "multipart/form-data", // 이 부분을 명시적으로 설정
+        //   },
+        // }
       );
       return response.data.secure_url; // 업로드된 이미지의 URL 반환
     } catch (error) {
-      console.error("이미지 업로드에 실패함:", error);
+      console.error(
+        "이미지 업로드 에러:",
+        error.response ? error.response.data : error.message
+      );
       throw error;
     }
   };
 
+  // 폼 제출 처리
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     if (!image) {
-      alert("Please attach an image.");
+      alert("이미지를 첨부해 주세요.");
       return;
     }
 
@@ -95,7 +88,7 @@ export default function AdminProducts() {
         .post("/api/products/add", productData)
         .then((response) => {
           if (response.status === 200) {
-            alert("Product successfully added!");
+            alert("상품이 성공적으로 등록되었습니다!");
             // 폼 초기화
             setProduct({
               brand: "",
@@ -107,16 +100,22 @@ export default function AdminProducts() {
           }
         })
         .catch((error) => {
-          alert("Failed to add product. " + error.message);
+          alert("상품 등록에 실패했습니다. " + error.message);
         });
     } catch (error) {
-      alert("Failed to upload image. " + error.message);
+      alert("이미지 업로드에 실패했습니다. " + error.message);
     }
   };
+
   return (
     <main className={styles.admin}>
       <Link className={styles.back} href="/admin">
-        <Image src="/images/icon_arrow_back.png" width={200} height={50} />
+        <Image
+          src="/images/icon_arrow_back.png"
+          alt="뒤로가기"
+          width={200}
+          height={50}
+        />
       </Link>
       <section className={styles.adminTop}>
         <h3 className={styles.adminTit}>상품관리</h3>
@@ -142,13 +141,13 @@ export default function AdminProducts() {
               <span>상품 이미지</span>
               <input
                 type="file"
+                name="image"
                 accept="image/*"
                 onChange={handleImageChange}
               />
             </label>
             <label>
               <span>브랜드명</span>
-
               <input
                 type="text"
                 name="brand"
