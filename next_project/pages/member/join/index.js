@@ -1,26 +1,84 @@
 import Link from "next/link";
 import { useState } from "react";
+import axios from "axios";
+import { useRouter } from "next/router";
 import styles from "./../index.module.css";
 
 export default function Join() {
+  // 회원가입 완료 폼으로 리디렉트
+  const router = useRouter();
   const [address, setAddress] = useState("");
+  const [detailAddress, setDetailAddress] = useState(""); // 상세 주소 입력을 위한 state
   const [zoneCode, setZoneCode] = useState("");
   const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
   const [agreeTerms1, setAgreeTerms1] = useState(false);
   const [agreeTerms2, setAgreeTerms2] = useState(false);
+  const [password, setPassword] = useState("");
+  const [passwordConfirm, setPasswordConfirm] = useState("");
+  const [passwordError, setPasswordError] = useState(false);
+
+  const handleEmailChange = (e) => {
+    setEmail(e.target.value);
+  };
 
   const handleAddressSearch = () => {
-    // 다음 우편번호 서비스를 호출하는 함수
     window.daum.postcode.load(function () {
       new window.daum.Postcode({
         oncomplete: function (data) {
-          // 사용자가 검색 결과를 선택했을 때 실행되는 함수
-          setZoneCode(data.zonecode); // 우편번호 (5자리 새우편번호 사용)
-          setAddress(data.address); // 전체 주소
+          setZoneCode(data.zonecode);
+          setAddress(data.address);
         },
       }).open();
     });
+  };
+
+  // 회원가입 처리 함수
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    if (!agreeTerms1 || !agreeTerms2) {
+      alert("모든 필수 약관에 동의해야 합니다.");
+      return;
+    }
+    if (password !== passwordConfirm) {
+      alert("비밀번호가 일치하지 않습니다.");
+      return;
+    }
+
+    try {
+      const response = await axios.post("/api/register", {
+        email: document.getElementById("join_email").value,
+        password,
+        name,
+        phoneNumber,
+        address: `${address}, ${detailAddress}`,
+        zoneCode,
+      });
+      // alert("회원가입이 완료되었습니다.");
+      if (response.status === 201) {
+        router.push("/member/complete"); // 성공 시 /member/complete 페이지로 리디렉션
+      }
+      // console.log("Registration successful", response);
+    } catch (error) {
+      if (error.response && error.response.status === 409) {
+        alert("이미 사용 중인 이메일입니다.");
+      } else {
+        console.error("Registration failed", error);
+        alert("회원가입 중 오류가 발생했습니다.");
+      }
+    }
+  };
+
+  // 비밀번호 유효성 검사
+  const handlePasswordChange = (e) => {
+    setPassword(e.target.value);
+    setPasswordError(passwordConfirm && e.target.value !== passwordConfirm);
+  };
+
+  const handlePasswordConfirmChange = (e) => {
+    setPasswordConfirm(e.target.value);
+    setPasswordError(password && e.target.value !== password);
   };
 
   return (
@@ -28,9 +86,9 @@ export default function Join() {
       <section className={styles.section}>
         <div className={styles.divContainer}>
           <h3>회원가입</h3>
-          <form>
+          <form onSubmit={handleSubmit}>
             <div>
-              <label htmlFor="join_email">이메일*</label>
+              <label htmlFor="join_email">이메일 *</label>
               <input
                 type="email"
                 id="join_email"
@@ -38,10 +96,12 @@ export default function Join() {
                 placeholder="이메일 주소를 입력하세요"
                 required
                 className={styles.inputField}
+                value={email}
+                onChange={handleEmailChange}
               />
             </div>
             <div>
-              <label htmlFor="join_password">비밀번호*</label>
+              <label htmlFor="join_password">비밀번호 *</label>
               <input
                 type="password"
                 id="join_password"
@@ -49,10 +109,12 @@ export default function Join() {
                 placeholder="비밀번호 입력"
                 required
                 className={styles.inputField}
+                value={password}
+                onChange={handlePasswordChange}
               />
             </div>
             <div>
-              <label htmlFor="join_password_confirm">비밀번호 확인*</label>
+              <label htmlFor="join_password_confirm">비밀번호 확인 *</label>
               <input
                 type="password"
                 id="join_password_confirm"
@@ -60,10 +122,15 @@ export default function Join() {
                 placeholder="비밀번호 재입력"
                 required
                 className={styles.inputField}
+                value={passwordConfirm}
+                onChange={handlePasswordConfirmChange}
               />
+              {passwordError && (
+                <span className={styles.req}>* 비밀번호를 확인해주세요.</span>
+              )}
             </div>
             <div>
-              <label htmlFor="join_name">이름*</label>
+              <label htmlFor="join_name">이름 *</label>
               <input
                 type="text"
                 id="join_name"
@@ -76,7 +143,7 @@ export default function Join() {
               />
             </div>
             <div>
-              <label htmlFor="join_phone">휴대폰 번호*</label>
+              <label htmlFor="join_phone">휴대폰 번호 *</label>
               <input
                 type="tel"
                 id="join_phone"
@@ -122,11 +189,9 @@ export default function Join() {
                 type="text"
                 id="join_address02"
                 name="join_address02"
-                placeholder="상세 주소 입력"
-                value=""
-                readOnly
-                required
+                placeholder="상세 주소를 입력해주세요"
                 className={styles.inputField}
+                onChange={(e) => setDetailAddress(e.target.value)}
               />
             </div>
             <div className={styles.agreement}>
@@ -139,6 +204,7 @@ export default function Join() {
                   id="agree_terms_1"
                   checked={agreeTerms1}
                   onChange={(e) => setAgreeTerms1(e.target.checked)}
+                  required
                 />
                 <label htmlFor="agree_terms_1">[필수] 이용약관 동의</label>
               </h5>
@@ -217,6 +283,7 @@ export default function Join() {
                   id="agree_terms_2"
                   checked={agreeTerms2}
                   onChange={(e) => setAgreeTerms2(e.target.checked)}
+                  required
                 />
                 <label htmlFor="agree_terms_2">
                   [필수] 개인정보 처리방침 동의
@@ -253,9 +320,9 @@ export default function Join() {
               회원가입
             </button>
 
-            <div className={styles.linkGroup}>
+            {/* <div className={styles.linkGroup}>
               <Link href="/member">로그인 페이지로 이동</Link>
-            </div>
+            </div> */}
           </form>
         </div>
       </section>

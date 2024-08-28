@@ -9,7 +9,16 @@ import "@/styles/footer.css";
 export default function App({ Component, pageProps }) {
   const [isActive, setIsActive] = useState(false);
   const [showTopBtn, setShowTopBtn] = useState(false);
-  const router = useRouter(); // 라우터 인스턴스를 가져옴
+  // 마이페이지, 관리자를 구분
+  const [userRole, setUserRole] = useState("");
+  // 라우터 인스턴스를 가져옴
+  const router = useRouter();
+
+  useEffect(() => {
+    // 사용자 역할 확인 (예: 로컬 스토리지에서 가져옴)
+    const role = localStorage.getItem("userRole") || "";
+    setUserRole(role);
+  }, [router.asPath]); // 라우터 경로가 변경될 때마다 실행
 
   const toggleMenu = () => {
     setIsActive(!isActive);
@@ -103,13 +112,22 @@ export default function App({ Component, pageProps }) {
         </div>
         <div className={`nav-menu ${isActive ? "active" : ""}`}>
           <div className="nav-header">
-            <Link className="member active" href="/member">
+            <Link
+              className={`member ${!userRole ? "active" : ""}`}
+              href="/member"
+            >
               로그인 / 회원가입
             </Link>
-            <Link className="mypage" href="/mypage">
+            <Link
+              className={`mypage ${userRole === "user" ? "active" : ""}`}
+              href="/mypage"
+            >
               마이페이지
             </Link>
-            <Link className="admin" href="/admin">
+            <Link
+              className={`admin ${userRole === "admin" ? "active" : ""}`}
+              href="/admin"
+            >
               관리자페이지
             </Link>
           </div>

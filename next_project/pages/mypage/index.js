@@ -1,12 +1,26 @@
+import { useEffect } from "react";
+import Router from "next/router";
 import Link from "next/link";
 import Image from "next/image";
 import styles from "./index.module.css";
+import axios from "axios";
 
-export default function Mypage() {
+export default function Mypage({ user }) {
+  useEffect(() => {
+    if (!user.name) {
+      alert("회원가입 후 이용 가능합니다.");
+      Router.push("/");
+    }
+  }, [user]);
   return (
     <main className={styles.mypage}>
       <Link className={styles.back} href="/">
-        <Image src="/images/icon_arrow_back.png" width={200} height={50} />
+        <Image
+          art="Profile"
+          src="/images/icon_arrow_back.png"
+          width={200}
+          height={50}
+        />
       </Link>
       <section className={styles.mypageTop}>
         <h3 className={styles.mypageTit}>마이페이지</h3>
@@ -23,9 +37,11 @@ export default function Mypage() {
               <span>MD</span>
             </li>
             <li className={styles.userName}>
-              <strong>김은지</strong>님 안녕하세요.
+              <strong>{user.name || "Guest"}</strong>님 안녕하세요.
             </li>
-            <li className={styles.email}>dust1234@gmail.com</li>
+            <li className={styles.email}>
+              {user.email || "No email provided"}
+            </li>
           </ul>
         </div>
       </section>
@@ -84,4 +100,30 @@ export default function Mypage() {
       </section>
     </main>
   );
+}
+
+export async function getServerSideProps(context) {
+  const { req } = context;
+  const token = req.cookies.token;
+
+  if (!token) {
+    return {
+      redirect: {
+        destination: "/member",
+        permanent: false,
+      },
+    };
+  }
+
+  try {
+    const response = await axios.get("http://localhost:3000/api/user", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return { props: { user: response.data } };
+  } catch (error) {
+    console.error("Failed to fetch user data:", error);
+    return { props: { user: {} } };
+  }
 }

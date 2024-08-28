@@ -14,6 +14,15 @@
   margin-bottom: 2rem;
   color: #303030;
 }
+.divContainer form > div > span:not(.addressWrap) {
+  color: #d42c2c;
+  font-size: 1.2rem;
+  margin-top: 1rem;
+  display: none;
+}
+.divContainer form > div > span.req {
+  display: block;
+}
 .divContainer form > span {
   font-size: 1.4rem;
   color: #282828;

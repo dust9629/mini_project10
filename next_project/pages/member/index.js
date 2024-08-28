@@ -1,14 +1,36 @@
 import Link from "next/link";
+import { useState } from "react";
+import axios from "axios";
+import { useRouter } from "next/router";
 import styles from "./index.module.css";
 
 export default function Login() {
+  const router = useRouter();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const handleLogin = async (event) => {
+    event.preventDefault();
+    try {
+      const response = await axios.post("/api/login", { email, password });
+      if (response.status === 200) {
+        // 로그인 성공: 토큰을 로컬 스토리지에 저장
+        localStorage.setItem("token", response.data.token);
+        console.log("로그인 성공: 토큰 저장됨");
+        router.push("/");
+      }
+    } catch (error) {
+      alert("로그인 실패: " + error.response.data.message);
+    }
+  };
+
   return (
     <main>
       <section>
         <div className={styles.divContainer}>
           <div className={styles.prdTxt}>
             <h3>로그인 해주세요</h3>
-            <form>
+            <form onSubmit={handleLogin}>
               <div>
                 <label htmlFor="login_id">이메일</label>
                 <input
@@ -18,6 +40,8 @@ export default function Login() {
                   placeholder="이메일 주소를 입력하세요"
                   required
                   className={styles.inputField}
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                 />
               </div>
               <div>
@@ -29,6 +53,8 @@ export default function Login() {
                   placeholder="비밀번호를 입력하세요"
                   required
                   className={styles.inputField}
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                 />
               </div>
 
