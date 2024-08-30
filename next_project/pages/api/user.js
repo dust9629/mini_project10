@@ -1,4 +1,5 @@
 import { connectDB } from "../../util/database";
+import { ObjectId } from "mongodb"; // ObjectId를 import합니다.
 import jwt from "jsonwebtoken";
 
 export default async (req, res) => {
@@ -16,7 +17,9 @@ export default async (req, res) => {
     const userId = decoded.userId;
 
     const { client, db } = await connectDB();
-    const user = await db.collection("users").findOne({ _id: userId });
+    const user = await db
+      .collection("users")
+      .findOne({ _id: new ObjectId(userId) }); // userId를 ObjectId로 변환합니다.
 
     if (!user) {
       client.close();

@@ -5,13 +5,20 @@ import Image from "next/image";
 import styles from "./index.module.css";
 import axios from "axios";
 
-export default function Mypage({ user }) {
+export default function Mypage({ user, error }) {
   useEffect(() => {
-    if (!user.name) {
+    if (!user.name && !error) {
       alert("회원가입 후 이용 가능합니다.");
       Router.push("/");
+      return;
     }
-  }, [user]);
+    if (error) {
+      alert(error);
+      Router.push("/");
+      return;
+    }
+  }, [user, error]); // 의존성 배열에 error 추가
+
   return (
     <main className={styles.mypage}>
       <Link className={styles.back} href="/">
@@ -104,26 +111,38 @@ export default function Mypage({ user }) {
 
 export async function getServerSideProps(context) {
   const { req } = context;
-  const token = req.cookies.token;
+  const { cookies } = req;
+  const token = cookies.token;
 
   if (!token) {
     return {
-      redirect: {
-        destination: "/member",
-        permanent: false,
+      props: {
+        user: {},
+        error: "로그인이 필요합니다.",
       },
     };
   }
-
   try {
     const response = await axios.get("http://localhost:3000/api/user", {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
-    return { props: { user: response.data } };
+
+    if (response.status === 200) {
+      return { props: { user: response.data } };
+    } else {
+      throw new Error(
+        response.data.message || "사용자 정보를 가져오는데 실패했습니다."
+      );
+    }
   } catch (error) {
-    console.error("Failed to fetch user data:", error);
-    return { props: { user: {} } };
+    console.error("유저데이터 패치에 실패함:", error);
+    return {
+      props: {
+        user: {},
+        error: error.message || "사용자 정보를 불러오는데 실패했습니다.",
+      },
+    };
   }
 }

@@ -12,8 +12,9 @@ export default async (req, res) => {
         client.close();
         return res.status(409).json({ message: "이미 사용중인 이메일입니다." });
       }
-
+      // 비밀번호 해싱
       const hashedPassword = await bcrypt.hash(password, 10);
+      // 일반 유저는 기본 Normember
       const user = await db.collection("users").insertOne({
         email,
         password: hashedPassword,
@@ -21,6 +22,7 @@ export default async (req, res) => {
         phoneNumber,
         address,
         zoneCode,
+        role: "normember",
       });
 
       client.close();
@@ -37,6 +39,6 @@ export default async (req, res) => {
     }
   } else {
     res.setHeader("Allow", ["POST"]);
-    res.status(405).end(`Method ${req.method} Not Allowed`);
+    res.status(405).end(`${req.method} 메소드가 처리되지 않음`);
   }
 };

@@ -24,13 +24,23 @@ export default function App({ Component, pageProps }) {
     setIsActive(!isActive);
   };
 
+  const handleLogout = () => {
+    localStorage.removeItem("userRole"); // 사용자 역할 정보 제거
+    localStorage.removeItem("token"); // 로컬 스토리지의 토큰 제거
+    alert("로그아웃 되었습니다.");
+    router.push("/"); // 로그인 페이지로 리디렉션
+  };
+
   useEffect(() => {
     const handleRouteChange = () => {
-      setIsActive(false); // 페이지 이동 시 isActive를 false로 설정
+      setIsActive(false);
+      const role = localStorage.getItem("userRole") || "";
+      setUserRole(role);
     };
 
     // 라우터 이벤트 리스너 등록
-    router.events.on("routeChangeStart", handleRouteChange);
+    router.events.on("routeChangeComplete", handleRouteChange);
+    handleRouteChange(); // 초기 로드 시에도 실행하여 상태를 설정
 
     // cleanup 함수
     return () => {
@@ -119,7 +129,7 @@ export default function App({ Component, pageProps }) {
               로그인 / 회원가입
             </Link>
             <Link
-              className={`mypage ${userRole === "user" ? "active" : ""}`}
+              className={`mypage ${userRole === "normember" ? "active" : ""}`}
               href="/mypage"
             >
               마이페이지
@@ -131,6 +141,7 @@ export default function App({ Component, pageProps }) {
               관리자페이지
             </Link>
           </div>
+
           <div className="nav-body">
             <div className="nav-banner">
               <p>
@@ -157,7 +168,7 @@ export default function App({ Component, pageProps }) {
                 <Link href="/">이벤트</Link>
               </li>
             </ul>
-            <Link className="logout" href="/">
+            <Link className="logout" href="/" onClick={handleLogout}>
               로그아웃
             </Link>
           </div>

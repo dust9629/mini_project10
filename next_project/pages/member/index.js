@@ -6,6 +6,9 @@ import styles from "./index.module.css";
 
 export default function Login() {
   const router = useRouter();
+  const handleKakaoLogin = () => {
+    window.location.href = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.KAKAO_REST_API_KEY}&redirect_uri=${process.env.NEXT_PUBLIC_REDIRECT_URI}&response_type=code`;
+  };
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -16,6 +19,7 @@ export default function Login() {
       if (response.status === 200) {
         // 로그인 성공: 토큰을 로컬 스토리지에 저장
         localStorage.setItem("token", response.data.token);
+        localStorage.setItem("userRole", response.data.userRole);
         console.log("로그인 성공: 토큰 저장됨");
         router.push("/");
       }
@@ -66,7 +70,11 @@ export default function Login() {
               <button type="submit" className={styles.loginButton}>
                 로그인
               </button>
-              <button type="button" className={styles.kakaoLoginButton}>
+              <button
+                type="button"
+                onClick={handleKakaoLogin}
+                className={styles.kakaoLoginButton}
+              >
                 카카오 로그인
               </button>
               <Link href="/member/join">회원가입</Link>

@@ -1,8 +1,19 @@
+import { useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import Router from "next/router";
 import styles from "./index.module.css";
+import axios from "axios";
 
-export default function admin() {
+export default function Admin({ user, error }) {
+  useEffect(() => {
+    // 사용자 데이터가 없거나, 권한이 'admin'이 아니라면 메인 페이지로 리다이렉트합니다.
+    if (!user || user.role !== "admin") {
+      alert(error || "관리자만 접속이 가능합니다.");
+      Router.push("/");
+    }
+  }, [user, error]); // 의존성 배열에 user와 error를 추가하여 둘 중 하나가 변경될 때마다 확인
+
   return (
     <main className={styles.admin}>
       <Link className={styles.back} href="/">
@@ -23,9 +34,11 @@ export default function admin() {
               <span>MD</span>
             </li>
             <li className={styles.userName}>
-              <strong>김은지</strong>님 안녕하세요.
+              <strong>{user?.name || "Guest"}</strong>님 안녕하세요.
             </li>
-            <li className={styles.email}>dust1234@gmail.com</li>
+            <li className={styles.email}>
+              {user?.email || "No email provided"}
+            </li>
           </ul>
         </div>
       </section>
@@ -66,4 +79,43 @@ export default function admin() {
       </section>
     </main>
   );
+}
+
+export async function getServerSideProps(context) {
+  const { req } = context;
+  const { cookies } = req;
+  const token = cookies.token;
+
+  if (!token) {
+    return {
+      props: {
+        user: {},
+        error: "로그인이 필요합니다.",
+      },
+    };
+  }
+  try {
+    const response = await axios.get("http://localhost:3000/api/user", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    if (response.data.role !== "admin") {
+      return {
+        props: {
+          user: {},
+          error: "관리자만 접속이 가능합니다.",
+        },
+      };
+    }
+    return { props: { user: response.data } };
+  } catch (error) {
+    console.error("Failed to fetch admin data:", error);
+    return {
+      props: {
+        user: {},
+        error: "관리자 정보를 불러오는데 실패했습니다.",
+      },
+    };
+  }
 }
