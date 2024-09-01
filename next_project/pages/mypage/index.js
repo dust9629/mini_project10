@@ -1,29 +1,55 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Router from "next/router";
 import Link from "next/link";
 import Image from "next/image";
 import styles from "./index.module.css";
 import axios from "axios";
 
-export default function Mypage({ user, error }) {
+export default function Mypage() {
+  const [user, setUser] = useState(null); // 사용자 정보를 null로 초기화
+  const [error, setError] = useState(""); // 에러 메시지를 관리
+  const [loading, setLoading] = useState(true); // 로딩 상태 추가
+
   useEffect(() => {
-    if (!user.name && !error) {
-      alert("회원가입 후 이용 가능합니다.");
-      Router.push("/");
+    const token = localStorage.getItem("token");
+    if (!token) {
+      Router.push("/login");
+      setError("로그인이 필요합니다.");
+      setLoading(false); // 로딩 상태 업데이트
       return;
     }
-    if (error) {
-      alert(error);
-      Router.push("/");
-      return;
-    }
-  }, [user, error]); // 의존성 배열에 error 추가
+
+    axios
+      .get("http://localhost:3000/api/user", {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((response) => {
+        setUser(response.data);
+        setLoading(false); // 로딩 완료
+      })
+      .catch((err) => {
+        setError(
+          err.response?.data?.message ||
+            "사용자 정보를 불러오는데 실패했습니다."
+        );
+        Router.push("/login");
+        setLoading(false); // 에러 발생 시 로딩 상태 업데이트
+      });
+  }, []);
+
+  if (loading) {
+    return <p>로딩 중...</p>; // 로딩 중이면 로딩 메시지 표시
+  }
+
+  if (error) {
+    return <p>{error}</p>; // 오류가 있으면 오류 메시지 표시
+  }
 
   return (
     <main className={styles.mypage}>
       <Link className={styles.back} href="/">
         <Image
-          art="Profile"
+          alt="Profile"
           src="/images/icon_arrow_back.png"
           width={200}
           height={50}
@@ -44,10 +70,10 @@ export default function Mypage({ user, error }) {
               <span>MD</span>
             </li>
             <li className={styles.userName}>
-              <strong>{user.name || "Guest"}</strong>님 안녕하세요.
+              <strong>{user?.name || "Guest"}</strong>님 안녕하세요.
             </li>
             <li className={styles.email}>
-              {user.email || "No email provided"}
+              {user?.email || "이메일 정보 없음"}
             </li>
           </ul>
         </div>
@@ -107,42 +133,4 @@ export default function Mypage({ user, error }) {
       </section>
     </main>
   );
-}
-
-export async function getServerSideProps(context) {
-  const { req } = context;
-  const { cookies } = req;
-  const token = cookies.token;
-
-  if (!token) {
-    return {
-      props: {
-        user: {},
-        error: "로그인이 필요합니다.",
-      },
-    };
-  }
-  try {
-    const response = await axios.get("http://localhost:3000/api/user", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-
-    if (response.status === 200) {
-      return { props: { user: response.data } };
-    } else {
-      throw new Error(
-        response.data.message || "사용자 정보를 가져오는데 실패했습니다."
-      );
-    }
-  } catch (error) {
-    console.error("유저데이터 패치에 실패함:", error);
-    return {
-      props: {
-        user: {},
-        error: error.message || "사용자 정보를 불러오는데 실패했습니다.",
-      },
-    };
-  }
 }

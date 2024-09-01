@@ -47,7 +47,7 @@ export default function adminProducts() {
         </ul>
       </section>
       <section className={styles.adminBtm}>
-        <h3 className={styles.adminTit}>상품 전체조회</h3>
+        <h3 className={styles.adminTit}>선물하기 상품등록</h3>
         <ul className={styles.adminList}>
           {prdList.map((item, i) => (
             <li className={styles.prd} key={i}>

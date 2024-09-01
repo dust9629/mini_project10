@@ -7,7 +7,7 @@ async function connectDB() {
   const client = new MongoClient(url, options);
   try {
     await client.connect();
-    console.log("MongoDB 연결됨!");
+    console.log("MongoDB 연결된 상태~~~~");
     const db = client.db("boodle");
     return { client, db };
   } catch (error) {

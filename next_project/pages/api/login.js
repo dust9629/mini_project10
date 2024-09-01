@@ -9,14 +9,13 @@ export default async (req, res) => {
     let client;
 
     try {
-      // Connect to the database and destructure client and db from the result
       const { client: dbClient, db } = await connectDB();
-      client = dbClient; // Assign the dbClient to client for proper closure in the finally block
+      client = dbClient;
 
-      // Find the user by email
+      // email로 유저 찾기
       const user = await db.collection("users").findOne({ email });
       if (!user) {
-        return res.status(404).json({ message: "User not found" });
+        return res.status(404).json({ message: "유저를 찾을 수 없습니다." });
       }
 
       // Check if the provided password matches the stored hash
@@ -31,7 +30,7 @@ export default async (req, res) => {
           userId: user._id,
           role: user.role,
         },
-        "your_jwt_secret",
+        process.env.JWT_SECRET,
         {
           expiresIn: "1h",
         }
@@ -40,9 +39,9 @@ export default async (req, res) => {
       // Serialize the token into a cookie
       const serialized = serialize("token", token, {
         httpOnly: true,
-        secure: process.env.NODE_ENV !== "development", // Use secure cookies if not in development
-        maxAge: 3600, // 1 hour in seconds
-        path: "/", // Cookie valid for all paths
+        secure: process.env.NODE_ENV !== "development",
+        maxAge: 3600,
+        path: "/",
       });
 
       // Set the cookie in the response header
@@ -52,13 +51,11 @@ export default async (req, res) => {
       console.error("Error during login:", error);
       res.status(500).json({ message: "Internal server error" });
     } finally {
-      // Ensure the database client is closed
       if (client) {
         client.close();
       }
     }
   } else {
-    // Respond with method not allowed if not a POST request
     res.setHeader("Allow", ["POST"]);
     res.status(405).end("Method Not Allowed");
   }

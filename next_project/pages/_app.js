@@ -138,7 +138,7 @@ export default function App({ Component, pageProps }) {
               className={`admin ${userRole === "admin" ? "active" : ""}`}
               href="/admin"
             >
-              관리자페이지
+              관리자 페이지
             </Link>
           </div>
 

@@ -7,12 +7,11 @@ import axios from "axios";
 
 export default function Admin({ user, error }) {
   useEffect(() => {
-    // 사용자 데이터가 없거나, 권한이 'admin'이 아니라면 메인 페이지로 리다이렉트합니다.
-    if (!user || user.role !== "admin") {
-      alert(error || "관리자만 접속이 가능합니다.");
+    if (error || !user) {
+      alert(error || "접근 권한이 없습니다.");
       Router.push("/");
     }
-  }, [user, error]); // 의존성 배열에 user와 error를 추가하여 둘 중 하나가 변경될 때마다 확인
+  }, [error, user]);
 
   return (
     <main className={styles.admin}>
@@ -37,7 +36,7 @@ export default function Admin({ user, error }) {
               <strong>{user?.name || "Guest"}</strong>님 안녕하세요.
             </li>
             <li className={styles.email}>
-              {user?.email || "No email provided"}
+              {user?.email || "이메일 정보 없음"}
             </li>
           </ul>
         </div>
@@ -81,6 +80,7 @@ export default function Admin({ user, error }) {
   );
 }
 
+// 서버 사이드에서 사용자의 'admin' 권한을 검사
 export async function getServerSideProps(context) {
   const { req } = context;
   const { cookies } = req;
