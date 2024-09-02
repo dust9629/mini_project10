@@ -1,7 +1,8 @@
 import { connectDB } from "@/util/database";
-import { uploadImage } from "@/lib/s3"; // S3 업로드 함수 가져오기
-
-const formidable = require("formidable").default;
+import { IncomingForm } from "formidable";
+import os from "os";
+// import { uploadImage } from "@/lib/s3"; // S3 업로드 함수 가져오기
+// import path from "path";
 
 export const config = {
   api: {
@@ -11,54 +12,49 @@ export const config = {
 
 export default async function handler(req, res) {
   if (req.method !== "POST") {
-    return res.status(405).json({ message: "메소드가 허용되지 않음." });
+    return res.status(405).json({ message: "Method not allowed" });
   }
 
-  const form = formidable({
+  const { db, client } = await connectDB();
+
+  const form = new IncomingForm({
     multiples: true,
     keepExtensions: true,
-    uploadDir: "/public/images", // 적절한 업로드 경로 설정
+    uploadDir: os.tmpdir(),
   });
 
-  form.parse(req, async (err, fields, files) => {
+  form.parse(req, async (err, fields) => {
     if (err) {
       console.error("폼 파싱 에러:", err);
+      client.close();
       return res.status(500).json({ message: "폼 파싱 에러" });
     }
 
-    const imageFile = files.image;
-    if (!imageFile) {
-      return res
-        .status(400)
-        .json({ message: "제공된 이미지 파일이 없습니다." });
+    const { imageUrl, brand, prd_name, prd_price, categories } = fields;
+    if (!imageUrl || !brand || !prd_name || !prd_price) {
+      client.close();
+      return res.status(400).json({ message: "Missing required fields" });
     }
 
     try {
-      const imageUrl = await uploadImage(imageFile, "boodleproject", "images"); // 'boodleproject'는 실제 S3 버킷 이름으로 교체하세요.
-
-      const client = await connectDB();
-      const db = client.db("boodle");
-      const { brand, prd_name, prd_price, categories, gift_type } = fields;
-
-      const result = await db.collection("product").insertOne({
+      const result = await db.collection("products").insertOne({
         imageUrl,
         brand,
         prd_name,
         prd_price,
+        // amount: parseInt(amount, 10),
         categories,
-        gift_type,
       });
 
-      res
-        .status(200)
-        .json({ message: "상품 등록이 성공적으로 완료되었습니다.", result });
+      res.status(200).json({ message: "상품이 등록되었습니다.", result });
     } catch (error) {
       console.error("상품 등록에 실패했습니다.:", error);
-      res.status(500).json({ message: "상품 등록에 실패했습니다." });
+      res.status(500).json({
+        message: "상품 등록에 실패했습니다.",
+        error: error.toString(),
+      });
     } finally {
-      if (client) {
-        await client.close();
-      }
+      client.close(); // 연결 종료
     }
   });
 }

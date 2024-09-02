@@ -15,7 +15,7 @@ export default function AdminProducts() {
 
   // 이미지 파일 선택 시 처리
   const handleImageChange = (e) => {
-    console.log(e.target.files[0]);
+    console.log(e.target.files[0]); // 파일 선택 로그 확인
     setImage(e.target.files[0]);
   };
 
@@ -45,27 +45,20 @@ export default function AdminProducts() {
   const uploadImageToCloudinary = async () => {
     const formData = new FormData();
     formData.append("file", image);
-    formData.append("upload_preset", "boodle"); // Cloudinary에서 설정한 업로드 프리셋
-    // 폼 데이터 구성 검사 ( 이미지 추가가 된건지 확인 )
-    for (let key of formData.keys()) {
-      console.log(key, formData.get(key));
-    }
+    formData.append(
+      "upload_preset",
+      process.env.NEXT_PUBLIC_CLOUDINARY_UPLOAD_PRESET
+    );
+
     try {
       const response = await axios.post(
         "https://api.cloudinary.com/v1_1/boodle/image/upload",
-        formData
-        // {
-        //   headers: {
-        //     "Content-Type": "multipart/form-data", // 이 부분을 명시적으로 설정
-        //   },
-        // }
+        formData,
+        { headers: { "Content-Type": "multipart/form-data" } }
       );
       return response.data.secure_url; // 업로드된 이미지의 URL 반환
     } catch (error) {
-      console.error(
-        "이미지 업로드 에러:",
-        error.response ? error.response.data : error.message
-      );
+      console.error("이미지 업로드 에러:", error);
       throw error;
     }
   };
@@ -89,7 +82,6 @@ export default function AdminProducts() {
         .then((response) => {
           if (response.status === 200) {
             alert("상품이 성공적으로 등록되었습니다!");
-            // 폼 초기화
             setProduct({
               brand: "",
               prd_name: "",
@@ -175,54 +167,25 @@ export default function AdminProducts() {
             </label>
             <div>
               <span>카테고리 분류</span>
-              <label>
-                <input
-                  type="checkbox"
-                  value="new_items"
-                  onChange={handleCategoryChange}
-                />{" "}
-                새로운 아이템
-              </label>
-              <label>
-                <input
-                  type="checkbox"
-                  value="best_items"
-                  onChange={handleCategoryChange}
-                />{" "}
-                인기있는 아이템
-              </label>
+              {["new_items", "best_items"].map((category) => (
+                <label key={category}>
+                  <input
+                    type="checkbox"
+                    value={category}
+                    onChange={handleCategoryChange}
+                    checked={product.categories.includes(category)}
+                  />
+                  {category === "new_items"
+                    ? "새로운 아이템"
+                    : "인기있는 아이템"}
+                </label>
+              ))}
             </div>
             <button className={styles.registerBtn} type="submit">
               상품 등록하기
             </button>
           </form>
         </div>
-        <ul className={styles.adminList}>
-          {/* {prdList.map((item, i) => (
-            <li className={styles.prd} key={i}>
-              <div className={styles.prdImg}>
-                <Image
-                  src={`/images/item_b${i}.jpg`}
-                  alt={item.name}
-                  width={300}
-                  height={300}
-                />
-              </div>
-              <div className={styles.PrdTxt}>
-                <span className={styles.prdBrand}>{item.brand}</span>
-                <h3 className={styles.prdPrdName}>{item.name}</h3>
-                <p className={styles.prdPrice}>
-                  재고수량 : <span className={styles.prdCount}>1</span>
-                  &nbsp;&nbsp;/&nbsp;&nbsp;
-                  <strong>{item.price}</strong>원
-                </p>
-              </div>
-              <button className={styles.del}>
-                <Image src="/images/icon_close.png" width={50} height={50} />
-              </button>
-            </li>
-          ))} */}
-        </ul>
       </section>
     </main>
   );

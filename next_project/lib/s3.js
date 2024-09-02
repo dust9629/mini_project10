@@ -1,25 +1,31 @@
-import AWS from "aws-sdk";
+import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
+import { Upload } from "@aws-sdk/lib-storage";
 
-// AWS S3 구성
-AWS.config.update({
-  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+// AWS S3 클라이언트 초기화
+const s3Client = new S3Client({
   region: process.env.AWS_REGION,
+  credentials: {
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+  },
 });
-
-const s3 = new AWS.S3();
 
 // 이미지 업로드 함수
 async function uploadImage(file, bucketName, keyPrefix) {
   const params = {
     Bucket: bucketName,
     Key: `${keyPrefix}/${file.name}`,
-    Body: file,
+    Body: file.stream || file, // Node.js 환경에서는 file.stream, 브라우저에서는 file 객체 사용
     ACL: "public-read",
   };
 
   try {
-    const { Location } = await s3.upload(params).promise();
+    const upload = new Upload({
+      client: s3Client,
+      params: params,
+    });
+
+    const { Location } = await upload.done();
     return Location;
   } catch (err) {
     console.error("Upload Error:", err);
