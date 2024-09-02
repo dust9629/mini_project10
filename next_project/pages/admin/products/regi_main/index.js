@@ -13,9 +13,19 @@ export default function AdminProducts() {
     categories: [],
   });
 
+  // 카테고리 매핑
+  const categoryLabels = {
+    new_items: "신상품",
+    best_items: "인기상품",
+    housewarming: "집들이",
+    birthday: "생일",
+    anniversary: "기념일",
+    thanks: "축하",
+  };
+
   // 이미지 파일 선택 시 처리
   const handleImageChange = (e) => {
-    console.log(e.target.files[0]); // 파일 선택 로그 확인
+    // console.log(e.target.files[0]); // 파일 선택 로그 확인
     setImage(e.target.files[0]);
   };
 
@@ -117,12 +127,12 @@ export default function AdminProducts() {
           </li>
           <li>
             <Link className={styles.active} href="/admin/products/regi_main">
-              일반상품 등록
+              상품 등록
             </Link>
           </li>
-          <li>
+          {/* <li>
             <Link href="/admin/products/regi_gift">선물하기 등록</Link>
-          </li>
+          </li> */}
         </ul>
       </section>
       <section className={styles.adminBtm}>
@@ -167,17 +177,15 @@ export default function AdminProducts() {
             </label>
             <div>
               <span>카테고리 분류</span>
-              {["new_items", "best_items"].map((category) => (
-                <label key={category}>
+              {Object.entries(categoryLabels).map(([key, label]) => (
+                <label key={key}>
                   <input
                     type="checkbox"
-                    value={category}
+                    value={key}
                     onChange={handleCategoryChange}
-                    checked={product.categories.includes(category)}
-                  />
-                  {category === "new_items"
-                    ? "새로운 아이템"
-                    : "인기있는 아이템"}
+                    checked={product.categories.includes(key)}
+                  />{" "}
+                  {label}
                 </label>
               ))}
             </div>

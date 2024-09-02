@@ -15,6 +15,9 @@ h3.adminTit,
   font-weight: 500;
   margin: 0 0 1.2rem;
   padding-top: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
 a.back {
   display: block;
@@ -104,7 +107,7 @@ a.back img {
   width: 100%;
   margin-top: 2rem;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   gap: 1.2rem;
   margin-bottom: 3.2rem;
 }
@@ -223,4 +226,18 @@ button.registerBtn {
   cursor: pointer;
   margin-top: 2rem;
   width: 100%;
+}
+.cateBadge {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.8rem;
+}
+.cateBadge > span {
+  display: block;
+  font-size: 1.2rem;
+  padding: 0.4rem 0.8rem;
+  border: 1px solid #202020;
+}
+.cateBadge > span + span {
+  margin-left: 0.4rem;
 }
