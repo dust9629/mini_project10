@@ -63,6 +63,21 @@ export default function AdminProducts() {
       product.categories.includes(selectedCategory)
   );
 
+  const deleteProduct = async (productId) => {
+    if (window.confirm("해당 상품을 삭제하시겠습니까?")) {
+      try {
+        const response = await axios.delete(`/api/products/${productId}`);
+        if (response.status === 200) {
+          alert("상품이 삭제되었습니다.");
+          setProducts(products.filter((product) => product._id !== productId));
+        }
+      } catch (error) {
+        console.error("상품 삭제에 실패했습니다.", error);
+        alert("상품 삭제에 실패했습니다.");
+      }
+    }
+  };
+
   return (
     <main className={styles.admin}>
       <Link className={styles.back} href="/admin">
@@ -115,7 +130,10 @@ export default function AdminProducts() {
                   <strong>{product.prd_price}</strong>원
                 </p>
               </div>
-              <button className={styles.del}>
+              <button
+                className={styles.del}
+                onClick={() => deleteProduct(product._id)}
+              >
                 <Image src="/images/icon_close.png" width={50} height={50} />
               </button>
             </li>
