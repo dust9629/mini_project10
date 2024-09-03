@@ -20,7 +20,7 @@ export default function AdminProducts() {
     housewarming: "집들이",
     birthday: "생일",
     anniversary: "기념일",
-    thanks: "축하",
+    thanks: "감사",
   };
 
   // 이미지 파일 선택 시 처리

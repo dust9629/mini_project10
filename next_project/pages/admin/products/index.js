@@ -27,7 +27,7 @@ export default function AdminProducts() {
     housewarming: "집들이",
     birthday: "생일",
     anniversary: "기념일",
-    thanks: "축하",
+    thanks: "감사",
     all: "전체보기",
   };
   // let prdList = [

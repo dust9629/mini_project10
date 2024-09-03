@@ -2,51 +2,37 @@ import Link from "next/link";
 import Image from "next/image";
 import styles from "./index.module.css";
 import { useEffect, useState } from "react";
+import { connectDB } from "../../util/database";
 
-let itemsB = [
-  {
-    name: "감성 인테리어 파키라+페블 화분+흙없이 실내에서 키우는 식물 축하 선물 (블랙&화이트)",
-    brand: "본투비그린",
-    price: "23,900",
-  },
-  {
-    name: "[화분 받침] Art Pot 받침",
-    brand: "슈퍼마켙 플라워",
-    price: "3,000",
-  },
-  {
-    name: "미니 히노키 pearl",
-    brand: "큐이디",
-    price: "50,000",
-  },
-  {
-    name: "해송소나무 테라스톤세트 미니분재",
-    brand: "펫플랜트",
-    price: "52,800",
-  },
-  {
-    name: "감성 인테리어 파키라+페블 화분+흙없이 실내에서 키우는 식물 축하 선물 (블랙&화이트)",
-    brand: "본투비그린",
-    price: "23,900",
-  },
-  {
-    name: "[화분 받침] Art Pot 받침",
-    brand: "슈퍼마켙 플라워",
-    price: "3,000",
-  },
-  {
-    name: "미니 히노키 pearl",
-    brand: "큐이디",
-    price: "50,000",
-  },
-  {
-    name: "해송소나무 테라스톤세트 미니분재",
-    brand: "펫플랜트",
-    price: "52,800",
-  },
-];
+export default function List({ products }) {
+  const categoryLabels = {
+    all: "전체보기",
+    new_items: "신상품",
+    best_items: "인기상품",
+    housewarming: "집들이",
+    birthday: "생일",
+    anniversary: "기념일",
+    thanks: "감사",
+  };
 
-export default function List() {
+  const [activeCategory, setActiveCategory] = useState("all");
+  const [filteredProducts, setFilteredProducts] = useState(products);
+
+  useEffect(() => {
+    filterProducts(activeCategory);
+  }, [activeCategory, products]);
+
+  function filterProducts(category) {
+    if (category === "all") {
+      setFilteredProducts(products);
+    } else {
+      const filtered = products.filter((product) =>
+        product.categories.includes(category)
+      );
+      setFilteredProducts(filtered);
+    }
+  }
+
   return (
     <main className={styles.productList}>
       <Link className={styles.back} href="/">
@@ -55,18 +41,29 @@ export default function List() {
       <section className={styles.listTop}>
         <div>
           <h3 className={styles.listTit}>상품 리스트</h3>
-          <ul className={styles.listSort}>
+          {/* <ul className={styles.listSort}>
             <li className={styles.active}># 기념일</li>
             <li># 생일</li>
             <li># 축하</li>
             <li># 감사</li>
+          </ul> */}
+          <ul className={styles.listSort}>
+            {Object.entries(categoryLabels).map(([key, label]) => (
+              <li
+                key={key}
+                className={activeCategory === key ? styles.active : ""}
+                onClick={() => setActiveCategory(key)}
+              >
+                #{label}
+              </li>
+            ))}
           </ul>
         </div>
       </section>
 
       <section className={styles.prdList}>
         <div className={styles.prdWrap}>
-          <ul className="cont-wrap">
+          {/* <ul className="cont-wrap">
             {itemsB.map((item, i) => (
               <li className="cont" key={i}>
                 <Link href="/list/detail">
@@ -102,9 +99,47 @@ export default function List() {
                 </p>
               </li>
             ))}
+          </ul> */}
+          <ul className="cont-wrap">
+            {filteredProducts.map((item, i) => (
+              <li className="cont" key={item._id}>
+                <Link href={`/list/detail/${item._id}`}>
+                  <div className="cont-img">
+                    <Image
+                      src={item.imageUrl}
+                      alt={item.name}
+                      width={300}
+                      height={600}
+                    />
+                  </div>
+                  <div className="cont-txt">
+                    <span className="prd-brand">{item.brand}</span>
+                    <h3 className="prd-name">{item.name}</h3>
+                    <p className="prd-price">
+                      <strong>{item.price}</strong>원
+                    </p>
+                  </div>
+                </Link>
+              </li>
+            ))}
           </ul>
         </div>
       </section>
     </main>
   );
+}
+
+export async function getServerSideProps() {
+  const { db } = await connectDB();
+  const products = await db.collection("products").find({}).toArray();
+  const serializedProducts = products.map((product) => ({
+    _id: product._id.toString(),
+    name: product.prd_name,
+    brand: product.brand,
+    price: product.prd_price,
+    imageUrl: product.imageUrl,
+    categories: product.categories,
+  }));
+
+  return { props: { products: serializedProducts } };
 }

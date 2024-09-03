@@ -15,6 +15,7 @@ export default async function handler(req, res) {
     return res.status(405).json({ message: "Method not allowed" });
   }
 
+  // const db = await connectDB();
   const { db, client } = await connectDB();
 
   const form = new IncomingForm({
@@ -42,8 +43,8 @@ export default async function handler(req, res) {
         brand,
         prd_name,
         prd_price,
-        // amount: parseInt(amount, 10),
         categories,
+        // amount: parseInt(amount, 10),
       });
 
       res.status(200).json({ message: "상품이 등록되었습니다.", result });

@@ -25,9 +25,11 @@ a.back img {
   height: auto;
 }
 .listSort {
+  width: 100%;
   display: flex;
   overflow-x: scroll;
   margin-bottom: 2.4rem;
+  margin-top: 2rem;
 }
 .listSort > li {
   font-size: 1.6rem;
@@ -35,6 +37,8 @@ a.back img {
   border: 1px solid #202020;
   padding: 0.8rem 1.4rem;
   border-radius: 1.8rem;
+  cursor: pointer;
+  white-space: nowrap;
 }
 .listSort > li.active {
   color: #fff;

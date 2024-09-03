@@ -2,26 +2,33 @@ import Link from "next/link";
 import Image from "next/image";
 import styles from "./../index.module.css";
 import ReviewSection from "../../../components/review";
-import { connectDB } from "@/util/database";
+import { connectDB } from "../../../util/database";
+import { ObjectId } from "mongodb";
 
 export async function getServerSideProps(context) {
-  const client = await connectDB();
+  const { db } = await connectDB();
+  const productId = context.params.id; // URL에서 상품 ID를 추출
+
   try {
-    const db = client.db("boodle");
-    const product = await db.collection("product").findOne(); // 상품 하나만 조회
+    const product = await db
+      .collection("products")
+      .findOne({ _id: new ObjectId(productId) });
+    if (!product) {
+      console.log("No product found for ID:", productId);
+      return { props: { error: "No product found." } };
+    }
     return {
       props: { product: JSON.parse(JSON.stringify(product)) },
     };
   } catch (error) {
-    return { props: { error: "Failed to fetch data." } };
-  } finally {
-    await client.close();
+    console.error("Failed to fetch product:", error);
+    return { props: { error: "Failed to fetch product." } };
   }
 }
 
 export default function Detail({ product, error }) {
   if (error) {
-    return <p>Error: Failed to load product.</p>;
+    return <p>Error: {error}</p>;
   }
   if (!product) {
     return <p>No product found.</p>;
@@ -29,7 +36,7 @@ export default function Detail({ product, error }) {
 
   return (
     <main className={styles.productDetail}>
-      <Link className={styles.back} href="/">
+      <Link className={styles.back} href="/list">
         <Image
           src="/images/icon_arrow_back.png"
           alt="뒤로가기"
@@ -42,8 +49,8 @@ export default function Detail({ product, error }) {
         <div className={styles.prdInfo}>
           <div className={styles.prdImg}>
             <Image
-              src="/images/brand0_0.jpg"
-              alt="상품 이미지"
+              src={product.imageUrl}
+              alt={product.prd_name}
               width={700}
               height={700}
               priority
@@ -52,7 +59,7 @@ export default function Detail({ product, error }) {
           <div className={styles.prdTxt}>
             <span className={styles.prdBrand}>{product.brand}</span>
             <div className={styles.prdTit}>
-              <h3>{product.prd_tit}</h3>
+              <h3>{product.prd_name}</h3>
               <p className={styles.likeBtn}>
                 <Image
                   src="/images/icon_like_e.png"
@@ -73,20 +80,6 @@ export default function Detail({ product, error }) {
             <p className={styles.prdPrice}>
               <strong>{product.prd_price}</strong>원
             </p>
-            <ul className={styles.prdDesc}>
-              <li>
-                배송정보 : <span>무료배송</span>
-              </li>
-              <li>
-                배송정보 : <span>무료배송</span>
-              </li>
-              <li>
-                배송정보 : <span>무료배송</span>
-              </li>
-              <li>
-                배송정보 : <span>무료배송</span>
-              </li>
-            </ul>
           </div>
           <div className={styles.prdBtn}>
             <p>
@@ -101,7 +94,7 @@ export default function Detail({ product, error }) {
         <h3 className={styles.listTit}>상세 정보</h3>
         <div className={styles.prdDetails}>
           <Image
-            src="/images/brand0_0.jpg"
+            src={product.imageUrl}
             alt="상품 상세이미지"
             width={700}
             height={700}

@@ -7,53 +7,31 @@ import "swiper/css/navigation"; // 네비게이션 스타일
 import "swiper/css/pagination"; // 페이지네이션 스타일
 import "swiper/css/autoplay";
 import EventPopup from "../components/popup";
+import { connectDB } from "../util/database";
 
 SwiperCore.use([Pagination, Navigation, Autoplay]);
 
-export default function Home() {
+export default function Home({ newItems, bestItems }) {
   let curationTit = "지친 몸을 누일 수 있는 폭닥한 침구 ~50%";
   let category = ["집들이", "생일", "기념일", "감사"];
-  let itemsN = [
-    {
-      name: "WAVE Bracket (5colors) [24SS NEW COLOR]",
-      brand: "베르몬드",
-      price: "120,000",
-    },
-    { name: "SNOWMAN22 V2 Table 3Colors", brand: "일광전구", price: "250,000" },
-    {
-      name: "Line Floor Lamp Black",
-      brand: "에프에프 컬렉티브",
-      price: "380,000",
-    },
-    {
-      name: "네시노 오렌지 단스탠드 조명 Nessino Table Lamp Orange",
-      brand: "아르떼미데",
-      price: "320,000",
-    },
-  ];
-
-  let itemsB = [
-    {
-      name: "감성 인테리어 파키라+페블 화분+흙없이 실내에서 키우는 식물 축하 선물 (블랙&화이트)",
-      brand: "본투비그린",
-      price: "23,900",
-    },
-    {
-      name: "[화분 받침] Art Pot 받침",
-      brand: "슈퍼마켙 플라워",
-      price: "3,000",
-    },
-    {
-      name: "미니 히노키 pearl",
-      brand: "큐이디",
-      price: "50,000",
-    },
-    {
-      name: "해송소나무 테라스톤세트 미니분재",
-      brand: "펫플랜트",
-      price: "52,800",
-    },
-  ];
+  // let itemsN = [
+  //   {
+  //     name: "WAVE Bracket (5colors) [24SS NEW COLOR]",
+  //     brand: "베르몬드",
+  //     price: "120,000",
+  //   },
+  //   { name: "SNOWMAN22 V2 Table 3Colors", brand: "일광전구", price: "250,000" },
+  //   {
+  //     name: "Line Floor Lamp Black",
+  //     brand: "에프에프 컬렉티브",
+  //     price: "380,000",
+  //   },
+  //   {
+  //     name: "네시노 오렌지 단스탠드 조명 Nessino Table Lamp Orange",
+  //     brand: "아르떼미데",
+  //     price: "320,000",
+  //   },
+  // ];
 
   const slidesCura = [
     {
@@ -147,7 +125,7 @@ export default function Home() {
               <Link href="/list">+</Link>
             </div>
             <ul className="cont-wrap">
-              {itemsN.map((item, i) => (
+              {/* {itemsN.map((item, i) => (
                 <li className="cont" key={i}>
                   <Link href="/list/detail">
                     <div className="cont-img">
@@ -180,6 +158,27 @@ export default function Home() {
                       height={35}
                     />
                   </p>
+                </li>
+              ))} */}
+              {newItems.map((item, index) => (
+                <li className="cont" key={index}>
+                  <Link href={`/list/detail/${item._id}`}>
+                    <div className="cont-img">
+                      <Image
+                        src={item.imageUrl}
+                        alt={item.prd_name}
+                        width={300}
+                        height={600}
+                      />
+                    </div>
+                    <div className="cont-txt">
+                      <span className="prd-brand">{item.brand}</span>
+                      <h3 className="prd-name">{item.prd_name}</h3>
+                      <p className="prd-price">
+                        <strong>{item.prd_price}</strong>원
+                      </p>
+                    </div>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -260,39 +259,25 @@ export default function Home() {
               <Link href="/list">+</Link>
             </div>
             <ul className="cont-wrap">
-              {itemsB.map((item, i) => (
-                <li className="cont" key={i}>
-                  <Link href="/list/detail">
+              {bestItems.map((item, index) => (
+                <li className="cont" key={index}>
+                  <Link href={`/list/detail/${item._id}`}>
                     <div className="cont-img">
                       <Image
-                        src={`/images/item_b${i}.jpg`}
-                        alt={item.name}
+                        src={item.imageUrl}
+                        alt={item.prd_name}
                         width={300}
                         height={600}
                       />
                     </div>
                     <div className="cont-txt">
                       <span className="prd-brand">{item.brand}</span>
-                      <h3 className="prd-name">{item.name}</h3>
+                      <h3 className="prd-name">{item.prd_name}</h3>
                       <p className="prd-price">
-                        <strong>{item.price}</strong>원
+                        <strong>{item.prd_price}</strong>원
                       </p>
                     </div>
                   </Link>
-                  <p className="like-btn">
-                    <Image
-                      src="/images/icon_like_e.png"
-                      className="like-e"
-                      width={35}
-                      height={35}
-                    />
-                    <Image
-                      src="/images/icon_like_f.png"
-                      className="like-f"
-                      width={35}
-                      height={35}
-                    />
-                  </p>
                 </li>
               ))}
             </ul>
@@ -341,4 +326,38 @@ export default function Home() {
       <EventPopup />
     </main>
   );
+}
+export async function getServerSideProps() {
+  const { db } = await connectDB();
+  const newItemsData = await db
+    .collection("products")
+    .find({ categories: "new_items" })
+    .sort({ _id: -1 })
+    .limit(4)
+    .toArray();
+
+  const bestItemsData = await db
+    .collection("products")
+    .find({ categories: "best_items" })
+    .sort({ _id: -1 })
+    .limit(4)
+    .toArray();
+
+  const newItems = newItemsData.map((item) => ({
+    _id: item._id.toString(),
+    imageUrl: item.imageUrl,
+    brand: item.brand,
+    prd_name: item.prd_name,
+    prd_price: item.prd_price,
+  }));
+
+  const bestItems = bestItemsData.map((item) => ({
+    _id: item._id.toString(),
+    imageUrl: item.imageUrl,
+    brand: item.brand,
+    prd_name: item.prd_name,
+    prd_price: item.prd_price,
+  }));
+
+  return { props: { newItems, bestItems } };
 }
