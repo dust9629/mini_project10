@@ -68,19 +68,20 @@ export default function Brand() {
       </Link>
       <section className={styles.mainBan}>
         <span className={styles.badge01}>New Brand</span>
-        <h3>신규 입점된 브랜드를 소개합니다</h3>
+        <h3 className={styles.brandBigTit}>신규 입점된 브랜드를 소개합니다</h3>
         <div className={styles.mainImg}>
           <Image src="/images/brand0_ban.jpg" width={700} height={700} />
         </div>
         <div className={styles.brandMainTxt}>
-          <h4>
-            자연을 닮은 브랜드 <strong>"스퀘어폰드"</strong>
+          <h4 className={styles.brandSubTit}>
+            자연을 닮은 브랜드{" "}
+            <strong className={styles.brandName}>"스퀘어폰드"</strong>
           </h4>
           <p className={styles.brandSubTxt}>
             Water plants habitat. 연못에 사는 동.식물을 이야기하는
             스퀘어폰드입니다.
           </p>
-          <p>
+          <p className={styles.brandDescTxt}>
             보글보글 이끼를 닮은 코스터와 현무암을 연상시키는 플랜트 팟은
             식집사들의 마음을 훔치는 것만이 아니라, 그 자체로 한 폭의 자연
             풍경을 연출합니다. 각 제품은 자연에서 그대로 옮겨온 듯한 느낌을

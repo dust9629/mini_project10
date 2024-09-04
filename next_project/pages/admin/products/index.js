@@ -30,28 +30,6 @@ export default function AdminProducts() {
     thanks: "감사",
     all: "전체보기",
   };
-  // let prdList = [
-  //   {
-  //     name: "감성 인테리어 파키라+페블 화분+흙없이 실내에서 키우는 식물 축하 선물 (블랙&화이트)",
-  //     brand: "본투비그린",
-  //     price: "23,900",
-  //   },
-  //   {
-  //     name: "[화분 받침] Art Pot 받침",
-  //     brand: "슈퍼마켙 플라워",
-  //     price: "3,000",
-  //   },
-  //   {
-  //     name: "미니 히노키 pearl",
-  //     brand: "큐이디",
-  //     price: "50,000",
-  //   },
-  //   {
-  //     name: "해송소나무 테라스톤세트 미니분재",
-  //     brand: "펫플랜트",
-  //     price: "52,800",
-  //   },
-  // ];
 
   const handleCategoryChange = (e) => {
     setSelectedCategory(e.target.value);

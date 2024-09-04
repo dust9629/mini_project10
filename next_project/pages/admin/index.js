@@ -65,7 +65,7 @@ export default function Admin({ user, error }) {
             </Link>
           </li>
           <li>
-            <Link href="/">
+            <Link href="/admin/brands">
               <p className={styles.adminMenu}>브랜드</p>
             </Link>
           </li>
