@@ -7,9 +7,9 @@ import axios from "axios";
 
 export default function Admin({ user, error }) {
   useEffect(() => {
-    if (error || !user) {
+    if (error || !user.role === "admin") {
       alert(error || "접근 권한이 없습니다.");
-      Router.push("/");
+      Router.push("/login");
     }
   }, [error, user]);
 

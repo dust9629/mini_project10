@@ -14,7 +14,7 @@ export default async (req, res) => {
     }
 
     // JWT 토큰 검증
-    console.log("JWT_SECRET used for verification:", process.env.JWT_SECRET);
+    // console.log("JWT_SECRET used for verification:", process.env.JWT_SECRET);
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     const userId = decoded.userId;
 
@@ -38,6 +38,8 @@ export default async (req, res) => {
     console.error("서버 처리 중 오류 발생:", error);
     if (error.name === "JsonWebTokenError") {
       res.status(401).json({ message: "유효하지 않은 토큰입니다." });
+    } else if (error.name === "MongoNetworkError") {
+      res.status(503).json({ message: "데이터베이스 연결 실패" });
     } else {
       res.status(500).json({ message: "서버 내부 오류" });
     }

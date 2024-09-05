@@ -6,51 +6,49 @@ import styles from "./index.module.css";
 import axios from "axios";
 
 export default function Mypage() {
-  const [user, setUser] = useState(null); // 사용자 정보를 null로 초기화
-  const [error, setError] = useState(""); // 에러 메시지를 관리
-  const [loading, setLoading] = useState(true); // 로딩 상태 추가
+  const [user, setUser] = useState(null);
+  const [error, setError] = useState(""); // 에러 메시지 상태 관리
+  const [loading, setLoading] = useState(true); // 로딩 상태 관리
 
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (!token) {
-      Router.push("/login");
-      setError("로그인이 필요합니다.");
-      setLoading(false); // 로딩 상태 업데이트
+      setError("로그인이 필요합니다."); // 에러 상태 업데이트
+      Router.push("/login"); // 로그인 페이지로 리다이렉트
       return;
     }
 
     axios
-      .get("http://localhost:3000/api/user", {
+      .get("http://localhost:3000/api/users", {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((response) => {
         setUser(response.data);
-        setLoading(false); // 로딩 완료
+        setLoading(false); // 로딩 상태 업데이트
       })
-      .catch((err) => {
+      .catch((error) => {
+        console.error("사용자 정보를 불러오는데 에러가 있음..:", error);
         setError(
-          err.response?.data?.message ||
-            "사용자 정보를 불러오는데 실패했습니다."
+          "사용자 정보를 불러오는데 실패했습니다. 다시 로그인 해주세요."
         );
-        Router.push("/login");
-        setLoading(false); // 에러 발생 시 로딩 상태 업데이트
+        Router.push("/login"); // 로그인 페이지로 리다이렉트
       });
   }, []);
 
   if (loading) {
-    return <p>로딩 중...</p>; // 로딩 중이면 로딩 메시지 표시
+    return <p>로딩 중...</p>; // 로딩 중 표시
   }
 
   if (error) {
-    return <p>{error}</p>; // 오류가 있으면 오류 메시지 표시
+    return <p>{error}</p>; // 에러가 있다면 에러 메시지 표시
   }
 
   return (
     <main className={styles.mypage}>
       <Link className={styles.back} href="/">
         <Image
-          alt="Profile"
           src="/images/icon_arrow_back.png"
+          alt="뒤로가기 버튼"
           width={200}
           height={50}
         />
@@ -59,7 +57,12 @@ export default function Mypage() {
         <h3 className={styles.mypageTit}>마이페이지</h3>
         <div className={styles.mypageUsers}>
           <div className={styles.profile}>
-            <Image src="/images/profile.jpg" width={300} height={300} />
+            <Image
+              src="/images/profile.jpg"
+              alt="사용자 프로필 이미지"
+              width={300}
+              height={300}
+            />
           </div>
           <ul>
             <li className={styles.badge}>
@@ -84,7 +87,12 @@ export default function Mypage() {
           <li>
             <Link href="/">
               <div className={styles.profileImg}>
-                <Image src="/images/icon_m01.png" width={300} height={300} />
+                <Image
+                  alt={"icon"}
+                  src="/images/icon_m01.png"
+                  width={300}
+                  height={300}
+                />
               </div>
               <p className={styles.mypageMenu}>정보변경</p>
             </Link>
@@ -92,7 +100,12 @@ export default function Mypage() {
           <li>
             <Link href="/">
               <div className={styles.profileImg}>
-                <Image src="/images/icon_m02.png" width={300} height={300} />
+                <Image
+                  alt={"icon"}
+                  src="/images/icon_m02.png"
+                  width={300}
+                  height={300}
+                />
               </div>
               <p className={styles.mypageMenu}>주문확인</p>
             </Link>
@@ -100,7 +113,12 @@ export default function Mypage() {
           <li>
             <Link href="/like">
               <div className={styles.profileImg}>
-                <Image src="/images/icon_m03.png" width={300} height={300} />
+                <Image
+                  alt={"icon"}
+                  src="/images/icon_m03.png"
+                  width={300}
+                  height={300}
+                />
               </div>
               <p className={styles.mypageMenu}>관심상품</p>
             </Link>
@@ -108,7 +126,12 @@ export default function Mypage() {
           <li>
             <Link href="/">
               <div className={styles.profileImg}>
-                <Image src="/images/icon_m04.png" width={300} height={300} />
+                <Image
+                  alt={"icon"}
+                  src="/images/icon_m04.png"
+                  width={300}
+                  height={300}
+                />
               </div>
               <p className={styles.mypageMenu}>장바구니</p>
             </Link>
@@ -116,7 +139,12 @@ export default function Mypage() {
           <li>
             <Link href="/">
               <div className={styles.profileImg}>
-                <Image src="/images/icon_m05.png" width={300} height={300} />
+                <Image
+                  alt={"icon"}
+                  src="/images/icon_m05.png"
+                  width={300}
+                  height={300}
+                />
               </div>
               <p className={styles.mypageMenu}>할인코드</p>
             </Link>
@@ -124,7 +152,12 @@ export default function Mypage() {
           <li>
             <Link href="/">
               <div className={styles.profileImg}>
-                <Image src="/images/icon_m06.png" width={300} height={300} />
+                <Image
+                  alt={"icon"}
+                  src="/images/icon_m06.png"
+                  width={300}
+                  height={300}
+                />
               </div>
               <p className={styles.mypageMenu}>할인쿠폰</p>
             </Link>
