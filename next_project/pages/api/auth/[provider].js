@@ -1,9 +1,30 @@
+// import jwt from "jsonwebtoken";
 import axios from "axios";
-import { connectDB } from "../../util/database";
+import { connectDB } from "../../../util/database";
+import express from "express";
+import session from "express-session";
+import ConnectMongo from "connect-mongo";
 
-export default async (req, res) => {
-  if (req.query.provider === "kakao") {
-    console.log("KAKAO_REST_API_KEY:", process.env.KAKAO_REST_API_KEY);
+const mongoStore = ConnectMongo.create({
+  clientPromise: connectDB().then(({ client }) => client),
+  stringify: false,
+});
+
+export default function authHandler(req, res) {
+  const app = express();
+
+  app.use(
+    session({
+      secret: "your_secret_key",
+      resave: false,
+      saveUninitialized: false,
+      store: mongoStore, // 수정된 MongoStore 인스턴스 사용
+      cookie: { maxAge: 1800000 }, // 30분
+    })
+  );
+
+  // 카카오 로그인 라우트
+  app.post("/api/auth/kakao", async (req, res) => {
     const { code } = req.query;
     try {
       const tokenResponse = await axios.post(
@@ -22,8 +43,6 @@ export default async (req, res) => {
       );
 
       const { access_token } = tokenResponse.data;
-
-      // 사용자 정보 요청
       const userInfoResponse = await axios.get(
         "https://kapi.kakao.com/v2/user/me",
         {
@@ -35,32 +54,33 @@ export default async (req, res) => {
       );
 
       const { email, profile } = userInfoResponse.data.kakao_account;
-      const { client, db } = await connectDB();
+      const { db } = await connectDB();
 
-      // 이메일이 없는 경우 예외 처리
-      if (!email) {
-        throw new Error("이메일 없음 - 카카오 계정에서 이메일 제공 동의 필요");
-      }
-
-      // MongoDB에서 사용자 조회
       let user = await db.collection("users").findOne({ email });
-
-      // MongoDB에 사용자가 없으면 새로 저장
       if (!user) {
         user = await db.collection("users").insertOne({
           email,
-          name: profile.nickname, // 프로필에서 이름 가져오기
-          role: "normember", // 기본 권한 설정
-          provider: "kakao", // 로그인 제공자 표시
-          kakaoId: userInfoResponse.data.id, // 카카오 사용자 ID 저장
+          name: profile.nickname,
+          role: "member",
+          provider: "kakao",
+          kakaoId: userInfoResponse.data.id,
         });
       }
 
-      // 성공적 로그인 처리
-      res.redirect("/");
+      // 세션에 사용자 정보 저장
+      req.session.user = {
+        id: user._id.toString(),
+        role: user.role,
+        name: user.name,
+        email: user.email,
+      };
+
+      res.redirect("/"); // 성공적인 로그인 후 리디렉션
     } catch (error) {
       console.error("Kakao login error:", error);
       res.status(500).json({ message: "Internal server error" });
     }
-  }
-};
+  });
+
+  return app(req, res);
+}

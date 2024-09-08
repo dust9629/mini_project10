@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import SwiperCore, { Pagination, Navigation, Autoplay } from "swiper";
@@ -14,24 +15,19 @@ SwiperCore.use([Pagination, Navigation, Autoplay]);
 export default function Home({ newItems, bestItems }) {
   let curationTit = "지친 몸을 누일 수 있는 폭닥한 침구 ~50%";
   let category = ["집들이", "생일", "기념일", "감사"];
-  // let itemsN = [
-  //   {
-  //     name: "WAVE Bracket (5colors) [24SS NEW COLOR]",
-  //     brand: "베르몬드",
-  //     price: "120,000",
-  //   },
-  //   { name: "SNOWMAN22 V2 Table 3Colors", brand: "일광전구", price: "250,000" },
-  //   {
-  //     name: "Line Floor Lamp Black",
-  //     brand: "에프에프 컬렉티브",
-  //     price: "380,000",
-  //   },
-  //   {
-  //     name: "네시노 오렌지 단스탠드 조명 Nessino Table Lamp Orange",
-  //     brand: "아르떼미데",
-  //     price: "320,000",
-  //   },
-  // ];
+
+  useEffect(() => {
+    // 토큰 처리 로직
+    const urlParams = new URLSearchParams(window.location.search);
+    const token = urlParams.get("token");
+    const role = urlParams.get("role");
+    if (token) {
+      localStorage.setItem("token", token);
+      localStorage.setItem("userRole", role);
+      // 초기 URL에서 쿼리 파라미터 제거
+      window.history.pushState({}, document.title, "/");
+    }
+  }, []);
 
   const slidesCura = [
     {
@@ -328,36 +324,40 @@ export default function Home({ newItems, bestItems }) {
   );
 }
 export async function getServerSideProps() {
-  const { db } = await connectDB();
-  const newItemsData = await db
-    .collection("products")
-    .find({ categories: "new_items" })
-    .sort({ _id: -1 })
-    .limit(4)
-    .toArray();
+  try {
+    const { db } = await connectDB();
+    const newItemsData = await db
+      .collection("products")
+      .find({ categories: "new_items" })
+      .sort({ _id: -1 })
+      .limit(4)
+      .toArray();
+    const bestItemsData = await db
+      .collection("products")
+      .find({ categories: "best_items" })
+      .sort({ _id: -1 })
+      .limit(4)
+      .toArray();
 
-  const bestItemsData = await db
-    .collection("products")
-    .find({ categories: "best_items" })
-    .sort({ _id: -1 })
-    .limit(4)
-    .toArray();
+    const newItems = newItemsData.map((item) => ({
+      _id: item._id.toString(),
+      imageUrl: item.imageUrl,
+      brand: item.brand,
+      prd_name: item.prd_name,
+      prd_price: item.prd_price,
+    }));
 
-  const newItems = newItemsData.map((item) => ({
-    _id: item._id.toString(),
-    imageUrl: item.imageUrl,
-    brand: item.brand,
-    prd_name: item.prd_name,
-    prd_price: item.prd_price,
-  }));
+    const bestItems = bestItemsData.map((item) => ({
+      _id: item._id.toString(),
+      imageUrl: item.imageUrl,
+      brand: item.brand,
+      prd_name: item.prd_name,
+      prd_price: item.prd_price,
+    }));
 
-  const bestItems = bestItemsData.map((item) => ({
-    _id: item._id.toString(),
-    imageUrl: item.imageUrl,
-    brand: item.brand,
-    prd_name: item.prd_name,
-    prd_price: item.prd_price,
-  }));
-
-  return { props: { newItems, bestItems } };
+    return { props: { newItems, bestItems } };
+  } catch (error) {
+    console.error("데이터베이스 연결에 실패하였습니다.", error);
+    return { props: { newItems: [], bestItems: [] } }; // 오류가 발생한 경우 빈 배열 반환
+  }
 }

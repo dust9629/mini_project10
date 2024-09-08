@@ -5,32 +5,27 @@ import { useRouter } from "next/router";
 import styles from "./index.module.css";
 
 export default function Login() {
-  console.log("Kakao API Key:", process.env.NEXT_PUBLIC_KAKAO_REST_API_KEY);
-  console.log("Redirect URI:", process.env.NEXT_PUBLIC_REDIRECT_URI);
-
-  const router = useRouter();
-  const handleKakaoLogin = () => {
-    const kakaoAuthUrl = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.NEXT_PUBLIC_KAKAO_REST_API_KEY}&redirect_uri=${process.env.NEXT_PUBLIC_REDIRECT_URI}&response_type=code`;
-    window.location.href = kakaoAuthUrl;
-  };
-
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const router = useRouter();
 
   const handleLogin = async (event) => {
     event.preventDefault();
     try {
       const response = await axios.post("/api/login", { email, password });
       if (response.status === 200) {
-        // 로그인 성공: 토큰을 로컬 스토리지에 저장
         localStorage.setItem("token", response.data.token);
         localStorage.setItem("userRole", response.data.userRole);
-        console.log("로그인 성공: 토큰 저장됨");
         router.push("/");
       }
     } catch (error) {
-      alert("로그인 실패: " + error.response.data.message);
+      alert("Login failed: " + error.response.data.message);
     }
+  };
+
+  const handleKakaoLogin = () => {
+    const kakaoAuthUrl = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.KAKAO_REST_API_KEY}&redirect_uri=${process.env.NEXT_PUBLIC_REDIRECT_URI}&response_type=code`;
+    window.location.href = kakaoAuthUrl;
   };
 
   return (

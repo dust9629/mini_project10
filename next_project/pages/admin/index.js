@@ -1,17 +1,48 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import Router from "next/router";
 import Link from "next/link";
 import Image from "next/image";
-import Router from "next/router";
 import styles from "./index.module.css";
-import axios from "axios";
 
-export default function Admin({ user, error }) {
+export default function Admin() {
+  const [user, setUser] = useState(null);
+  const [error, setError] = useState("");
+
   useEffect(() => {
-    if (error || !user.role === "admin") {
-      alert(error || "접근 권한이 없습니다.");
-      Router.push("/login");
+    const token = localStorage.getItem("token");
+    if (!token) {
+      Router.push("/member");
+      return;
     }
-  }, [error, user]);
+
+    const fetchUser = async () => {
+      try {
+        const response = await axios.get("/api/users", {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        setUser(response.data);
+        if (response.data.role !== "admin") {
+          setError("관리자만 접근이 가능합니다.");
+          alert("관리자만 접근 가능합니다.");
+          Router.push("/");
+        }
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+        Router.push("/member");
+      }
+    };
+
+    fetchUser();
+  }, []);
+
+  if (error) {
+    return <p>{error}</p>;
+  }
+
+  if (!user) {
+    return <p>Loading...</p>;
+  }
 
   return (
     <main className={styles.admin}>
@@ -78,44 +109,4 @@ export default function Admin({ user, error }) {
       </section>
     </main>
   );
-}
-
-// 서버 사이드에서 사용자의 'admin' 권한을 검사
-export async function getServerSideProps(context) {
-  const { req } = context;
-  const { cookies } = req;
-  const token = cookies.token;
-
-  if (!token) {
-    return {
-      props: {
-        user: {},
-        error: "로그인이 필요합니다.",
-      },
-    };
-  }
-  try {
-    const response = await axios.get("http://localhost:3000/api/user", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-    if (response.data.role !== "admin") {
-      return {
-        props: {
-          user: {},
-          error: "관리자만 접속이 가능합니다.",
-        },
-      };
-    }
-    return { props: { user: response.data } };
-  } catch (error) {
-    console.error("Failed to fetch admin data:", error);
-    return {
-      props: {
-        user: {},
-        error: "관리자 정보를 불러오는데 실패했습니다.",
-      },
-    };
-  }
 }

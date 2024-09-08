@@ -6,56 +6,57 @@ import "@/styles/globals.css";
 import "@/styles/header.css";
 import "@/styles/footer.css";
 
-export default function App({ Component, pageProps }) {
+function App({ Component, pageProps }) {
   const [isActive, setIsActive] = useState(false);
   const [showTopBtn, setShowTopBtn] = useState(false);
   const [userRole, setUserRole] = useState("");
   const router = useRouter();
 
   useEffect(() => {
+    // 로컬 스토리지에서 userRole 읽어오기
     const role = localStorage.getItem("userRole") || "";
     setUserRole(role);
-  }, [router.asPath]);
 
-  const toggleMenu = () => {
-    setIsActive(!isActive);
-  };
+    // 라우터 이벤트 핸들러
+    const handleRouteChange = () => {
+      const updatedRole = localStorage.getItem("userRole") || "";
+      setUserRole(updatedRole);
+    };
 
-  const handleLogout = () => {
+    // 라우트 변경 감지를 위해 이벤트 리스너 추가
+    router.events.on("routeChangeComplete", handleRouteChange);
+
+    return () => {
+      // 컴포넌트 언마운트 시 이벤트 리스너 제거
+      router.events.off("routeChangeComplete", handleRouteChange);
+    };
+  }, []);
+
+  // 로그아웃 처리
+  const handleLogout = async () => {
     localStorage.removeItem("userRole");
     localStorage.removeItem("token");
     alert("로그아웃 되었습니다.");
-    router.push("/");
+    router.push("/").then(() => window.location.reload()); // 페이지 이동 후 강제로 페이지를 리로드합니다.
   };
 
+  // 라우트 변경 시 메뉴 상태 리셋
   useEffect(() => {
-    const handleRouteChange = () => {
-      setIsActive(false); // 페이지 이동 시 메뉴 상태 초기화
-      const role = localStorage.getItem("userRole") || "";
-      setUserRole(role);
-    };
-
-    router.events.on("routeChangeComplete", handleRouteChange);
-    return () => {
-      router.events.off("routeChangeComplete", handleRouteChange);
-    };
-  }, [router]);
+    setIsActive(false);
+  }, [router.pathname]);
 
   useEffect(() => {
     const toggleVisibility = () => {
-      if (window.pageYOffset > 300) {
-        setShowTopBtn(true);
-      } else {
-        setShowTopBtn(false);
-      }
+      setShowTopBtn(window.pageYOffset > 300);
     };
-
     window.addEventListener("scroll", toggleVisibility);
-
-    return () => {
-      window.removeEventListener("scroll", toggleVisibility);
-    };
+    return () => window.removeEventListener("scroll", toggleVisibility);
   }, []);
+
+  // 네비게이션 메뉴 토글
+  const toggleMenu = () => {
+    setIsActive(!isActive);
+  };
 
   const scrollToTop = () => {
     window.scrollTo({
@@ -213,3 +214,5 @@ export default function App({ Component, pageProps }) {
     </>
   );
 }
+
+export default App;
