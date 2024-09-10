@@ -246,3 +246,16 @@ button.registerBtn {
 .cateBadge > span + span {
   margin-left: 0.4rem;
 }
+.couponTit {
+  font-size: 1.8rem;
+  margin: 0 0 1rem;
+}
+.couponPer {
+  font-size: 2rem;
+  margin: 1rem 0 2rem;
+}
+.couponDue {
+  font-size: 1.4rem;
+  margin: 0;
+  padding: 0;
+}

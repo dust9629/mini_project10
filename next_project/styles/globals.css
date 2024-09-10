@@ -502,5 +502,5 @@ a.back img {
   width: 5rem;
   height: 5rem;
   z-index: 99999;
-  left: 50%;
+  right: calc(100% - 965px);
 }

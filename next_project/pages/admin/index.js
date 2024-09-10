@@ -4,6 +4,7 @@ import Router from "next/router";
 import Link from "next/link";
 import Image from "next/image";
 import styles from "./index.module.css";
+import BackButton from "./../../components/backButton";
 
 export default function Admin() {
   const [user, setUser] = useState(null);
@@ -46,9 +47,10 @@ export default function Admin() {
 
   return (
     <main className={styles.admin}>
-      <Link className={styles.back} href="/">
+      {/* <Link className={styles.back} href="/">
         <Image src="/images/icon_arrow_back.png" width={200} height={50} />
-      </Link>
+      </Link> */}
+      <BackButton className={styles.back} />
       <section className={styles.adminTop}>
         <h3 className={styles.adminTit}>관리자 페이지</h3>
         <div className={styles.adminUsers}>
