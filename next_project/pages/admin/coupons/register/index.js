@@ -80,7 +80,7 @@ export default function AdminCoupons() {
                 type="text"
                 name="coupon_percent"
                 value={discountRate}
-                placeholder="할인율 입력 (ex : 20%)"
+                placeholder="할인율 입력시 숫자만 (ex : 20)"
                 onChange={(e) => setDiscountRate(e.target.value)}
               />
             </label>
