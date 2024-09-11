@@ -4,21 +4,42 @@ import Image from "next/image";
 import styles from "./../../index.module.css";
 
 export default function AdminCoupons() {
-  // 상태 초기화
-  const [couponName, setCouponName] = useState("첫 구매 할인쿠폰");
-  const [discountRate, setDiscountRate] = useState("30%");
-  const [validityPeriod, setValidityPeriod] = useState(
-    "2024.01.01 ~ 2024.10.10"
-  );
+  const [couponName, setCouponName] = useState("");
+  const [discountRate, setDiscountRate] = useState("");
+  const [validityPeriod, setValidityPeriod] = useState("");
 
-  // 폼 제출 핸들러
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    // 여기서 API 호출을 수행하거나 다른 처리를 할 수 있습니다.
-    alert(
-      `쿠폰 이름: ${couponName}, 할인율: ${discountRate}, 기간: ${validityPeriod}`
-    );
+  const resetForm = () => {
+    setCouponName("");
+    setDiscountRate("");
+    setValidityPeriod("");
   };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    const couponData = {
+      couponName,
+      discountRate,
+      validityPeriod,
+    };
+
+    const response = await fetch("/api/coupons/add", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(couponData),
+    });
+
+    const data = await response.json();
+    if (data.success) {
+      alert("쿠폰이 성공적으로 등록되었습니다.");
+      resetForm(); // 폼 초기화
+    } else {
+      alert("쿠폰 등록 실패: " + data.message);
+    }
+  };
+
   return (
     <main className={styles.admin}>
       <Link className={styles.back} href="/admin">
@@ -49,6 +70,7 @@ export default function AdminCoupons() {
                 type="text"
                 name="coupon"
                 value={couponName}
+                placeholder="쿠폰 이름 입력"
                 onChange={(e) => setCouponName(e.target.value)}
               />
             </label>
@@ -58,6 +80,7 @@ export default function AdminCoupons() {
                 type="text"
                 name="coupon_percent"
                 value={discountRate}
+                placeholder="할인율 입력 (ex : 20%)"
                 onChange={(e) => setDiscountRate(e.target.value)}
               />
             </label>
@@ -67,6 +90,7 @@ export default function AdminCoupons() {
                 type="text"
                 name="coupon_period"
                 value={validityPeriod}
+                placeholder="유효 기간 입력 (ex: 2099.01.01 ~ 2099.12.31)"
                 onChange={(e) => setValidityPeriod(e.target.value)}
               />
             </label>
