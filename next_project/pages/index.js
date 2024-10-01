@@ -60,33 +60,76 @@ export default function Home({ newItems, bestItems }) {
     <main>
       {/* 큐레이션 배너 */}
       <section className="section01">
-        <Link href="/event" className="inner-wrap n1">
-          <div className="main-ban-wrap">
-            <div href="/" className="curation_ban">
-              <Image
-                src="/images/main_ban01.jpg"
-                alt="메인배너1"
-                width={1000}
-                height={1000}
-              />
-            </div>
-          </div>
-          <div className="main-txt-wrap">
-            <h4 className="title-main">{curationTit}</h4>
-            <p className="title-sub">VOL. 여름의 끝자락에서 만난 가을</p>
-            <p className="title-writer">
-              <span>curator. 레이첼 그린</span>
-              <span>
-                <Image
-                  src="/images/icon_arrow_ban.png"
-                  alt="더보기"
-                  width={100}
-                  height={100}
-                />
-              </span>
-            </p>
-          </div>
-        </Link>
+        <Swiper
+          // spaceBetween={50}
+          slidesPerView={1}
+          navigation={true}
+          pagination={{ clickable: true }}
+          loop={true}
+          autoplay={{
+            delay: 1000,
+            // disableOnInteraction: false,
+          }}
+        >
+          <SwiperSlide>
+            <Link href="/event" className="inner-wrap n1">
+              <div className="main-ban-wrap">
+                <div className="curation_ban">
+                  <Image
+                    src="/images/main_ban01.webp"
+                    alt="메인배너1"
+                    width={1000}
+                    height={1000}
+                  />
+                </div>
+              </div>
+              <div className="main-txt-wrap">
+                <h4 className="title-main">{curationTit}</h4>
+                <p className="title-sub">VOL. 여름의 끝자락에서 만난 가을</p>
+                <p className="title-writer">
+                  <span>curator. 레이첼 그린</span>
+                  <span>
+                    <Image
+                      src="/images/icon_arrow_ban.png"
+                      alt="더보기"
+                      width={100}
+                      height={100}
+                    />
+                  </span>
+                </p>
+              </div>
+            </Link>
+          </SwiperSlide>
+          <SwiperSlide>
+            <Link href="/event" className="inner-wrap n2">
+              <div className="main-ban-wrap">
+                <div className="curation_ban">
+                  <Image
+                    src="/images/main_ban02.webp"
+                    alt="메인배너2"
+                    width={1000}
+                    height={1000}
+                  />
+                </div>
+              </div>
+              <div className="main-txt-wrap">
+                <h4 className="title-main">{curationTit}</h4>
+                <p className="title-sub">VOL. 여름의 끝자락에서 만난 가을</p>
+                <p className="title-writer">
+                  <span>curator. 레이첼 그린</span>
+                  <span>
+                    <Image
+                      src="/images/icon_arrow_ban.png"
+                      alt="더보기"
+                      width={100}
+                      height={100}
+                    />
+                  </span>
+                </p>
+              </div>
+            </Link>
+          </SwiperSlide>
+        </Swiper>
       </section>
       {/* 선물 추천 카테고리 */}
       <section className="section02">
@@ -211,7 +254,7 @@ export default function Home({ newItems, bestItems }) {
               <Link href="/brand">+</Link>
             </div>
             <div className="brand-story">
-              <Link href="/brand" className="story-img">
+              <Link href="/brand/detail" className="story-img">
                 <Image src="/images/brand0_ban.jpg" width={700} height={700} />
               </Link>
 

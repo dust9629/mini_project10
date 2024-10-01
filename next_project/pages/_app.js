@@ -161,6 +161,9 @@ function App({ Component, pageProps }) {
               <li>
                 <Link href="/">이벤트</Link>
               </li>
+              <li>
+                <Link href="/">브랜드 소개</Link>
+              </li>
             </ul>
             <Link className="logout" href="/" onClick={handleLogout}>
               로그아웃

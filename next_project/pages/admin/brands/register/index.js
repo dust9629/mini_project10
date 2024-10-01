@@ -7,7 +7,9 @@ import "draft-js/dist/Draft.css";
 import axios from "axios";
 
 export default function RegisterBrands() {
-  const [editorState, setEditorState] = useState(EditorState.createEmpty());
+  const [editorState, setEditorState] = useState(() =>
+    EditorState.createEmpty()
+  );
   const [image, setImage] = useState(null);
   const [brandData, setBrandData] = useState({
     brandBigTit: "",
@@ -95,41 +97,68 @@ export default function RegisterBrands() {
         <h3 className={styles.adminTit}>브랜드 소개글 등록</h3>
         <div className={styles.register}>
           <form onSubmit={handleSubmit}>
-            <input
-              type="text"
-              name="brandBigTit"
-              value={brandData.brandBigTit}
-              onChange={handleChange}
-              placeholder="대표 제목"
-            />
-            <input type="file" onChange={handleImageChange} accept="image/*" />
-            <input
-              type="text"
-              name="brandSubTit"
-              value={brandData.brandSubTit}
-              onChange={handleChange}
-              placeholder="소제목"
-            />
-            <input
-              type="text"
-              name="brandName"
-              value={brandData.brandName}
-              onChange={handleChange}
-              placeholder="브랜드 이름"
-            />
-            <textarea
-              name="brandSubTxt"
-              value={brandData.brandSubTxt}
-              onChange={handleChange}
-              placeholder="브랜드 소개"
-            />
-            <Editor
-              editorState={editorState}
-              onChange={handleEditorChange}
-              placeholder="상세 설명..."
-            />
+            <label>
+              <span>브랜드 소개글 제목</span>
+              <input
+                type="text"
+                name="brandBigTit"
+                value={brandData.brandBigTit}
+                onChange={handleChange}
+                placeholder="대표 제목을 입력하세요."
+              />
+            </label>
+            <label>
+              <span>메인 이미지</span>
+              <input
+                type="file"
+                onChange={handleImageChange}
+                accept="image/*"
+              />
+            </label>
+            <label>
+              <span>브랜드 서브 제목</span>
+              <input
+                type="text"
+                name="brandSubTit"
+                value={brandData.brandSubTit}
+                onChange={handleChange}
+                placeholder="소제목을 입력하세요."
+              />
+            </label>
+            <label>
+              <span>브랜드명</span>
+              <input
+                type="text"
+                name="brandName"
+                value={brandData.brandName}
+                onChange={handleChange}
+                placeholder="브랜드 이름"
+              />
+            </label>
+            <label>
+              <span>브랜드 슬로건</span>
+              <textarea
+                name="brandSubTxt"
+                value={brandData.brandSubTxt}
+                onChange={handleChange}
+                placeholder="브랜드 슬로건을 입력하세요."
+              />
+            </label>
+            <label className={styles.editorCont}>
+              <span>브랜드 소개글 내용</span>
+              <div className={styles.editorWrapper}>
+                <Editor
+                  editorState={editorState}
+                  onChange={handleEditorChange}
+                  placeholder="상세 설명을 입력하세요."
+                  editorKey="editor"
+                />
+              </div>
+            </label>
 
-            <button type="submit">등록하기</button>
+            <button type="submit" className={styles.registerBtn}>
+              등록하기
+            </button>
           </form>
         </div>
       </section>

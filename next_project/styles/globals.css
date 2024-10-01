@@ -83,6 +83,9 @@ main section {
   background-color: rgba(0, 0, 0, 0.3);
   z-index: 1;
 }
+.inner-wrap.n1 .swiper-wrapper {
+  max-height: 75rem;
+}
 .main-txt-wrap {
   position: absolute;
   bottom: 8%;
