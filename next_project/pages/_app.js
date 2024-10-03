@@ -183,10 +183,10 @@ function App({ Component, pageProps }) {
             <h3>Contact info.</h3>
             <p></p>
             <p>
-              전화번호: 010-8696-9388&nbsp;&nbsp;|&nbsp;&nbsp;이메일:
+              Tel: 010-8696-9388&nbsp;&nbsp;|&nbsp;&nbsp;Email:
               dust9629@gmail.com
             </p>
-            <p>© dust9629 all rights reserved</p>
+            <p>©dust9629 all rights reserved</p>
           </div>
           <div className="footer-links">
             <Link target="_blank" href="/">
