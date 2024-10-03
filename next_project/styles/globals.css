@@ -1,8 +1,11 @@
-html,
-body {
-  font-size: 62.5%;
+html {
+  font-size: 68%;
   list-style: none;
   text-decoration: none;
+}
+body {
+  /* font-size: 62.5%; */
+  font-size: 1.6rem;
 }
 
 body {
@@ -19,12 +22,13 @@ body {
   overflow: hidden;
 }
 main {
-  margin: 0 auto;
-  margin-top: 75px;
-  background-color: #fff;
+  width: 100%;
   height: 100%;
   max-width: 650px;
   min-width: 340px;
+  margin: 0 auto;
+  margin-top: 75px;
+  background-color: #fff;
   position: relative;
 }
 main::before {
@@ -506,4 +510,25 @@ a.back img {
   height: 5rem;
   z-index: 99999;
   right: calc(100% - 965px);
+}
+
+/* 작은 화면 (모바일) */
+@media (max-width: 600px) {
+  html {
+    font-size: 60%; /* 더 작은 기본 폰트 크기를 제공 */
+  }
+}
+
+/* 중간 화면 (태블릿) */
+@media (min-width: 601px) and (max-width: 1024px) {
+  html {
+    font-size: 62.5%; /* 기존 설정 유지 */
+  }
+}
+
+/* 큰 화면 (데스크탑) */
+@media (min-width: 1025px) {
+  html {
+    font-size: 62.5%; /* 더 큰 기본 폰트 크기를 제공 */
+  }
 }
