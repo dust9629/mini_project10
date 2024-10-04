@@ -65,3 +65,27 @@
 .popupButton {
   margin-left: 1rem;
 }
+
+@media (max-width: 600px) {
+  .popupContainer {
+    border-top-right-radius: 2.2rem;
+    border-top-left-radius: 2.2rem;
+  }
+  .popupContainer > a {
+    padding: 3rem 2.5rem 0;
+    width: calc(100% - 5rem);
+  }
+  .popupContainer > div {
+    width: calc(100% - 5rem);
+    padding: 2.4rem 2.5rem;
+  }
+  .popupContainer > a > p {
+    font-size: 2rem;
+    line-height: 1.5;
+    margin-bottom: 7rem;
+  }
+  .popupContainer > div > p > label,
+  .popupContainer > div > button {
+    font-size: 1.4rem;
+  }
+}

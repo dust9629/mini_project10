@@ -154,3 +154,8 @@ header .header-inner {
   transform: rotate(-45deg);
   bottom: 45%;
 }
+@media (max-width: 600px) {
+  html {
+    font-size: 60%; /* 더 작은 기본 폰트 크기를 제공 */
+  }
+}
