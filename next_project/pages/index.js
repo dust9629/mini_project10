@@ -88,7 +88,7 @@ export default function Home({ newItems, bestItems }) {
                 <p className="title-sub">VOL. 여름의 끝자락에서 만난 가을</p>
                 <p className="title-writer">
                   <span>curator. 레이첼 그린</span>
-                  <span>
+                  <span className="title-arrow">
                     <Image
                       src="/images/icon_arrow_ban.png"
                       alt="더보기"
@@ -117,7 +117,36 @@ export default function Home({ newItems, bestItems }) {
                 <p className="title-sub">VOL. 여름의 끝자락에서 만난 가을</p>
                 <p className="title-writer">
                   <span>curator. 레이첼 그린</span>
-                  <span>
+                  <span className="title-arrow">
+                    <Image
+                      src="/images/icon_arrow_ban.png"
+                      alt="더보기"
+                      width={100}
+                      height={100}
+                    />
+                  </span>
+                </p>
+              </div>
+            </Link>
+          </SwiperSlide>
+          <SwiperSlide>
+            <Link href="/event" className="inner-wrap n3">
+              <div className="main-ban-wrap">
+                <div className="curation_ban">
+                  <Image
+                    src="/images/main_ban03.webp"
+                    alt="메인배너3"
+                    width={1000}
+                    height={1000}
+                  />
+                </div>
+              </div>
+              <div className="main-txt-wrap">
+                <h4 className="title-main">{curationTit}</h4>
+                <p className="title-sub">VOL. 여름의 끝자락에서 만난 가을</p>
+                <p className="title-writer">
+                  <span>curator. 레이첼 그린</span>
+                  <span className="title-arrow">
                     <Image
                       src="/images/icon_arrow_ban.png"
                       alt="더보기"

@@ -1,7 +1,7 @@
 header {
   margin: 0 auto;
   background-color: #fff;
-  height: 75px;
+  height: 65px;
   max-width: 650px;
   min-width: 340px;
   border-bottom: 1px solid #000;
@@ -33,11 +33,11 @@ header .header-inner {
 }
 .header-inner .right a {
   display: block;
-  width: 2.6rem;
-  height: 2.6rem;
+  width: 2.4rem;
+  height: 2.4rem;
 }
 .header-inner .right a + a {
-  margin-left: 1.4rem;
+  margin-left: 1.2rem;
 }
 .header-inner .right a img {
   width: 100%;
@@ -78,7 +78,7 @@ header .header-inner {
   margin: 0;
 }
 .nav-header {
-  height: 75px;
+  height: 65px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -155,7 +155,17 @@ header .header-inner {
   bottom: 45%;
 }
 @media (max-width: 600px) {
-  html {
-    font-size: 60%; /* 더 작은 기본 폰트 크기를 제공 */
+  .header-inner .left .logo-wrap {
+    width: 7rem;
+  }
+  .ham-btn {
+    width: 26px;
+    height: 18px;
+    margin-left: 3rem;
+  }
+  .header-inner .right a {
+    display: block;
+    width: 2.2rem;
+    height: 2.2rem;
   }
 }
