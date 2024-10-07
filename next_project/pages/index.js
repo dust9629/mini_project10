@@ -62,13 +62,14 @@ export default function Home({ newItems, bestItems }) {
       <section className="section01">
         <Swiper
           // spaceBetween={50}
+          // key={someChangingValue}
           slidesPerView={1}
           navigation={true}
           pagination={{ clickable: true }}
           loop={true}
           autoplay={{
             delay: 1000,
-            // disableOnInteraction: false,
+            disableOnInteraction: false,
           }}
         >
           <SwiperSlide>
@@ -284,7 +285,12 @@ export default function Home({ newItems, bestItems }) {
             </div>
             <div className="brand-story">
               <Link href="/brand/detail" className="story-img">
-                <Image src="/images/brand0_ban.jpg" width={700} height={700} />
+                <Image
+                  src="/images/brand0_ban.jpg"
+                  alt="스퀘어폰드"
+                  width={700}
+                  height={700}
+                />
               </Link>
 
               <div className="story-txt">
@@ -304,7 +310,12 @@ export default function Home({ newItems, bestItems }) {
               </div>
               <div className="story-prd">
                 <div className="story-prd-img">
-                  <Image src="/images/brand0_0.jpg" width={200} height={200} />
+                  <Image
+                    src="/images/brand0_0.jpg"
+                    alt="브랜드 이미지"
+                    width={200}
+                    height={200}
+                  />
                 </div>
                 <div className="cont-txt">
                   <span className="prd-brand">스퀘어폰드</span>

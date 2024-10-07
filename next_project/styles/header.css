@@ -155,8 +155,21 @@ header .header-inner {
   bottom: 45%;
 }
 @media (max-width: 600px) {
+  .nav-header a {
+    font-size: 1.6rem;
+  }
+  .nav-header {
+    padding: 0px 14px;
+  }
   .header-inner .left .logo-wrap {
     width: 7rem;
+  }
+  header .header-inner {
+    padding: 0 14px;
+  }
+  .nav-body .nav-tab li {
+    font-size: 1.6rem;
+    padding: 1.8rem 1.4rem;
   }
   .ham-btn {
     width: 26px;

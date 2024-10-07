@@ -1,7 +1,7 @@
 .productList,
 .productDetail {
   width: 100%;
-  padding-bottom: 2rem;
+  padding-bottom: 4rem;
 }
 .productList > section,
 .productDetail > section.prd {
@@ -142,7 +142,8 @@ a.back img {
 .prdBtn button {
   width: 100%;
   background-color: #8f8f8f;
-  border-color: #ccc;
+  border-color: #8f8f8f;
+  margin-top: 1rem;
 }
 .prdBtn > p > button.cart {
   background-color: #fff;
@@ -154,4 +155,28 @@ a.back img {
 .prdDetails img {
   width: 100%;
   height: auto;
+}
+@media (max-width: 500px) {
+  .productList > section,
+  .productDetail > section.prd {
+    margin: 0 auto;
+    width: calc(100% - 2.8rem);
+    padding: 0 1.4rem;
+  }
+  a.back {
+    display: block;
+    width: 2rem;
+    padding: 1.6rem 1.2rem 0;
+  }
+  h3.listTit {
+    font-size: 1.8rem;
+    margin: 0 0 1rem;
+    padding-top: 1.4rem;
+  }
+  .listSort > li {
+    font-size: 1.4rem;
+  }
+  .listSort > li + li {
+    margin-left: 0.6rem;
+  }
 }
