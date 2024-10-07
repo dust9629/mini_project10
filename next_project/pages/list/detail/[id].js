@@ -93,6 +93,21 @@ export default function Detail({ product, error }) {
       <section className={styles.prd}>
         <h3 className={styles.listTit}>상세 정보</h3>
         <div className={styles.prdDetails}>
+          <div className={styles.detailsTop}>
+            <Image
+              className={styles.logoDetail}
+              src="/images/logo.png"
+              alt="부들 로고"
+              width={78}
+              height={28}
+            />
+            <p>
+              부들은 부들부들한 감촉만큼 부드럽고
+              <br />
+              안락한 공간으로 만들어 드립니다.
+            </p>
+          </div>
+
           <Image
             src={product.imageUrl}
             alt="상품 상세이미지"

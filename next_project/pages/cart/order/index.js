@@ -53,13 +53,9 @@ export default function order() {
       <Link className={styles.back} href="/">
         <Image src="/images/icon_arrow_back.png" width={200} height={50} />
       </Link>
-      <section className={styles.orderTop}>
-        <div>
-          <h3 className={styles.orderTit}>상품주문</h3>
-        </div>
-      </section>
 
       <section className={styles.orderList}>
+        <h3 className={styles.cartTit}>상품주문</h3>
         <div className={styles.orderWrap}>
           <ul className="order-wrap">
             {orderList.map((item, i) => (
@@ -77,8 +73,8 @@ export default function order() {
                     <span className={styles.orderBrand}>{item.brand}</span>
                     <h3 className={styles.orderPrdName}>{item.name}</h3>
                     <p className={styles.orderPrice}>
-                      수량 : <span className={styles.orderCount}>2</span>
-                      &nbsp;&nbsp;/&nbsp;&nbsp;
+                      {/* 수량 : <span className={styles.orderCount}>2</span>
+                      &nbsp;&nbsp;/&nbsp;&nbsp; */}
                       <strong>{item.price}</strong>원
                     </p>
                   </div>
@@ -87,46 +83,9 @@ export default function order() {
             ))}
           </ul>
         </div>
-        <div className={styles.orderTxt}>
-          <h4>결제예정 금액</h4>
-          <ul>
-            <li>
-              <h6>총 상품금액</h6>
-              <p>
-                <strong>30,000</strong>원
-              </p>
-            </li>
-            <li>
-              <h6>총 할인금액</h6>
-              <p>
-                <strong>0</strong>원
-              </p>
-            </li>
-            <li>
-              <h6>총 배송비</h6>
-              <p>
-                <strong>0</strong>원
-              </p>
-            </li>
-          </ul>
-          <div className={styles.totalPrice}>
-            <h6>총 결제 금액</h6>
-            <p>
-              <strong>30,000</strong>원
-            </p>
-          </div>
-        </div>
-
-        <div className={styles.payWay}>
-          <h3 className={styles.orderTit}>결제수단</h3>
-          <ul>
-            <li>{/* <Image src="/images/" /> */}</li>
-          </ul>
-        </div>
 
         <div className={styles.orderInfo}>
-          <h3 className={styles.orderTit}>주문자 정보</h3>
-
+          <h3 className={styles.orderTit}>배송지 정보</h3>
           <form>
             <div>
               <label htmlFor="join_email">이메일*</label>
@@ -209,9 +168,53 @@ export default function order() {
           </form>
         </div>
 
-        <div className={styles.orderBtn}>
-          <button className={styles.select}>선택상품주문</button>
-          <button className={styles.total}>전체상품주문</button>
+        <div className={styles.payWay}>
+          <h3 className={styles.orderTit}>결제수단</h3>
+          <ul>
+            <li>
+              <a href="/">카드 결제</a>
+            </li>
+            <li>
+              <a href="/">기타 수단</a>
+            </li>
+          </ul>
+        </div>
+
+        <div className={styles.payAll}>
+          <h3 className={styles.orderTit}>결제예정 금액</h3>
+          <ul>
+            <li>
+              <h6>총 상품금액</h6>
+              <p>
+                <strong>30,000</strong>원
+              </p>
+            </li>
+            <li>
+              <h6>총 할인금액</h6>
+              <p>
+                <strong>0</strong>원
+              </p>
+            </li>
+            <li>
+              <h6>총 배송비</h6>
+              <p>
+                <strong>0</strong>원
+              </p>
+            </li>
+          </ul>
+          <div className={styles.totalPrice}>
+            <h6>최종 결제금액</h6>
+            <p>
+              <strong className={styles.allPrice}>30,000</strong>원
+            </p>
+          </div>
+        </div>
+
+        <div className={styles.totalBtn}>
+          {/* <button className={styles.select}>선택상품주문</button> */}
+          <button className={styles.orderAll}>
+            총 <strong className={styles.allPrice}>30,000</strong>원 결제하기
+          </button>
         </div>
       </section>
     </main>

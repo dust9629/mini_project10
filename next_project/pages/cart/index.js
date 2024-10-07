@@ -32,15 +32,10 @@ export default function Cart() {
       <Link className={styles.back} href="/">
         <Image src="/images/icon_arrow_back.png" width={200} height={50} />
       </Link>
-      <section className={styles.cartTop}>
-        <div>
-          <h3 className={styles.cartTit}>장바구니</h3>
-        </div>
-      </section>
-
       <section className={styles.cartList}>
+        <h3 className={styles.cartTit}>장바구니</h3>
         <div className={styles.cartWrap}>
-          <ul className="cart-wrap">
+          <ul>
             {cartList.map((item, i) => (
               <li className={styles.cart} key={i}>
                 <Link className={styles.cartConts} href="/list/detail">
@@ -56,8 +51,8 @@ export default function Cart() {
                     <span className={styles.cartBrand}>{item.brand}</span>
                     <h3 className={styles.cartPrdName}>{item.name}</h3>
                     <p className={styles.cartPrice}>
-                      수량 : <span className={styles.cartCount}>2</span>
-                      &nbsp;&nbsp;/&nbsp;&nbsp;
+                      {/* 수량 : <span className={styles.cartCount}>2</span>
+                      &nbsp;&nbsp;/&nbsp;&nbsp; */}
                       <strong>{item.price}</strong>원
                     </p>
                   </div>
@@ -69,8 +64,8 @@ export default function Cart() {
             ))}
           </ul>
         </div>
-        <div className={styles.cartTxt}>
-          <h4>결제예정 금액</h4>
+        <div className={styles.payAll}>
+          <h3 className={styles.orderTit}>결제예정 금액</h3>
           <ul>
             <li>
               <h6>총 상품금액</h6>

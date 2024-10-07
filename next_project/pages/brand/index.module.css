@@ -128,3 +128,38 @@ a.back img {
 .contWrap .mainTxt .contTxt {
   font-size: 1.3rem;
 }
+@media (max-width: 500px) {
+  a.back {
+    width: 2rem;
+    padding: 1.6rem 1.4rem 0;
+  }
+  .mainBan,
+  .contList {
+    width: calc(100% - 2.8rem);
+    margin: 0 auto;
+    padding: 1.2rem 1.4rem 4rem;
+  }
+  .mainBan h3,
+  .contList h3 {
+    font-size: 1.8rem;
+    margin: 1.4rem 0 3rem;
+  }
+  .brandMainTxt h4 {
+    font-size: 1.6rem;
+    margin: 3rem 0 2rem;
+  }
+  .brandMainTxt p {
+    font-size: 1.4rem;
+    line-height: 1.6;
+    margin: 0 0 1rem;
+  }
+  .mainBan > div {
+    width: 100%;
+  }
+  .prdList > div {
+    width: calc(100% - 2.8rem);
+  }
+  .prdList > div {
+    padding: 0;
+  }
+}

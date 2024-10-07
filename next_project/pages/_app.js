@@ -186,7 +186,7 @@ function App({ Component, pageProps }) {
               Tel: 010-8696-9388&nbsp;&nbsp;|&nbsp;&nbsp;Email:
               dust9629@gmail.com
             </p>
-            <p>©dust9629 all rights reserved</p>
+            <p>dust9629 all rights reserved</p>
           </div>
           <div className="footer-links">
             <Link target="_blank" href="/">
@@ -208,7 +208,7 @@ function App({ Component, pageProps }) {
               Velog
             </Link>
             &nbsp;|&nbsp;
-            <Link target="_blank" href="/">
+            <Link target="_blank" href="https://github.com/dust9629">
               Github
             </Link>
           </div>

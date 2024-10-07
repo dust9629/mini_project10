@@ -156,6 +156,20 @@ a.back img {
   width: 100%;
   height: auto;
 }
+.detailsTop {
+  width: 100%;
+  text-align: center;
+  padding: 2.8rem 0 3.2rem;
+}
+.detailsTop img {
+  width: 9rem;
+  margin-bottom: 1.8rem;
+}
+.detailsTop > p {
+  font-size: 1.8rem;
+  margin-bottom: 2rem;
+  line-height: 1.6;
+}
 @media (max-width: 500px) {
   .productList > section,
   .productDetail > section.prd {
@@ -166,7 +180,7 @@ a.back img {
   a.back {
     display: block;
     width: 2rem;
-    padding: 1.6rem 1.2rem 0;
+    padding: 1.6rem 1.4rem 0;
   }
   h3.listTit {
     font-size: 1.8rem;
@@ -175,8 +189,39 @@ a.back img {
   }
   .listSort > li {
     font-size: 1.4rem;
+    margin-bottom: 0.8rem;
   }
   .listSort > li + li {
     margin-left: 0.6rem;
+  }
+  /* 상품 상세 */
+  .prdTit > h3 {
+    font-size: 1.8rem;
+    margin: 0 0 1.2rem;
+    padding-top: 1.2rem;
+  }
+  .prdTxt .likeBtn {
+    width: 2rem;
+    height: 2rem;
+  }
+  .prdBtn button,
+  .prdBtn > p > button {
+    /* width: calc(50% - 0.5rem); */
+    font-size: 1.4rem;
+    padding: 1.4rem 1rem;
+    margin-top: 0.8rem;
+  }
+  .prdBtn > p > button {
+    width: calc(50% - 0.4rem);
+  }
+  .prdPrice strong {
+    font-size: 1.6rem;
+  }
+  .detailsTop img {
+    width: 7rem;
+    margin-bottom: 1.2rem;
+  }
+  .detailsTop > p {
+    font-size: 1.4rem;
   }
 }

@@ -13,9 +13,11 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  margin-bottom: 2rem;
 }
 .review h3 > p {
   font-size: 1.8rem;
+  font-weight: 500;
 }
 .review h3 > div {
   font-size: 1.2rem;
@@ -39,12 +41,12 @@
   font-size: 1.4rem;
   font-weight: 300;
   color: #fff;
-  padding: 3rem 0;
+  padding: 3rem 0.2rem;
   margin-left: 1rem;
 }
 .reviewCont {
   margin-top: 3rem;
-  padding: 2rem 0;
+  padding: 2rem 0 0;
   border-top: 1px solid #a2a2a2;
   border-bottom: 1px solid #a2a2a2;
   display: flex;
@@ -75,4 +77,19 @@
   padding: 1.8rem 2rem;
   margin-top: 1rem;
   height: 5rem;
+}
+@media (max-width: 600px) {
+  .review > div > button,
+  .submit {
+    font-size: 1.3rem;
+    margin-left: 0.8rem;
+  }
+  .review {
+    padding: 3rem 1.4rem 2rem;
+    width: calc(100% - 2.8rem);
+  }
+  .reviewCont .reviewDesc {
+    font-size: 1.2rem;
+    padding: 1.4rem 1rem;
+  }
 }
