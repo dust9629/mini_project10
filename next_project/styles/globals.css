@@ -467,7 +467,7 @@ section.section02 ul li > a:hover {
   height: 100%;
   position: relative;
 }
-.cura-slide .swiper .swiper-slide img::before {
+.cura-slide .swiper .swiper-slide a::before {
   content: "";
   position: absolute;
   top: 0;
@@ -476,15 +476,16 @@ section.section02 ul li > a:hover {
   height: 99%;
   background-color: rgba(0, 0, 0, 0.8);
   transition: all 0.3s;
+  z-index: 1;
 }
-.cura-slide .swiper .swiper-slide.swiper-slide-active img::before {
+.cura-slide .swiper .swiper-slide.swiper-slide-active a::before {
   background-color: rgba(0, 0, 0, 0.09);
   transition: all 0.3s;
 }
 .cura-slide .swiper .swiper-slide .cura-slide-txt {
   position: absolute;
   bottom: 10%;
-  left: 3.6rem;
+  left: 2.6rem;
   opacity: 0.3;
 }
 .cura-slide .swiper .swiper-slide.swiper-slide-active .cura-slide-txt {

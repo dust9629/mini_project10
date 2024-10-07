@@ -35,6 +35,21 @@ header .header-inner {
   display: block;
   width: 2.4rem;
   height: 2.4rem;
+  position: relative;
+}
+.header-inner .right a > p {
+  position: absolute;
+  top: -3px;
+  right: -3px;
+  width: 1.2rem;
+  height: 1.2rem;
+  font-size: 0.8rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  background-color: #020202;
+  border-radius: 50%;
 }
 .header-inner .right a + a {
   margin-left: 1.2rem;

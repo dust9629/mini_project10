@@ -9,6 +9,7 @@ export default function Document() {
           href="https://cdn.jsdelivr.net/npm/pretendard/dist/web/static/pretendard.css"
           rel="stylesheet"
         />
+        <link rel="icon" href="/boodle.png" type="image/png" />
       </Head>
       <body>
         <Main />

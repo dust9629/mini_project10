@@ -103,6 +103,7 @@ function App({ Component, pageProps }) {
                 width={50}
                 height={50}
               />
+              <p className="cart-count">4</p>
             </Link>
             <div
               className={`ham-btn ${isActive ? "active" : ""}`}
