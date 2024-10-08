@@ -202,11 +202,11 @@ function App({ Component, pageProps }) {
               Notion
             </Link>
             &nbsp;|&nbsp;
-            <Link target="_blank" href="/">
+            <Link target="_blank" href="https://medium.com/@dust9629">
               Medium
             </Link>
             &nbsp;|&nbsp;
-            <Link target="_blank" href="/">
+            <Link target="_blank" href="https://velog.io/@dust9629/posts">
               Velog
             </Link>
             &nbsp;|&nbsp;

@@ -31,7 +31,10 @@ const EventPopup = () => {
 
   return (
     <div className={styles.popupContainer}>
-      <Link href="/" target="_blank">
+      <Link
+        href="https://pricey-sing-49c.notion.site/Boodle-507fc2ff90f546bfb24c5c386d6720ac?pvs=4"
+        target="_blank"
+      >
         <p className={styles.popupText}>
           첫 방문 특별 이벤트!
           <br />

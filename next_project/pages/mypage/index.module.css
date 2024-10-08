@@ -68,7 +68,7 @@ a.back img {
 }
 .orderedBtm,
 .mypageBtm {
-  padding-top: 3rem;
+  padding-top: 3rem !important;
 }
 .orderedBtm ul,
 .mypageBtm ul {

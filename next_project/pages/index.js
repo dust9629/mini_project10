@@ -251,6 +251,20 @@ export default function Home({ newItems, bestItems }) {
                       </p>
                     </div>
                   </Link>
+                  <p className="like-btn">
+                    <Image
+                      src="/images/icon_like_e.png"
+                      className="like-e"
+                      width={35}
+                      height={35}
+                    />
+                    <Image
+                      src="/images/icon_like_f.png"
+                      className="like-f"
+                      width={35}
+                      height={35}
+                    />
+                  </p>
                 </li>
               ))}
             </ul>
@@ -360,6 +374,20 @@ export default function Home({ newItems, bestItems }) {
                       </p>
                     </div>
                   </Link>
+                  <p className="like-btn">
+                    <Image
+                      src="/images/icon_like_e.png"
+                      className="like-e"
+                      width={35}
+                      height={35}
+                    />
+                    <Image
+                      src="/images/icon_like_f.png"
+                      className="like-f"
+                      width={35}
+                      height={35}
+                    />
+                  </p>
                 </li>
               ))}
             </ul>
