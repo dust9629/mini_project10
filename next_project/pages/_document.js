@@ -10,6 +10,10 @@ export default function Document() {
           rel="stylesheet"
         />
         <link rel="icon" href="/boodle.png" type="image/png" />
+        <link
+          rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css"
+        />
       </Head>
       <body>
         <Main />

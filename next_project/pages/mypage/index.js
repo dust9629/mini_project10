@@ -74,7 +74,6 @@ export default function Mypage() {
         </div>
       </section>
       <section className={styles.mypageBtm}>
-        <h3 className={styles.mypageTit}></h3>
         <ul>
           <li>
             <Link href="/">
@@ -90,7 +89,7 @@ export default function Mypage() {
             </Link>
           </li>
           <li>
-            <Link href="/">
+            <Link href="/mypage/ordered">
               <div className={styles.profileImg}>
                 <Image
                   alt={"icon"}
@@ -116,7 +115,7 @@ export default function Mypage() {
             </Link>
           </li>
           <li>
-            <Link href="/">
+            <Link href="/cart">
               <div className={styles.profileImg}>
                 <Image
                   alt={"icon"}
@@ -129,7 +128,7 @@ export default function Mypage() {
             </Link>
           </li>
           <li>
-            <Link href="/">
+            <Link href="/salecode">
               <div className={styles.profileImg}>
                 <Image
                   alt={"icon"}
@@ -142,7 +141,7 @@ export default function Mypage() {
             </Link>
           </li>
           <li>
-            <Link href="/">
+            <Link href="/salecoupon">
               <div className={styles.profileImg}>
                 <Image
                   alt={"icon"}

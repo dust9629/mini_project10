@@ -94,6 +94,7 @@ export default function Detail({ product, error }) {
         <h3 className={styles.listTit}>상세 정보</h3>
         <div className={styles.prdDetails}>
           <div className={styles.detailsTop}>
+            <i className="fas fa-couch"></i>
             <Image
               className={styles.logoDetail}
               src="/images/logo.png"

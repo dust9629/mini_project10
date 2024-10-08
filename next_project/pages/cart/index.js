@@ -29,7 +29,7 @@ let cartList = [
 export default function Cart() {
   return (
     <main className={styles.cart}>
-      <Link className={styles.back} href="/">
+      <Link className={styles.back} href="/mypage">
         <Image src="/images/icon_arrow_back.png" width={200} height={50} />
       </Link>
       <section className={styles.cartList}>

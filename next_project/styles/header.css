@@ -130,6 +130,11 @@ header .header-inner {
   left: 1.8rem;
   padding: 0.8rem 2rem 0.8rem 0;
 }
+.nav-body a.logout i {
+  font-size: 1.4rem;
+  margin-right: 0.5rem;
+  color: #4e4e4e;
+}
 /* 햄버거 메뉴 버튼 */
 .ham-btn {
   width: 32px;

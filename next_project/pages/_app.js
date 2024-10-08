@@ -80,7 +80,7 @@ function App({ Component, pageProps }) {
             </Link>
           </div>
           <div className="right">
-            <Link href="/">
+            <Link href="/list">
               <Image
                 src="/images/icon_search.png"
                 alt="찾아보기"
@@ -167,6 +167,7 @@ function App({ Component, pageProps }) {
               </li>
             </ul>
             <Link className="logout" href="/" onClick={handleLogout}>
+              <i className="fas fa-sign-out-alt"></i>
               로그아웃
             </Link>
           </div>

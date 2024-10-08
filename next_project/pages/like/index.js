@@ -49,12 +49,14 @@ let itemsB = [
 export default function Like() {
   return (
     <main className={styles.productLike}>
-      <Link className={styles.back} href="/">
+      <Link className={styles.back} href="/mypage">
         <Image src="/images/icon_arrow_back.png" width={200} height={50} />
       </Link>
       <section className={styles.likeTop}>
         <div>
-          <h3 className={styles.likeTit}>좋아요 리스트</h3>
+          <h3 className={styles.likeTit}>
+            <span className={styles.likeProfile}>엘리스</span>님의 좋아요 리스트
+          </h3>
         </div>
       </section>
 

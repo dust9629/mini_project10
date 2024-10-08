@@ -66,58 +66,13 @@ a.back img {
 .email {
   font-size: 1.2rem;
 }
-.orderedBtm,
+.orderedBtm {
+  padding-top: 3rem !important;
+}
 .mypageBtm {
   padding-top: 3rem;
 }
-.orderedBtm ul,
-.mypageBtm ul {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  justify-items: center;
-  align-items: center;
-  gap: 2rem;
-}
-.orderedBtm ul {
-  grid-template-columns: repeat(4, 1fr);
-  gap: 1.8rem;
-}
-.orderedBtm ul > li,
-.mypageBtm ul > li {
-  width: 100%;
-  border: 1px solid #525252;
-  padding: 2rem 0;
-}
-.orderedBtm ul > li {
-  display: flex;
-  align-items: center;
-  flex-direction: column;
-}
-.orderedBtm ul > li.stepOne {
-  background-color: #202020;
-}
-.orderedBtm ul > li > strong {
-  margin-bottom: 1.2rem;
-}
-.orderedBtm ul > li > strong,
-.orderedBtm ul > li > span {
-  display: block;
-  font-size: 1.6rem;
-}
-.orderedBtm ul > li > strong.orderedAct,
-.orderedBtm ul > li > span.orderedAct {
-  color: #ccc;
-}
-.mypageBtm ul > li > a {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
-  text-decoration: none;
-  color: #202020;
-}
+
 .mypageBtm .profileImg {
   width: 6rem;
   height: 6rem;
@@ -132,31 +87,32 @@ a.back img {
   font-size: 1.6rem;
   margin: 2rem 0 0;
 }
-.orderedInfo {
-  border-top: 1px solid #525252;
-  margin-top: 2rem;
-  padding: 1.8rem 1.2rem;
+.salesInput {
+  display: flex;
+  align-items: center;
+  margin-top: 1rem;
 }
-.orderedInfo:last-child {
-  border-bottom: 1px solid #525252;
-}
-.orderedInfo > h5 {
+.salesInput input {
+  width: 100%;
   font-size: 1.6rem;
-  font-weight: 500;
-  margin-bottom: 1.2rem;
+  padding: 1.2rem 0.8rem;
+  border: 1px solid #525252;
+  border-radius: 0;
 }
-.orderedInfo > p {
+.salesInput button {
+  width: 12rem;
   font-size: 1.6rem;
-  margin-bottom: 0.6rem;
+  padding: 1.2rem 0.8rem;
+  margin-left: 1rem;
+  border: 1px solid #525252;
+  border-radius: 0;
+  background-color: #202020;
+  color: #fff;
 }
-.orderedInfo .orderedSum {
+.codeEmpty {
   font-size: 1.6rem;
-  margin: 0;
+  margin-top: 1rem;
 }
-.orderedInfo .orderedSum strong {
-  margin-right: 0.2rem;
-}
-
 @media (max-width: 500px) {
   .mypage > section {
     margin: 0 auto;
@@ -209,35 +165,17 @@ a.back img {
   .mypageBtm {
     padding-top: 2rem !important;
   }
-  .orderedBtm ul,
-  .mypageBtm ul {
-    gap: 1rem;
-  }
-  .orderedBtm,
-  .mypageBtm .mypageMenu {
+  .salesInput input {
     font-size: 1.4rem;
+    padding: 0.8rem 0.6rem;
   }
-  .orderedBtm ul > li > strong {
-    margin-bottom: 0.8rem;
-  }
-  .orderedBtm ul > li > strong,
-  .orderedBtm ul > li > span {
-    display: block;
+  .salesInput button {
+    width: 8rem;
     font-size: 1.4rem;
+    padding: 0.8rem 0.4rem;
+    margin-left: 0.8rem;
   }
-  .orderedInfo > h5 {
-    font-size: 1.2rem;
-    margin-bottom: 0.8rem;
-  }
-  .orderedInfo > p {
+  .codeEmpty {
     font-size: 1.4rem;
-    margin-bottom: 0.6rem;
-  }
-  .orderedInfo .orderedSum {
-    font-size: 1.4rem;
-    margin: 0;
-  }
-  .orderedInfo .orderedSum strong {
-    margin-right: 0.2rem;
   }
 }

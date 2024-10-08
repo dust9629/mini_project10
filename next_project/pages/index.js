@@ -242,7 +242,10 @@ export default function Home({ newItems, bestItems }) {
                     </div>
                     <div className="cont-txt">
                       <span className="prd-brand">{item.brand}</span>
-                      <h3 className="prd-name">{item.prd_name}</h3>
+                      <h3 className="prd-name">
+                        {/* <span className="sold-out">품절</span> */}
+                        {item.prd_name}
+                      </h3>
                       <p className="prd-price">
                         <strong>{item.prd_price}</strong>원
                       </p>
