@@ -24,7 +24,11 @@ export default function Login() {
   };
 
   const handleKakaoLogin = () => {
-    const kakaoAuthUrl = `https://kauth.kakao.com/oauth/authorize?client_id=${process.env.KAKAO_REST_API_KEY}&redirect_uri=${process.env.NEXT_PUBLIC_REDIRECT_URI}&response_type=code`;
+    const kakaoAuthUrl = `https://kauth.kakao.com/oauth/authorize?client_id=${
+      process.env.KAKAO_REST_API_KEY
+    }&redirect_uri=${encodeURIComponent(
+      process.env.NEXT_PUBLIC_REDIRECT_URI
+    )}&response_type=code`;
     window.location.href = kakaoAuthUrl;
   };
 
