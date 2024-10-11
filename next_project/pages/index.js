@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import SwiperCore, { Pagination, Navigation, Autoplay } from "swiper";
@@ -8,6 +8,7 @@ import "swiper/css/navigation"; // 네비게이션 스타일
 import "swiper/css/pagination"; // 페이지네이션 스타일
 import "swiper/css/autoplay";
 import EventPopup from "../components/popup";
+import LikeButton from "../components/LikeButton";
 import { connectDB } from "../util/database";
 
 SwiperCore.use([Pagination, Navigation, Autoplay]);
@@ -16,6 +17,7 @@ export default function Home({ newItems, bestItems }) {
   let curationTit = "지친 몸을 누일 수 있는 폭닥한 침구 ~50%";
   let category = ["집들이", "생일", "기념일", "감사"];
 
+  const [user, setUser] = useState(null);
   useEffect(() => {
     // 토큰 처리 로직
     const urlParams = new URLSearchParams(window.location.search);
@@ -27,7 +29,12 @@ export default function Home({ newItems, bestItems }) {
       // 초기 URL에서 쿼리 파라미터 제거
       window.history.pushState({}, document.title, "/");
     }
+    // 로컬 스토리지에서 사용자 ID 가져오기
+    const userId = localStorage.getItem("userId");
+    setUser({ _id: userId });
   }, []);
+
+  // 페이지 컴포넌트가 로드될 때 사용자의 세션에서 사용자 ID를 가져와야 함 (좋아요 기능)
 
   const slidesCura = [
     {
@@ -194,41 +201,6 @@ export default function Home({ newItems, bestItems }) {
               <Link href="/list">+</Link>
             </div>
             <ul className="cont-wrap">
-              {/* {itemsN.map((item, i) => (
-                <li className="cont" key={i}>
-                  <Link href="/list/detail">
-                    <div className="cont-img">
-                      <Image
-                        src={`/images/item_n${i}.jpg`}
-                        alt={item.name}
-                        width={300}
-                        height={600}
-                      />
-                    </div>
-                    <div className="cont-txt">
-                      <span className="prd-brand">{item.brand}</span>
-                      <h3 className="prd-name">{item.name}</h3>
-                      <p className="prd-price">
-                        <strong>{item.price}</strong>원
-                      </p>
-                    </div>
-                  </Link>
-                  <p className="like-btn">
-                    <Image
-                      src="/images/icon_like_e.png"
-                      className="like-e"
-                      width={35}
-                      height={35}
-                    />
-                    <Image
-                      src="/images/icon_like_f.png"
-                      className="like-f"
-                      width={35}
-                      height={35}
-                    />
-                  </p>
-                </li>
-              ))} */}
               {newItems.map((item, index) => (
                 <li className="cont" key={index}>
                   <Link href={`/list/detail/${item._id}`}>
@@ -252,18 +224,7 @@ export default function Home({ newItems, bestItems }) {
                     </div>
                   </Link>
                   <p className="like-btn">
-                    <Image
-                      src="/images/icon_like_e.png"
-                      className="like-e"
-                      width={35}
-                      height={35}
-                    />
-                    <Image
-                      src="/images/icon_like_f.png"
-                      className="like-f"
-                      width={35}
-                      height={35}
-                    />
+                    <LikeButton userId={user?._id} itemId={item._id} />
                   </p>
                 </li>
               ))}
@@ -271,27 +232,6 @@ export default function Home({ newItems, bestItems }) {
           </div>
         </div>
       </section>
-      {/* 중간 배너 */}
-      {/* <section className="banner">
-        <div className="ban-wrap">
-          <Link href="/">
-            <Image src={"/images/ban01.png"} width={650} height={300} />
-            <p className="ban-txt">
-              <Image src={"/images/logo_tounou.png"} width={300} height={60} />
-              <span>뚜누만의 어쩌구</span>
-            </p>
-          </Link>
-        </div>
-        <div className="ban-wrap">
-          <Link href="/">
-            <Image src={"/images/ban02.png"} width={650} height={300} />
-            <p className="ban-txt">
-              <Image src={"/images/logo_artish.png"} width={300} height={60} />
-              <span>뚜누만의 어쩌구</span>
-            </p>
-          </Link>
-        </div>
-      </section> */}
       {/* 이벤트 브랜드 */}
       <section className="section04">
         <div className="inner-wrap n4">
@@ -375,18 +315,7 @@ export default function Home({ newItems, bestItems }) {
                     </div>
                   </Link>
                   <p className="like-btn">
-                    <Image
-                      src="/images/icon_like_e.png"
-                      className="like-e"
-                      width={35}
-                      height={35}
-                    />
-                    <Image
-                      src="/images/icon_like_f.png"
-                      className="like-f"
-                      width={35}
-                      height={35}
-                    />
+                    <LikeButton userId={user?._id} itemId={item._id} />
                   </p>
                 </li>
               ))}

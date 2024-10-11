@@ -66,8 +66,10 @@ export default async (req, res) => {
         process.env.JWT_SECRET,
         { expiresIn: "1h" }
       );
-
-      return res.status(200).json({ token, userRole: user.role });
+      return res
+        .status(200)
+        .json({ token, userRole: user.role, userId: user._id.toString() });
+      // return res.status(200).json({ token, userRole: user.role });
     } catch (error) {
       console.error("로그인 오류:", error);
       return res

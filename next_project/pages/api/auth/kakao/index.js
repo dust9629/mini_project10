@@ -40,7 +40,7 @@ export default async function kakaoLogin(req, res) {
       user = await db.collection("users").insertOne({
         email,
         name: profile.nickname,
-        role: "member",
+        role: "normember",
         provider: "kakao",
       });
     }
@@ -54,7 +54,7 @@ export default async function kakaoLogin(req, res) {
     // Redirect to frontend with token in query to store in localStorage
     res.redirect(`/?token=${token}&role=${user.role}`);
   } catch (error) {
-    console.error("Kakao login error:", error);
+    console.error("카카오 로그인 에러:", error);
     res.status(500).json({ message: "Internal server error" });
   }
 }
