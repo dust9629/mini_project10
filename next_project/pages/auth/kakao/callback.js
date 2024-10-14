@@ -14,7 +14,7 @@ const KakaoCallback = () => {
       router.push("/dashboard");
     } else {
       // 토큰이 없거나 문제가 있을 경우 로그인 페이지로 리다이렉트
-      router.push("/login");
+      router.push("/member");
     }
   }, [router]);
 
