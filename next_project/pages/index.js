@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import axios from "axios";
 import Link from "next/link";
 import Image from "next/image";
 import SwiperCore, { Pagination, Navigation, Autoplay } from "swiper";
@@ -19,19 +20,27 @@ export default function Home({ newItems, bestItems }) {
 
   const [user, setUser] = useState(null);
   useEffect(() => {
-    // 토큰 처리 로직
-    const urlParams = new URLSearchParams(window.location.search);
-    const token = urlParams.get("token");
-    const role = urlParams.get("role");
-    if (token) {
-      localStorage.setItem("token", token);
-      localStorage.setItem("userRole", role);
-      // 초기 URL에서 쿼리 파라미터 제거
-      window.history.pushState({}, document.title, "/");
-    }
-    // 로컬 스토리지에서 사용자 ID 가져오기
-    const userId = localStorage.getItem("userId");
-    setUser({ _id: userId });
+    const fetchUserData = async () => {
+      const token = localStorage.getItem("token");
+      if (token) {
+        try {
+          const response = await axios.get("/api/users", {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          });
+          const { userId } = response.data;
+          localStorage.setItem("userId", userId);
+          setUser({ _id: userId });
+        } catch (error) {
+          console.error("Failed to fetch user data", error);
+        }
+      }
+    };
+
+    fetchUserData();
+    // 초기 URL에서 쿼리 파라미터 제거
+    window.history.pushState({}, document.title, "/");
   }, []);
 
   // 페이지 컴포넌트가 로드될 때 사용자의 세션에서 사용자 ID를 가져와야 함 (좋아요 기능)

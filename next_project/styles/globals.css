@@ -539,17 +539,20 @@ a.back img {
   width: 100%;
   height: auto;
 }
-/* .top-btn-wrap {
-  position: relative;
+.top-btn-wrap {
+  position: fixed;
   max-width: 650px;
   min-width: 340px;
   margin: 0 auto;
-  background: red;
-} */
+  background: transparent;
+  bottom: 0;
+  left: 50%;
+  width: 100%;
+  transform: translateX(-50%);
+}
 .top-btn {
-  position: fixed;
-  bottom: 3rem;
-  right: 2rem;
+  position: relative;
+  z-index: 99999;
   background-color: #202020;
   color: #fff;
   border: none;
@@ -559,8 +562,9 @@ a.back img {
   justify-content: center;
   width: 5rem;
   height: 5rem;
-  z-index: 99999;
-  right: calc(100% - 965px);
+  float: right;
+  margin-right: 1.8rem;
+  margin-bottom: 2.8rem;
 }
 
 /* 큰 화면 (데스크탑) */

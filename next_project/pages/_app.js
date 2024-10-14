@@ -175,9 +175,11 @@ function App({ Component, pageProps }) {
       </header>
       <Component {...pageProps} />
       {showTopBtn && (
-        <button className="top-btn" onClick={scrollToTop}>
-          Top
-        </button>
+        <div className="top-btn-wrap">
+          <button className="top-btn" onClick={scrollToTop}>
+            Top
+          </button>
+        </div>
       )}
       <footer>
         <div className="footer-inner">

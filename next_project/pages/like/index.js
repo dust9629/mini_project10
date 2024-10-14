@@ -47,6 +47,17 @@ let itemsB = [
 ];
 
 export default function Like() {
+  const [items, setItems] = useState([]);
+
+  useEffect(() => {
+    const fetchLikedItems = async () => {
+      const userId = localStorage.getItem("userId");
+      const response = await axios.get(`/api/likes/user/${userId}`);
+      setItems(response.data.items);
+    };
+    fetchLikedItems();
+  }, []);
+
   return (
     <main className={styles.productLike}>
       <Link className={styles.back} href="/mypage">
