@@ -38,7 +38,7 @@ const EventPopup = () => {
         <p className={styles.popupText}>
           첫 방문 특별 이벤트!
           <br />
-          부들의 혜택을 확인하세요!
+          부들의 스토리를 확인하세요!
         </p>
       </Link>
       <div className="btn-wrap">
