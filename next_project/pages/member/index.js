@@ -16,6 +16,16 @@ export default function Login() {
       if (response.status === 200) {
         localStorage.setItem("token", response.data.token);
         localStorage.setItem("userRole", response.data.userRole);
+        // 로그인에 성공하면 장바구니 데이터 가져오기
+        const cartResponse = await axios.get("/api/cart", {
+          headers: { Authorization: `Bearer ${response.data.token}` },
+        });
+        if (cartResponse.status === 200) {
+          localStorage.setItem(
+            "cart",
+            JSON.stringify(cartResponse.data.cartItems)
+          );
+        }
         router.push("/");
       } else {
         throw new Error("로그인 실패");

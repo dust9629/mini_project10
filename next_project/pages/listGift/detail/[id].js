@@ -31,8 +31,36 @@ export default function Detail({ product, error }) {
     return <p>Error: {error}</p>;
   }
   if (!product) {
-    return <p>No product found.</p>;
+    return <p>상품을 찾을 수 없습니다.</p>;
   }
+
+  const addToCart = () => {
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+    // 필요한 상품 정보만 복사해서 사용
+    const productToSave = {
+      _id: product._id,
+      name: product.prd_name,
+      price: product.prd_price,
+      imageUrl: product.imageUrl,
+      brand: product.brand,
+    };
+
+    // 중복 상품 검사
+    const isProductExist = cart.some((item) => item._id === product._id);
+    if (isProductExist) {
+      alert("이미 장바구니에 있는 상품입니다.");
+      return;
+    }
+
+    cart.push(productToSave);
+    localStorage.setItem("cart", JSON.stringify(cart));
+    alert("장바구니에 추가되었습니다.");
+
+    // Custom 이벤트 발생
+    const event = new Event("cartUpdated");
+    window.dispatchEvent(event);
+  };
 
   return (
     <main className={styles.productDetail}>
@@ -83,7 +111,10 @@ export default function Detail({ product, error }) {
           </div>
           <div className={styles.prdBtn}>
             <p>
-              <button className={styles.cart}>장바구니</button>
+              {/* <button className={styles.cart}>장바구니</button> */}
+              <button className={styles.cart} onClick={addToCart}>
+                장바구니
+              </button>
               <button className={styles.buy}>구매하기</button>
             </p>
             <button className={styles.gift}>선물하기</button>

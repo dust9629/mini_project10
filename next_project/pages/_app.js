@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useRouter } from "next/router"; // useRouter를 import
+import { useRouter } from "next/router";
 import Link from "next/link";
 import Image from "next/image";
 import "@/styles/globals.css";
@@ -10,6 +10,7 @@ function App({ Component, pageProps }) {
   const [isActive, setIsActive] = useState(false);
   const [showTopBtn, setShowTopBtn] = useState(false);
   const [userRole, setUserRole] = useState("");
+  const [cartCount, setCartCount] = useState(0);
   const router = useRouter();
 
   useEffect(() => {
@@ -32,12 +33,28 @@ function App({ Component, pageProps }) {
     };
   }, []);
 
+  useEffect(() => {
+    const updateCartCount = () => {
+      const cart = JSON.parse(localStorage.getItem("cart")) || [];
+      setCartCount(cart.length);
+    };
+    updateCartCount();
+    window.addEventListener("storage", updateCartCount);
+    window.addEventListener("cartUpdated", updateCartCount); // Custom 이벤트 리스너 추가
+
+    return () => {
+      window.removeEventListener("storage", updateCartCount);
+      window.removeEventListener("cartUpdated", updateCartCount); // 이벤트 리스너 제거
+    };
+  }, []);
+
   // 로그아웃 처리
   const handleLogout = async () => {
-    localStorage.removeItem("userRole");
     localStorage.removeItem("token");
+    localStorage.removeItem("userRole");
+    localStorage.removeItem("cart"); // 장바구니 데이터도 제거
     alert("로그아웃 되었습니다.");
-    router.push("/").then(() => window.location.reload()); // 페이지 이동 후 강제로 페이지를 리로드합니다.
+    router.push("/").then(() => window.location.reload());
   };
 
   // 라우트 변경 시 메뉴 상태 리셋
@@ -103,7 +120,7 @@ function App({ Component, pageProps }) {
                 width={50}
                 height={50}
               />
-              <p className="cart-count">0</p>
+              <p className="cart-count">{cartCount}</p>
             </Link>
             <div
               className={`ham-btn ${isActive ? "active" : ""}`}

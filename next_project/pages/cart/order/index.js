@@ -3,37 +3,36 @@ import Image from "next/image";
 import styles from "./../index.module.css";
 // import styles from "./../../member";
 import { useEffect, useState } from "react";
+// import { useRouter } from 'next/router';
 
-let orderList = [
-  {
-    name: "감성 인테리어 파키라+페블 화분+흙없이 실내에서 키우는 식물 축하 선물 (블랙&화이트)",
-    brand: "본투비그린",
-    price: "23,900",
-  },
-  {
-    name: "[화분 받침] Art Pot 받침",
-    brand: "슈퍼마켙 플라워",
-    price: "3,000",
-  },
-  {
-    name: "미니 히노키 pearl",
-    brand: "큐이디",
-    price: "50,000",
-  },
-  {
-    name: "해송소나무 테라스톤세트 미니분재",
-    brand: "펫플랜트",
-    price: "52,800",
-  },
-];
+// let orderList = [
+//   {
+//     name: "감성 인테리어 파키라+페블 화분+흙없이 실내에서 키우는 식물 축하 선물 (블랙&화이트)",
+//     brand: "본투비그린",
+//     price: "23,900",
+//   },
+//   {
+//     name: "[화분 받침] Art Pot 받침",
+//     brand: "슈퍼마켙 플라워",
+//     price: "3,000",
+//   },
+//   {
+//     name: "미니 히노키 pearl",
+//     brand: "큐이디",
+//     price: "50,000",
+//   },
+//   {
+//     name: "해송소나무 테라스톤세트 미니분재",
+//     brand: "펫플랜트",
+//     price: "52,800",
+//   },
+// ];
 
-export default function order() {
+export default function Order() {
   const [address, setAddress] = useState("");
   const [zoneCode, setZoneCode] = useState("");
   const [name, setName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
-  const [agreeTerms1, setAgreeTerms1] = useState(false);
-  const [agreeTerms2, setAgreeTerms2] = useState(false);
 
   const handleAddressSearch = () => {
     // 다음 우편번호 서비스를 호출하는 함수
@@ -48,39 +47,62 @@ export default function order() {
     });
   };
 
+  const [orderItems, setOrderItems] = useState([]);
+  const [totalPrice, setTotalPrice] = useState(0);
+  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("card");
+
+  useEffect(() => {
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    setOrderItems(cart);
+    const total = cart.reduce(
+      (acc, item) => acc + parseInt(item.price.replace(/,/g, ""), 10),
+      0
+    );
+    setTotalPrice(total.toLocaleString());
+  }, []);
+
+  const handlePaymentMethodChange = (method) => {
+    setSelectedPaymentMethod(method);
+  };
+
   return (
     <main className={styles.order}>
-      <Link className={styles.back} href="/">
+      <Link className={styles.back} href="/cart">
         <Image src="/images/icon_arrow_back.png" width={200} height={50} />
       </Link>
 
       <section className={styles.orderList}>
-        <h3 className={styles.cartTit}>상품주문</h3>
+        <h3 className={styles.cartTit}>주문 상품 목록</h3>
         <div className={styles.orderWrap}>
           <ul className="order-wrap">
-            {orderList.map((item, i) => (
-              <li className={styles.order} key={i}>
-                <Link className={styles.orderConts} href="/list/detail">
-                  <div className={styles.orderImg}>
-                    <Image
-                      src={`/images/item_b${i}.jpg`}
-                      alt={item.name}
-                      width={300}
-                      height={300}
-                    />
-                  </div>
-                  <div className={styles.orderPrd}>
-                    <span className={styles.orderBrand}>{item.brand}</span>
-                    <h3 className={styles.orderPrdName}>{item.name}</h3>
-                    <p className={styles.orderPrice}>
-                      {/* 수량 : <span className={styles.orderCount}>2</span>
-                      &nbsp;&nbsp;/&nbsp;&nbsp; */}
-                      <strong>{item.price}</strong>원
-                    </p>
-                  </div>
-                </Link>
-              </li>
-            ))}
+            {orderItems.length > 0 ? (
+              orderItems.map((item, index) => (
+                <li className={styles.order} key={index}>
+                  <Link
+                    className={styles.orderConts}
+                    href={`/list/detail/${item._id}`}
+                  >
+                    <div className={styles.orderImg}>
+                      <Image
+                        src={item.imageUrl || `/images/placeholder.jpg`}
+                        alt={item.name}
+                        width={300}
+                        height={300}
+                      />
+                    </div>
+                    <div className={styles.orderPrd}>
+                      <span className={styles.orderBrand}>{item.brand}</span>
+                      <h3 className={styles.orderPrdName}>{item.name}</h3>
+                      <p className={styles.orderPrice}>
+                        <strong>{item.price}</strong>원
+                      </p>
+                    </div>
+                  </Link>
+                </li>
+              ))
+            ) : (
+              <p>주문할 상품이 없습니다.</p>
+            )}
           </ul>
         </div>
 
@@ -172,10 +194,24 @@ export default function order() {
           <h3 className={styles.orderTit}>결제수단</h3>
           <ul>
             <li>
-              <a href="/">카드 결제</a>
+              <p
+                onClick={() => handlePaymentMethodChange("card")}
+                className={
+                  selectedPaymentMethod === "card" ? styles.payActive : ""
+                }
+              >
+                카드 결제
+              </p>
             </li>
             <li>
-              <a href="/">기타 수단</a>
+              <p
+                onClick={() => handlePaymentMethodChange("other")}
+                className={
+                  selectedPaymentMethod === "other" ? styles.payActive : ""
+                }
+              >
+                기타 수단
+              </p>
             </li>
           </ul>
         </div>
@@ -186,7 +222,7 @@ export default function order() {
             <li>
               <h6>총 상품금액</h6>
               <p>
-                <strong>30,000</strong>원
+                <strong>{totalPrice}</strong>원
               </p>
             </li>
             <li>
@@ -205,7 +241,7 @@ export default function order() {
           <div className={styles.totalPrice}>
             <h6>최종 결제금액</h6>
             <p>
-              <strong className={styles.allPrice}>30,000</strong>원
+              <strong className={styles.allPrice}>{totalPrice}</strong>원
             </p>
           </div>
         </div>
@@ -213,7 +249,8 @@ export default function order() {
         <div className={styles.totalBtn}>
           {/* <button className={styles.select}>선택상품주문</button> */}
           <button className={styles.orderAll}>
-            총 <strong className={styles.allPrice}>30,000</strong>원 결제하기
+            총 <strong className={styles.allPrice}>{totalPrice}</strong>원
+            결제하기
           </button>
         </div>
       </section>
