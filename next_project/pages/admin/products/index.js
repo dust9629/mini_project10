@@ -59,7 +59,12 @@ export default function AdminProducts() {
   return (
     <main className={styles.admin}>
       <Link className={styles.back} href="/admin">
-        <Image src="/images/icon_arrow_back.png" width={200} height={50} />
+        <Image
+          src="/images/icon_arrow_back.png"
+          alt="뒤로가기"
+          width={200}
+          height={50}
+        />
       </Link>
       <section className={styles.adminTop}>
         <h3 className={styles.adminTit}>상품관리</h3>
