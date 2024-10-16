@@ -17,9 +17,11 @@ export default function Login() {
         localStorage.setItem("token", response.data.token);
         localStorage.setItem("userRole", response.data.userRole);
         router.push("/");
+      } else {
+        throw new Error("로그인 실패");
       }
     } catch (error) {
-      alert("Login failed: " + error.response.data.message);
+      alert("로그인 실패: " + error.response.data.message);
     }
   };
 
