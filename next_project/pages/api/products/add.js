@@ -31,7 +31,8 @@ export default async function handler(req, res) {
       return res.status(500).json({ message: "폼 파싱 에러" });
     }
 
-    const { imageUrl, brand, prd_name, prd_price, categories } = fields;
+    const { imageUrl, brand, prd_name, prd_price, categories, itemType } =
+      fields;
     if (!imageUrl || !brand || !prd_name || !prd_price) {
       client.close();
       return res.status(400).json({ message: "Missing required fields" });
@@ -44,6 +45,7 @@ export default async function handler(req, res) {
         prd_name,
         prd_price,
         categories,
+        itemType,
         // amount: parseInt(amount, 10),
       });
 

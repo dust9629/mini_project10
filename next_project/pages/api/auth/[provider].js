@@ -54,7 +54,6 @@ export default async function authHandler(req, res) {
   } catch (error) {
     console.error("카카오 로그인 에러:", error);
     res.status(500).json({ message: "Internal server error" });
-    // 리다이렉션 경로를 /member로 변경
     res.redirect("/member");
   }
 }

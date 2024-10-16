@@ -103,7 +103,7 @@ function App({ Component, pageProps }) {
                 width={50}
                 height={50}
               />
-              <p className="cart-count">4</p>
+              <p className="cart-count">0</p>
             </Link>
             <div
               className={`ham-btn ${isActive ? "active" : ""}`}
@@ -145,25 +145,39 @@ function App({ Component, pageProps }) {
             </div>
             <ul className="nav-tab">
               <li>
-                <Link href="/list">전체보기</Link>
+                <Link href="/listGift">전체보기</Link>
               </li>
               <li>
-                <Link href="/">가구</Link>
+                <Link href="/listGift?itemType=furniture" className="furniture">
+                  가구
+                </Link>
               </li>
               <li>
-                <Link href="/">소품</Link>
+                <Link
+                  href="/listGift?itemType=accessories"
+                  className="accessories"
+                >
+                  소품
+                </Link>
               </li>
               <li>
-                <Link href="/">문구</Link>
+                <Link
+                  href="/listGift?itemType=stationery"
+                  className="stationery"
+                >
+                  문구
+                </Link>
               </li>
               <li>
-                <Link href="/">기타</Link>
+                <Link href="/listGift?itemType=etc" className="etc">
+                  기타
+                </Link>
               </li>
               <li>
-                <Link href="/">이벤트</Link>
+                <Link href="/event">이벤트</Link>
               </li>
               <li>
-                <Link href="/">브랜드 소개</Link>
+                <Link href="/brand">브랜드 소개</Link>
               </li>
             </ul>
             <Link className="logout" href="/" onClick={handleLogout}>

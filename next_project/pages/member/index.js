@@ -12,7 +12,7 @@ export default function Login() {
   const handleLogin = async (event) => {
     event.preventDefault();
     try {
-      const response = await axios.post("/api/member", { email, password });
+      const response = await axios.post("/api/login", { email, password });
       if (response.status === 200) {
         localStorage.setItem("token", response.data.token);
         localStorage.setItem("userRole", response.data.userRole);
@@ -66,10 +66,10 @@ export default function Login() {
                 />
               </div>
 
-              <div className={styles.checkboxGroup}>
+              {/* <div className={styles.checkboxGroup}>
                 <input type="checkbox" id="remember_id" name="remember_id" />
                 <label htmlFor="remember_id">아이디 저장하기</label>
-              </div>
+              </div> */}
 
               <button type="submit" className={styles.loginButton}>
                 로그인

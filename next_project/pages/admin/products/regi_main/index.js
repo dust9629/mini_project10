@@ -11,6 +11,7 @@ export default function AdminProducts() {
     prd_name: "",
     prd_price: "",
     categories: [],
+    itemType: "",
   });
 
   // 카테고리 매핑
@@ -32,7 +33,14 @@ export default function AdminProducts() {
   // 텍스트 입력 처리
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setProduct({ ...product, [name]: value });
+    if (name === "prd_price") {
+      const formattedValue = value
+        .replace(/\D/g, "")
+        .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+      setProduct({ ...product, [name]: formattedValue });
+    } else {
+      setProduct({ ...product, [name]: value });
+    }
   };
 
   // 카테고리 선택 처리
@@ -188,6 +196,20 @@ export default function AdminProducts() {
                   {label}
                 </label>
               ))}
+            </div>
+            <div>
+              <span>아이템 타입</span>
+              <select
+                name="itemType"
+                value={product.itemType}
+                onChange={handleChange}
+              >
+                <option value="">선택하세요</option>
+                <option value="furniture">가구</option>
+                <option value="accessories">소품</option>
+                <option value="stationery">문구</option>
+                <option value="etc">기타</option>
+              </select>
             </div>
             <button className={styles.registerBtn} type="submit">
               상품 등록하기
