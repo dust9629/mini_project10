@@ -10,6 +10,8 @@ export default async (req, res) => {
   }
 
   const { email, password, kakaoToken } = req.body;
+
+  // 카카오 로그인 처리
   if (kakaoToken) {
     try {
       const userInfoResponse = await axios.get(
@@ -33,22 +35,35 @@ export default async (req, res) => {
           role: "normember",
           provider: "kakao",
         });
+        user = { _id: result.insertedId, ...result.ops[0] };
       }
 
       const token = jwt.sign(
-        { userId: user.insertedId || user._id, role: user.role },
+        { userId: user._id.toString(), role: user.role },
         process.env.JWT_SECRET,
         { expiresIn: "1h" }
       );
 
-      return res.status(200).json({ token, userRole: user.role });
+      return res.status(200).json({
+        token: token,
+        userId: user._id.toString(),
+        userRole: user.role,
+        // userInfo: {
+        //   name: user.name,
+        //   email: user.email,
+        //   address: user.address,
+        //   phoneNumber: user.phoneNumber,
+        //   zoneCode: user.zoneCode,
+        // },
+      });
     } catch (error) {
-      console.error("Kakao login error:", error);
+      console.error("카카오 로그인 에러:", error);
       return res
         .status(500)
         .json({ message: "Internal server error", error: error.message });
     }
   } else {
+    // 일반 로그인 처리
     try {
       const { db } = await connectDB();
       const user = await db.collection("users").findOne({ email });
@@ -66,10 +81,18 @@ export default async (req, res) => {
         process.env.JWT_SECRET,
         { expiresIn: "1h" }
       );
-      return res
-        .status(200)
-        .json({ token, userRole: user.role, userId: user._id.toString() });
-      // return res.status(200).json({ token, userRole: user.role });
+      return res.status(200).json({
+        token,
+        userId: user._id.toString(),
+        userRole: user.role,
+        userInfo: {
+          name: user.name,
+          email: user.email,
+          address: user.address,
+          phoneNumber: user.phoneNumber,
+          zoneCode: user.zoneCode,
+        },
+      });
     } catch (error) {
       console.error("로그인 오류:", error);
       return res

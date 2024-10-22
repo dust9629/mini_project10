@@ -40,7 +40,12 @@ export default function List({ products }) {
   return (
     <main className={styles.productList}>
       <Link className={styles.back} href="/">
-        <Image src="/images/icon_arrow_back.png" width={200} height={50} />
+        <Image
+          src="/images/icon_arrow_back.png"
+          alt="back"
+          width={200}
+          height={50}
+        />
       </Link>
       <section className={styles.listTop}>
         <div>
@@ -121,7 +126,7 @@ export default function List({ products }) {
                   <div className="cont-img">
                     <Image
                       src={item.imageUrl}
-                      alt={item.name}
+                      alt={`item.name`}
                       width={300}
                       height={600}
                     />
@@ -140,12 +145,14 @@ export default function List({ products }) {
                     className="like-e"
                     width={35}
                     height={35}
+                    alt="좋아요"
                   />
                   <Image
                     src="/images/icon_like_f.png"
                     className="like-f"
                     width={35}
                     height={35}
+                    alt="좋아요"
                   />
                 </p>
               </li>

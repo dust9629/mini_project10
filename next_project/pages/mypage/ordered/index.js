@@ -4,9 +4,12 @@ import Router from "next/router";
 import Link from "next/link";
 import Image from "next/image";
 import styles from "./../index.module.css";
+import jwtDecode from "jwt-decode";
 
-export default function Mypage() {
+export default function Ordered() {
   const [user, setUser] = useState(null);
+  const [orders, setOrders] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -14,24 +17,65 @@ export default function Mypage() {
       Router.push("/member");
       return;
     }
+    // 토큰에서 userId 추출
+    let userId;
+    try {
+      const decodedToken = jwtDecode(token);
+      userId = decodedToken.userId;
+    } catch (error) {
+      console.error("Error decoding token:", error);
+      Router.push("/member");
+      return;
+    }
 
-    const fetchUser = async () => {
+    const fetchUserAndOrders = async () => {
+      setLoading(true);
+      if (!userId) {
+        Router.push("/member"); // userId가 없다면 로그인 페이지로 리다이렉션
+        return;
+      }
+
       try {
-        const response = await axios.get("/api/users", {
+        const response = await axios.get(`/api/users/${userId}`, {
           headers: { Authorization: `Bearer ${token}` },
         });
-        setUser(response.data);
+        if (response.data) {
+          setUser(response.data);
+          await fetchOrders(userId, token);
+        } else {
+          Router.push("/member");
+        }
       } catch (error) {
         console.error("Error fetching user data:", error);
         Router.push("/member");
+      } finally {
+        setLoading(false);
       }
     };
 
-    fetchUser();
+    fetchUserAndOrders();
   }, []);
 
+  const fetchOrders = async (userId, token) => {
+    try {
+      const ordersResponse = await axios.get(
+        `/api/orders/user?userId=${userId}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
+      setOrders(ordersResponse.data);
+    } catch (error) {
+      console.error("Error fetching orders:", error);
+    }
+  };
+
+  if (loading) {
+    return <p>로딩중...</p>;
+  }
+
   if (!user) {
-    return <p>Loading...</p>;
+    return <p>유저 정보를 불러올 수 없습니다.</p>;
   }
 
   return (
@@ -93,18 +137,33 @@ export default function Mypage() {
             <span>배송완료</span>
           </li>
         </ul>
-        <div className={styles.orderedInfo}>
-          <h5>
-            주문번호 : <span>2024100801</span>
-          </h5>
-          <p>
-            상품명 : <span>화분 및 어쩌구..</span>
-          </p>
-          <div className={styles.orderedSum}>
-            <span>수량 : 1</span>&nbsp;&nbsp;&nbsp;/&nbsp;&nbsp;&nbsp;
-            <strong>30,000</strong>원
+        {orders.map((order, index) => (
+          <div className={styles.orderedInfo} key={index}>
+            <h5>
+              주문번호 :{" "}
+              <span className={styles.orderedId}>{order.orderNumber}</span>
+            </h5>
+            <p>
+              상품명 :{" "}
+              <span className={styles.orderedPrd}>
+                {order.items[0].name} 외 {order.items.length - 1}개
+              </span>
+            </p>
+            <div className={styles.orderedSum}>
+              <div>
+                수량 :{" "}
+                <span className={styles.orderedCount}>
+                  {order.items.length}
+                </span>
+              </div>
+              &nbsp;&nbsp;&nbsp;/&nbsp;&nbsp;&nbsp;
+              <strong className={styles.orderedPrice}>
+                {order.totalPrice.toLocaleString()}
+              </strong>
+              원
+            </div>
           </div>
-        </div>
+        ))}
       </section>
       <section className={styles.orderedBtm}>
         <h3 className={styles.mypageTit}>취소/교환/반품 내역</h3>

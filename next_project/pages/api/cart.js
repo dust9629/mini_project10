@@ -1,4 +1,3 @@
-// next_project/pages/api/cart.js
 import { connectDB } from "./../../util/database";
 import jwt from "jsonwebtoken";
 

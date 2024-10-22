@@ -3,39 +3,37 @@ import Image from "next/image";
 import styles from "./../index.module.css";
 // import styles from "./../../member";
 import { useEffect, useState } from "react";
-// import { useRouter } from 'next/router';
-
-// let orderList = [
-//   {
-//     name: "감성 인테리어 파키라+페블 화분+흙없이 실내에서 키우는 식물 축하 선물 (블랙&화이트)",
-//     brand: "본투비그린",
-//     price: "23,900",
-//   },
-//   {
-//     name: "[화분 받침] Art Pot 받침",
-//     brand: "슈퍼마켙 플라워",
-//     price: "3,000",
-//   },
-//   {
-//     name: "미니 히노키 pearl",
-//     brand: "큐이디",
-//     price: "50,000",
-//   },
-//   {
-//     name: "해송소나무 테라스톤세트 미니분재",
-//     brand: "펫플랜트",
-//     price: "52,800",
-//   },
-// ];
+import { useRouter } from "next/router";
 
 export default function Order() {
+  const router = useRouter();
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
   const [address, setAddress] = useState("");
   const [zoneCode, setZoneCode] = useState("");
-  const [name, setName] = useState("");
   const [phoneNumber, setPhoneNumber] = useState("");
 
+  useEffect(() => {
+    // 유저 데이터 로컬 스토리지에서 불러오기
+    const userData = JSON.parse(localStorage.getItem("userData"));
+    if (userData) {
+      setName(userData.name);
+      setEmail(userData.email);
+      setAddress(userData.address);
+      setPhoneNumber(userData.phoneNumber);
+      setZoneCode(userData.zoneCode);
+    }
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    setOrderItems(cart);
+    const total = cart.reduce(
+      (acc, item) => acc + parseInt(item.price.replace(/,/g, ""), 10),
+      0
+    );
+    setTotalPrice(total.toLocaleString());
+  }, []);
+
+  // 다음 우편번호 서비스를 호출하는 함수
   const handleAddressSearch = () => {
-    // 다음 우편번호 서비스를 호출하는 함수
     window.daum.postcode.load(function () {
       new window.daum.Postcode({
         oncomplete: function (data) {
@@ -61,14 +59,87 @@ export default function Order() {
     setTotalPrice(total.toLocaleString());
   }, []);
 
+  // 결제수단 선택
   const handlePaymentMethodChange = (method) => {
     setSelectedPaymentMethod(method);
+  };
+
+  // 주문자 정보 불러오기
+  useEffect(() => {
+    const storedUserInfo = localStorage.getItem("userInfo");
+    if (storedUserInfo) {
+      try {
+        const userInfo = JSON.parse(storedUserInfo);
+        setName(userInfo.name);
+        setEmail(userInfo.email);
+        setAddress(userInfo.address);
+        setPhoneNumber(userInfo.phoneNumber);
+        setZoneCode(userInfo.zoneCode); // 이 값도 userInfo에 포함되어 있다면 설정
+      } catch (error) {
+        console.error("Parsing error:", error);
+      }
+    }
+  }, []);
+
+  // 주문서 제출 버튼
+  const handlePlaceOrder = async () => {
+    if (orderItems.length === 0) {
+      alert("장바구니가 비어있습니다.");
+      return;
+    }
+
+    try {
+      const orderData = {
+        items: orderItems.map((item) => ({ productId: item._id, quantity: 1 })), // 수량은 무조건 1
+        userInfo: {
+          name,
+          email,
+          address,
+          phoneNumber,
+        },
+        totalPrice,
+      };
+
+      // 주문 API 호출
+      const response = await fetch("/api/orders", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+        body: JSON.stringify(orderData),
+      });
+
+      const responseData = await response.json();
+      if (!response.ok)
+        throw new Error(responseData.message || "주문 처리에 실패했습니다.");
+
+      localStorage.setItem(
+        "orderInfo",
+        JSON.stringify({
+          orderNumber: responseData.orderNumber, // 서버에서 반환받은 주문번호
+          items: orderItems,
+          totalPrice: totalPrice,
+        })
+      );
+
+      alert("주문이 성공적으로 완료되었습니다.");
+      localStorage.removeItem("cart"); // 장바구니 비우기
+      router.push("/cart/order/complete"); // 주문 완료 페이지로 이동
+    } catch (error) {
+      alert(`주문 처리 중 오류가 발생했습니다: ${error.message}`);
+    }
   };
 
   return (
     <main className={styles.order}>
       <Link className={styles.back} href="/cart">
-        <Image src="/images/icon_arrow_back.png" width={200} height={50} />
+        <Image
+          src="/images/icon_arrow_back.png"
+          alt="back"
+          width={200}
+          height={50}
+        />
       </Link>
 
       <section className={styles.orderList}>
@@ -101,7 +172,7 @@ export default function Order() {
                 </li>
               ))
             ) : (
-              <p>주문할 상품이 없습니다.</p>
+              <p className={styles.emptyMsg}>주문할 상품이 없습니다.</p>
             )}
           </ul>
         </div>
@@ -109,17 +180,6 @@ export default function Order() {
         <div className={styles.orderInfo}>
           <h3 className={styles.orderTit}>배송지 정보</h3>
           <form>
-            <div>
-              <label htmlFor="join_email">이메일*</label>
-              <input
-                type="email"
-                id="join_email"
-                name="join_email"
-                placeholder="이메일 주소를 입력하세요"
-                required
-                className={styles.inputField}
-              />
-            </div>
             <div>
               <label htmlFor="join_name">이름*</label>
               <input
@@ -129,6 +189,19 @@ export default function Order() {
                 placeholder="이름을 입력하세요"
                 value={name}
                 onChange={(e) => setName(e.target.value)}
+                required
+                className={styles.inputField}
+              />
+            </div>
+            <div>
+              <label htmlFor="join_email">이메일*</label>
+              <input
+                type="email"
+                id="join_email"
+                name="join_email"
+                placeholder="이메일 주소를 입력하세요"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 required
                 className={styles.inputField}
               />
@@ -155,7 +228,7 @@ export default function Order() {
                   name="join_zonecode"
                   placeholder="우편번호"
                   value={zoneCode}
-                  readOnly
+                  onChange={(e) => setZoneCode(e.target.value)}
                   className={styles.inputField}
                 />
                 <button
@@ -172,8 +245,8 @@ export default function Order() {
                 name="join_address01"
                 placeholder="주소 입력"
                 value={address}
-                readOnly
                 required
+                onChange={(e) => setAddress(e.target.value)}
                 className={styles.inputField}
               />
               <input
@@ -182,8 +255,8 @@ export default function Order() {
                 name="join_address02"
                 placeholder="상세 주소 입력"
                 value=""
-                readOnly
                 required
+                onChange={(e) => console.log(e.target.value)}
                 className={styles.inputField}
               />
             </div>
@@ -248,7 +321,7 @@ export default function Order() {
 
         <div className={styles.totalBtn}>
           {/* <button className={styles.select}>선택상품주문</button> */}
-          <button className={styles.orderAll}>
+          <button className={styles.orderAll} onClick={handlePlaceOrder}>
             총 <strong className={styles.allPrice}>{totalPrice}</strong>원
             결제하기
           </button>

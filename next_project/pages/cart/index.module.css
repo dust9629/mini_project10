@@ -173,6 +173,7 @@ main.order {
   padding-bottom: 2.4rem;
   /* border-bottom: 1px solid #d3d3d3; */
 }
+
 .cartBtn button,
 .orderBtn button,
 .totalBtn button {
@@ -184,6 +185,10 @@ main.order {
   border: 1px solid #202020;
   border-radius: unset;
 }
+.cartBtn,
+.cartBtn button {
+  width: 100%;
+}
 .totalBtn button {
   width: 100%;
 }
@@ -192,6 +197,7 @@ main.order {
   background-color: #fff;
   color: #202020;
 }
+
 .inputField {
   width: 100%;
   padding: 1.6rem 1.2rem;
@@ -244,6 +250,7 @@ main.order {
   align-items: center;
   justify-content: center;
 }
+
 .payWay li p {
   font-size: 1.6rem;
   display: block;
@@ -260,6 +267,32 @@ main.order {
   background-color: #202020;
   color: #ccc;
   border: 1px solid #202020;
+}
+.emptyMsg {
+  text-align: center;
+  padding: 4rem 0 2rem;
+  font-size: 1.6rem;
+}
+/* .completeWrap {
+  min-height: calc(100vh - 32.2rem);
+} */
+.orderedInfo {
+  padding: 1.8rem 1.2rem;
+  border: 1px solid #858585;
+  margin-bottom: 60rem;
+  margin-top: 3rem;
+}
+.orderedInfo > h5 {
+  font-size: 1.6rem;
+  margin-bottom: 1rem;
+}
+.orderedInfo > p {
+  font-size: 1.8rem;
+  margin-bottom: 0.8rem;
+}
+.orderedInfo > div {
+  display: flex;
+  font-size: 1.6rem;
 }
 @media (max-width: 500px) {
   .cart > section,
@@ -291,6 +324,7 @@ main.order {
     font-size: 1.4rem;
     padding: 1.6rem 1.2rem;
   }
+  .cartBtn button,
   .totalBtn button {
     width: 100%;
   }
@@ -320,6 +354,9 @@ main.order {
   }
   .payWay li p {
     padding: 1.6rem 0;
+    font-size: 1.4rem;
+  }
+  .emptyMsg {
     font-size: 1.4rem;
   }
 }

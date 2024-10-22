@@ -13,19 +13,16 @@ export default function Login() {
     event.preventDefault();
     try {
       const response = await axios.post("/api/login", { email, password });
-      if (response.status === 200) {
+      if (response.status === 200 && response.data.userId) {
         localStorage.setItem("token", response.data.token);
+        localStorage.setItem("userId", response.data.userId);
         localStorage.setItem("userRole", response.data.userRole);
-        // 로그인에 성공하면 장바구니 데이터 가져오기
-        const cartResponse = await axios.get("/api/cart", {
-          headers: { Authorization: `Bearer ${response.data.token}` },
-        });
-        if (cartResponse.status === 200) {
-          localStorage.setItem(
-            "cart",
-            JSON.stringify(cartResponse.data.cartItems)
-          );
-        }
+        localStorage.setItem(
+          "userInfo",
+          JSON.stringify(response.data.userInfo)
+        );
+
+        await new Promise((resolve) => setTimeout(resolve, 100));
         router.push("/");
       } else {
         throw new Error("로그인 실패");

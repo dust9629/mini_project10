@@ -39,22 +39,32 @@ function App({ Component, pageProps }) {
       setCartCount(cart.length);
     };
     updateCartCount();
-    window.addEventListener("storage", updateCartCount);
-    window.addEventListener("cartUpdated", updateCartCount); // Custom 이벤트 리스너 추가
 
+    const handleCartUpdated = () => updateCartCount();
+    window.addEventListener("storage", handleCartUpdated);
+    window.addEventListener("cartUpdated", handleCartUpdated);
     return () => {
-      window.removeEventListener("storage", updateCartCount);
-      window.removeEventListener("cartUpdated", updateCartCount); // 이벤트 리스너 제거
+      window.removeEventListener("storage", handleCartUpdated);
+      window.removeEventListener("cartUpdated", handleCartUpdated);
     };
   }, []);
 
   // 로그아웃 처리
   const handleLogout = async () => {
+    console.log("Before logout userId:", localStorage.getItem("userId"));
     localStorage.removeItem("token");
+    localStorage.removeItem("userId");
     localStorage.removeItem("userRole");
-    localStorage.removeItem("cart"); // 장바구니 데이터도 제거
+    localStorage.removeItem("userInfo");
+    localStorage.removeItem("cart");
+    localStorage.removeItem("orderInfo");
+
+    // 장바구니 숫자 업데이트
+    setCartCount(0);
     alert("로그아웃 되었습니다.");
-    router.push("/").then(() => window.location.reload());
+    await router.push("/");
+    console.log("After logout userId:", localStorage.getItem("userId"));
+    window.location.reload();
   };
 
   // 라우트 변경 시 메뉴 상태 리셋

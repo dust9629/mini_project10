@@ -104,7 +104,7 @@ export default function Cart() {
                 </li>
               ))
             ) : (
-              <p>장바구니가 비어 있습니다.</p>
+              <p className={styles.emptyMsg}>장바구니가 비어 있습니다.</p>
             )}
           </ul>
         </div>
