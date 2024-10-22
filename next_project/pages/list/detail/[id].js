@@ -2,6 +2,7 @@ import Link from "next/link";
 import Image from "next/image";
 import styles from "./../index.module.css";
 import ReviewSection from "../../../components/review";
+import { useRouter } from "next/router";
 import { connectDB } from "../../../util/database";
 import { ObjectId } from "mongodb";
 
@@ -14,30 +15,33 @@ export async function getServerSideProps(context) {
       .collection("products")
       .findOne({ _id: new ObjectId(productId) });
     if (!product) {
-      console.log("No product found for ID:", productId);
-      return { props: { error: "No product found." } };
+      return { props: { error: "상품을 찾을 수 없습니다." } };
     }
     return {
       props: { product: JSON.parse(JSON.stringify(product)) },
     };
   } catch (error) {
-    console.error("Failed to fetch product:", error);
-    return { props: { error: "Failed to fetch product." } };
+    return { props: { error: "상품 정보를 가져오는 데 실패했습니다." } };
   }
 }
 
 export default function Detail({ product, error }) {
+  const router = useRouter();
+
   if (error) {
-    return <p>Error: {error}</p>;
+    return <p>오류: {error}</p>;
   }
   if (!product) {
     return <p>상품을 찾을 수 없습니다.</p>;
   }
 
   const addToCart = () => {
-    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    if (product.stock === 0) {
+      alert("품절된 상품입니다.");
+      return;
+    }
 
-    // 필요한 상품 정보만 복사해서 사용
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
     const productToSave = {
       _id: product._id,
       name: product.prd_name,
@@ -61,6 +65,19 @@ export default function Detail({ product, error }) {
     const event = new Event("cartUpdated");
     window.dispatchEvent(event);
   };
+  // 상품을 장바구니에 추가
+  const buyNow = () => {
+    if (product.stock === 0) {
+      alert("품절된 상품입니다.");
+      return;
+    }
+    addToCart();
+    router.push(`/cart/order`);
+  };
+
+  const notifyFeatureUnavailable = () => {
+    alert("해당 기능은 준비중입니다.");
+  };
 
   return (
     <main className={styles.productDetail}>
@@ -78,7 +95,7 @@ export default function Detail({ product, error }) {
           <div className={styles.prdImg}>
             <Image
               src={product.imageUrl}
-              alt={product.prd_name}
+              alt={`product.prd_name`}
               width={700}
               height={700}
               priority
@@ -87,7 +104,12 @@ export default function Detail({ product, error }) {
           <div className={styles.prdTxt}>
             <span className={styles.prdBrand}>{product.brand}</span>
             <div className={styles.prdTit}>
-              <h3>{product.prd_name}</h3>
+              <h3>
+                {product.stock === 0 && (
+                  <span className={styles.soldOut}>품절</span>
+                )}
+                {product.prd_name}
+              </h3>
               <p className={styles.likeBtn}>
                 <Image
                   src="/images/icon_like_e.png"
@@ -115,9 +137,13 @@ export default function Detail({ product, error }) {
               <button className={styles.cart} onClick={addToCart}>
                 장바구니
               </button>
-              <button className={styles.buy}>구매하기</button>
+              <button className={styles.buy} onClick={buyNow}>
+                구매하기
+              </button>
             </p>
-            <button className={styles.gift}>선물하기</button>
+            <button className={styles.gift} onClick={notifyFeatureUnavailable}>
+              선물하기
+            </button>
           </div>
         </div>
       </section>

@@ -1,7 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
 import styles from "./../index.module.css";
-// import styles from "./../../member";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
@@ -14,6 +13,15 @@ export default function Order() {
   const [phoneNumber, setPhoneNumber] = useState("");
 
   useEffect(() => {
+    const token = localStorage.getItem("token");
+
+    // 비회원 로그인 유도
+    if (!token) {
+      alert("로그인/회원가입 후 이용할 수 있습니다.");
+      router.push("/member");
+      return;
+    }
+
     // 유저 데이터 로컬 스토리지에서 불러오기
     const userData = JSON.parse(localStorage.getItem("userData"));
     if (userData) {
@@ -23,6 +31,8 @@ export default function Order() {
       setPhoneNumber(userData.phoneNumber);
       setZoneCode(userData.zoneCode);
     }
+
+    // 장바구니 데이터 담기
     const cart = JSON.parse(localStorage.getItem("cart")) || [];
     setOrderItems(cart);
     const total = cart.reduce(
@@ -74,7 +84,7 @@ export default function Order() {
         setEmail(userInfo.email);
         setAddress(userInfo.address);
         setPhoneNumber(userInfo.phoneNumber);
-        setZoneCode(userInfo.zoneCode); // 이 값도 userInfo에 포함되어 있다면 설정
+        setZoneCode(userInfo.zoneCode);
       } catch (error) {
         console.error("Parsing error:", error);
       }
@@ -249,7 +259,7 @@ export default function Order() {
                 onChange={(e) => setAddress(e.target.value)}
                 className={styles.inputField}
               />
-              <input
+              {/* <input
                 type="text"
                 id="join_address02"
                 name="join_address02"
@@ -258,7 +268,7 @@ export default function Order() {
                 required
                 onChange={(e) => console.log(e.target.value)}
                 className={styles.inputField}
-              />
+              /> */}
             </div>
           </form>
         </div>

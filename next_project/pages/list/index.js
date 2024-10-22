@@ -133,7 +133,12 @@ export default function List({ products }) {
                   </div>
                   <div className="cont-txt">
                     <span className="prd-brand">{item.brand}</span>
-                    <h3 className="prd-name">{item.name}</h3>
+                    <h3 className="prd-name">
+                      {item.stock === 0 && (
+                        <span className="sold-out">품절</span>
+                      )}
+                      {item.name}
+                    </h3>
                     <p className="prd-price">
                       <strong>{item.price}</strong>원
                     </p>
@@ -174,7 +179,8 @@ export async function getServerSideProps() {
     price: product.prd_price,
     imageUrl: product.imageUrl,
     categories: product.categories,
-    itemType: product.itemType, // Make sure itemType is included in the fetched data
+    itemType: product.itemType,
+    stock: product.stock,
   }));
 
   return { props: { products: serializedProducts } };

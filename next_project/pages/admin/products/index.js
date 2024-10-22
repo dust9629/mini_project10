@@ -107,7 +107,10 @@ export default function AdminProducts() {
                     <span key={cat}>{categoryLabels[cat]}</span>
                   ))}
                 </div>
-                <span className={styles.prdBrand}>{product.brand}</span>
+                <span className={styles.prdBrand}>
+                  <strong>{product.brand}</strong> / 수량 :{" "}
+                  <strong>{product.stock}</strong>
+                </span>
                 <h3 className={styles.prdPrdName}>{product.prd_name}</h3>
                 <p className={styles.prdPrice}>
                   <strong>{product.prd_price}</strong>원

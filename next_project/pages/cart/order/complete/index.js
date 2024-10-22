@@ -50,7 +50,12 @@ export default function Complete() {
   return (
     <main className={styles.order}>
       <Link className={styles.back} href="/">
-        <Image src="/images/icon_arrow_back.png" width={200} height={50} />
+        <Image
+          src="/images/icon_arrow_back.png"
+          width={200}
+          height={50}
+          alt="back"
+        />
       </Link>
 
       <section className={styles.orderList}>

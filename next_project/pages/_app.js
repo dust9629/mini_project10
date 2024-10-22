@@ -51,7 +51,7 @@ function App({ Component, pageProps }) {
 
   // 로그아웃 처리
   const handleLogout = async () => {
-    console.log("Before logout userId:", localStorage.getItem("userId"));
+    console.log("Logging out...");
     localStorage.removeItem("token");
     localStorage.removeItem("userId");
     localStorage.removeItem("userRole");
@@ -62,9 +62,7 @@ function App({ Component, pageProps }) {
     // 장바구니 숫자 업데이트
     setCartCount(0);
     alert("로그아웃 되었습니다.");
-    await router.push("/");
-    console.log("After logout userId:", localStorage.getItem("userId"));
-    window.location.reload();
+    router.push("/").then(() => window.location.reload());
   };
 
   // 라우트 변경 시 메뉴 상태 리셋

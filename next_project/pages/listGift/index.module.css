@@ -183,6 +183,8 @@ a.back img {
   padding: 0.6rem 0.4rem;
   font-size: 1.6rem;
 }
+span.soldOut {
+}
 @media (max-width: 500px) {
   .productList > section,
   .productDetail > section.prd {

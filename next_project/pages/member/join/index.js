@@ -151,6 +151,7 @@ export default function Join() {
                 placeholder="휴대폰 번호 입력"
                 value={phoneNumber}
                 onChange={(e) => setPhoneNumber(e.target.value)}
+                maxLength="13"
                 required
                 className={styles.inputField}
               />

@@ -31,9 +31,16 @@ export default async function handler(req, res) {
       return res.status(500).json({ message: "폼 파싱 에러" });
     }
 
-    const { imageUrl, brand, prd_name, prd_price, categories, itemType } =
-      fields;
-    if (!imageUrl || !brand || !prd_name || !prd_price) {
+    const {
+      imageUrl,
+      brand,
+      prd_name,
+      prd_price,
+      categories,
+      itemType,
+      stock,
+    } = fields;
+    if (!imageUrl || !brand || !prd_name || !prd_price || !stock) {
       client.close();
       return res.status(400).json({ message: "Missing required fields" });
     }
@@ -46,7 +53,7 @@ export default async function handler(req, res) {
         prd_price,
         categories,
         itemType,
-        // amount: parseInt(amount, 10),
+        stock: parseInt(stock, 10),
       });
 
       res.status(200).json({ message: "상품이 등록되었습니다.", result });

@@ -13,16 +13,21 @@ export default function Login() {
     event.preventDefault();
     try {
       const response = await axios.post("/api/login", { email, password });
+      // console.log("Login response data:", response.data); // 응답 데이터 콘솔 출력
+
       if (response.status === 200 && response.data.userId) {
+        // console.log("Storing userId:", response.data.userId);
         localStorage.setItem("token", response.data.token);
         localStorage.setItem("userId", response.data.userId);
         localStorage.setItem("userRole", response.data.userRole);
+        console.log(localStorage.getItem("userId"));
         localStorage.setItem(
           "userInfo",
           JSON.stringify(response.data.userInfo)
         );
 
-        await new Promise((resolve) => setTimeout(resolve, 100));
+        console.log("Logged-in userId:", localStorage.getItem("userId")); // 로그인 직후 저장된 값 확인
+
         router.push("/");
       } else {
         throw new Error("로그인 실패");
@@ -95,7 +100,7 @@ export default function Login() {
               <div className={styles.linkGroup}>
                 <Link href="/member/find_id">아이디 찾기</Link>|
                 <Link href="/member/find_pw">비밀번호 찾기</Link>|
-                <Link href="/member/nonmember">비회원 주문 조회</Link>
+                {/* <Link href="/member/nonmember">비회원 주문 조회</Link> */}
               </div>
             </form>
           </div>

@@ -65,6 +65,18 @@ export default async function handler(req, res) {
       orderDate: new Date(),
     });
 
+    // 상품 재고 업데이트
+    await Promise.all(
+      items.map(async (item) => {
+        await db
+          .collection("products")
+          .updateOne(
+            { _id: new ObjectId(item.productId) },
+            { $inc: { stock: -item.quantity } }
+          );
+      })
+    );
+
     res.status(201).json({ success: true, orderNumber });
   } catch (error) {
     console.error("Error processing order:", error);

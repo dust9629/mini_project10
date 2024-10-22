@@ -313,6 +313,7 @@ section.section02 ul li > a:hover {
   font-weight: 500;
   line-height: 1.3;
 }
+.cont-wrap .cont-txt .prd-name span.soldOut,
 .cont-wrap .cont-txt .prd-name span.sold-out {
   display: inline-block;
   font-size: 1.2rem;

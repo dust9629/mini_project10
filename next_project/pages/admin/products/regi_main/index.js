@@ -12,6 +12,7 @@ export default function AdminProducts() {
     prd_price: "",
     categories: [],
     itemType: "",
+    stock: "",
   });
 
   // 카테고리 매핑
@@ -105,6 +106,8 @@ export default function AdminProducts() {
               prd_name: "",
               prd_price: "",
               categories: [],
+              itemType: "",
+              stock: "",
             });
             setImage(null); // 이미지 상태 초기화
           }
@@ -171,6 +174,15 @@ export default function AdminProducts() {
                 type="text"
                 name="prd_name"
                 value={product.prd_name}
+                onChange={handleChange}
+              />
+            </label>
+            <label>
+              <span>수량</span>
+              <input
+                type="number"
+                name="stock"
+                value={product.stock}
                 onChange={handleChange}
               />
             </label>
